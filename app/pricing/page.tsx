@@ -104,11 +104,11 @@ export default function PricingPage() {
   // Dynamic price anchors for psychological pricing
   const getPriceAnchor = (quantity: number) => {
     const anchors = {
-      1: "Menej ako jedna veľká pizza, čo zmizne za 10 minút 🍕",
-      2: "Menej ako nové Nike ponožky, ktoré aj tak stratíš 🧦",
-      3: "Menej ako 1 hodina súkromného doučka 🤓",
-      4: "Menej ako piatok večer v meste 🥳",
-      5: "Menej ako dve nočné jazdy taxíkom domov 🚕"
+      1: <>Menej ako jedna veľká pizza, čo zmizne za 10 minút <span className="emoji">🍕</span></>,
+      2: <>Menej ako nové Nike ponožky, ktoré aj tak stratíš <span className="emoji">🧦</span></>,
+      3: <>Menej ako 1 hodina súkromného doučka <span className="emoji">🤓</span></>,
+      4: <>Menej ako piatok večer v meste <span className="emoji">🥳</span></>,
+      5: <>Menej ako dve nočné jazdy taxíkom domov <span className="emoji">🚕</span></>
     }
     return anchors[quantity as keyof typeof anchors] || anchors[1]
   }

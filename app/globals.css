@@ -16112,6 +16112,12 @@ html {
   font-style: italic;
 }
 
+.sgpt-price-anchor .emoji {
+  font-style: normal;
+  display: inline-block;
+  transform: none;
+}
+
 /* ===== GENERAL 400px MOBILE OPTIMIZATIONS ===== */
 @media (max-width: 400px) {
   /* Container and layout improvements */
