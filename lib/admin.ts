@@ -3,6 +3,10 @@ import { supabase } from './supabase'
 
 export const resetAllVotes = async (): Promise<{ success: boolean; message: string }> => {
   try {
+    if (!supabase) {
+      return { success: false, message: 'Supabase client not initialized' }
+    }
+    
     const { error } = await supabase
       .from('votes')
       .delete()

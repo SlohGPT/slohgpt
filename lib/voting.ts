@@ -207,7 +207,7 @@ export const subscribeToVoteUpdates = (callback: (voteCounts: VoteCount[]) => vo
     unsubscribe: () => {
       console.log('[subscribeToVoteUpdates] Unsubscribing...')
       try {
-        if (channel && isSubscribed) {
+        if (channel && isSubscribed && supabase) {
           supabase.removeChannel(channel)
           isSubscribed = false
         }

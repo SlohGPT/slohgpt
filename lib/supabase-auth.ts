@@ -36,6 +36,10 @@ export function generatePasswordResetToken(): string {
 // Create user in Supabase
 export async function createUser(email: string, password: string, name: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     const passwordHash = await hashPassword(password)
     const verificationToken = generateVerificationToken()
     
@@ -81,6 +85,10 @@ export async function createUser(email: string, password: string, name: string) 
 // Verify email
 export async function verifyEmail(token: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -124,6 +132,10 @@ export async function verifyEmail(token: string) {
 // Login user
 export async function loginUser(email: string, password: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -163,6 +175,10 @@ export async function loginUser(email: string, password: string) {
 // Get user by email
 export async function getUserByEmail(email: string) {
   try {
+    if (!supabase) {
+      return null
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -192,6 +208,10 @@ export async function getUserByEmail(email: string) {
 // Get all users (for debugging)
 export async function getAllUsers() {
   try {
+    if (!supabase) {
+      return []
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -220,6 +240,10 @@ export async function getAllUsers() {
 // Request password reset
 export async function requestPasswordReset(email: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('id, email, name')
@@ -263,6 +287,10 @@ export async function requestPasswordReset(email: string) {
 // Reset password with token
 export async function resetPasswordWithToken(token: string, newPassword: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     const { data, error } = await supabase
       .from('users')
       .select('id, email, name, password_reset_expires')
@@ -313,6 +341,10 @@ export async function resetPasswordWithToken(token: string, newPassword: string)
 // Resend verification email
 export async function resendVerificationEmail(email: string) {
   try {
+    if (!supabase) {
+      throw new Error('Supabase client not initialized')
+    }
+    
     // Find user by email
     const { data, error } = await supabase
       .from('users')

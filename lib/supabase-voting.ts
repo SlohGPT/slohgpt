@@ -3,11 +3,13 @@ import { createClient } from '@supabase/supabase-js'
 // This is for the voting system (separate from authentication)
 // You'll need to create a separate Supabase project for voting or use the same one with different tables
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL_VOTING || 'https://your-voting-project.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY_VOTING || 'your-voting-anon-key'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL_VOTING
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY_VOTING
 
-// Create Supabase client for voting
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create Supabase client for voting only if environment variables are available
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null
 
 // Types for voting system
 export interface VoteCount {
