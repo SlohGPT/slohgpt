@@ -362,7 +362,7 @@ export default function HomePage() {
               <div className="pricing-badge popular">Dostupné teraz</div>
               <h3 className="pricing-card-title">Complete Essay</h3>
               <div className="pricing-price">
-                <span className="price-amount">14,99 €</span>
+                <span className="price-amount">7,99 €</span>
                 <span className="price-period">jednorazovo</span>
               </div>
               <ul className="pricing-features">
