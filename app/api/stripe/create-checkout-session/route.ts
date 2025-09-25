@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       apiVersion: '2025-08-27.basil',
     })
 
-    const { priceId, email } = await request.json()
+    const { priceId, email, customPrice, quantity } = await request.json()
 
     if (!priceId) {
       return NextResponse.json({ error: 'Price ID is required' }, { status: 400 })
@@ -21,7 +21,19 @@ export async function POST(request: NextRequest) {
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [
+      line_items: customPrice ? [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: `SlohGPT - ${quantity || 1} ${quantity === 1 ? 'sloh' : quantity && quantity < 5 ? 'slohy' : 'slohov'}`,
+              description: `Kompletný sloh s vysvetlením pre ${quantity || 1} ${quantity === 1 ? 'sloh' : quantity && quantity < 5 ? 'slohy' : 'slohov'}`,
+            },
+            unit_amount: Math.round(customPrice * 100), // Convert to cents
+          },
+          quantity: 1,
+        },
+      ] : [
         {
           price: priceId,
           quantity: 1,
@@ -32,7 +44,9 @@ export async function POST(request: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://slohgpt.vercel.app'}/pricing`,
       customer_email: email, // Optional: pre-fill email if provided
       metadata: {
-        source: 'homepage_cta',
+        source: customPrice ? 'pricing_page_custom' : 'homepage_cta',
+        quantity: quantity?.toString() || '1',
+        customPrice: customPrice?.toString() || '',
       },
     })
 

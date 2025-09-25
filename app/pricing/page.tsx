@@ -689,9 +689,14 @@ export default function PricingPage() {
                 className="sgpt-cta-button sgpt-primary"
                 onClick={async () => {
                   try {
-                    // Redirect directly to Stripe checkout
+                    // Redirect directly to Stripe checkout with custom pricing
                     const { redirectToCheckout } = await import('@/lib/stripe')
-                    await redirectToCheckout(process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!)
+                    await redirectToCheckout(
+                      process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!,
+                      undefined, // email
+                      currentPricing.totalPrice, // custom price
+                      essayQuantity // quantity
+                    )
                   } catch (error) {
                     console.error('Checkout error:', error)
                     // Fallback to pricing page if Stripe fails
