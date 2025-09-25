@@ -58,9 +58,16 @@ export default function StepThree({
       <div className="idemo-cta-section">
         <button 
           className="idemo-cta-btn"
-          onClick={() => {
-            // Redirect to pricing page
-            window.location.href = '/pricing'
+          onClick={async () => {
+            try {
+              // Redirect directly to Stripe checkout
+              const { redirectToCheckout } = await import('@/lib/stripe')
+              await redirectToCheckout(process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!)
+            } catch (error) {
+              console.error('Checkout error:', error)
+              // Fallback to pricing page if Stripe fails
+              window.location.href = '/pricing'
+            }
           }}
           aria-label="Chcem celý sloh za €7.99"
         >

@@ -687,9 +687,16 @@ export default function PricingPage() {
               </ul>
               <button 
                 className="sgpt-cta-button sgpt-primary"
-                onClick={() => {
-                  // Here you would typically redirect to payment or checkout
-                  alert(`Presmerovanie na platbu za ${essayQuantity} ${essayQuantity === 1 ? 'sloh' : essayQuantity < 5 ? 'slohy' : 'slohov'} - €${currentPricing.totalPrice.toFixed(2)}...`)
+                onClick={async () => {
+                  try {
+                    // Redirect directly to Stripe checkout
+                    const { redirectToCheckout } = await import('@/lib/stripe')
+                    await redirectToCheckout(process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!)
+                  } catch (error) {
+                    console.error('Checkout error:', error)
+                    // Fallback to pricing page if Stripe fails
+                    window.location.href = '/pricing'
+                  }
                 }}
                 aria-label={`Získať ${essayQuantity} ${essayQuantity === 1 ? 'sloh' : essayQuantity < 5 ? 'slohy' : 'slohov'} za €${currentPricing.totalPrice.toFixed(2)}`}
               >
@@ -1056,15 +1063,22 @@ export default function PricingPage() {
               </p>
 
               <div className="final-cta-actions">
-                <button 
-                  className="cta-primary"
-                  onClick={() => {
-                    // Here you would typically redirect to payment or checkout
-                    alert('Presmerovanie na platbu...')
-                  }}
-                  aria-label="Začať teraz za €7.99"
-                >
-                  ✨ Začať teraz - €7.99
+              <button 
+                className="cta-primary"
+                onClick={async () => {
+                  try {
+                    // Redirect directly to Stripe checkout
+                    const { redirectToCheckout } = await import('@/lib/stripe')
+                    await redirectToCheckout(process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!)
+                  } catch (error) {
+                    console.error('Checkout error:', error)
+                    // Fallback to pricing page if Stripe fails
+                    window.location.href = '/pricing'
+                  }
+                }}
+                aria-label="Začať teraz za €7.99"
+              >
+                ✨ Začať teraz - €7.99
             </button>
 
                 <button 
