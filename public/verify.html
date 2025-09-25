@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overenie emailu - SlohGPT</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0b0e1a 0%, #1a1a1a 50%, #0b0e1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Floating background elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(0, 224, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .verify-container {
+            background: rgba(11, 14, 26, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                0 0 0 1px rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+        }
+        
+        .logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+        
+        .title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .message {
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .resend-btn {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resend-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .resend-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+        
+        .resend-btn:hover::before {
+            left: 100%;
+        }
+        
+        .resend-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-link {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .back-link:hover {
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+        }
+        
+        .success-message {
+            color: #10b981;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        /* Performance optimizations */
+        .particle, .wave, .sparkle, .trail-line, .floating, .twinkle-animation {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Floating background animations - respect reduced motion */
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) translateX(5px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-5px) translateX(-5px) rotate(-1deg);
+            }
+            75% {
+                transform: translateY(-15px) translateX(3px) rotate(0.5deg);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .twinkle-animation {
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .verify-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .message {
+                font-size: 0.875rem;
+            }
+            
+            .floating-icon {
+                opacity: 0.1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements - Matching homepage variety -->
+    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;">
+        <!-- Layer 1: Main Floating Icons - Varied types like homepage -->
+        <!-- Star icons -->
+        <div class="floating" style="position: absolute; top: 20%; left: 2vw; opacity: 0.15; animation-delay: 0ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 60%; left: 4vw; opacity: 0.15; animation-delay: 1500ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                <path d="M12 2L13.09 8.26L20 9L15 14L16.18 21L12 17.77L7.82 21L9 14L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <!-- Pen/Pencil icons -->
+        <div class="floating" style="position: absolute; top: 40%; left: 15vw; opacity: 0.15; animation-delay: 800ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 75%; left: 20vw; opacity: 0.15; animation-delay: 2200ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <!-- Book icons -->
+        <div class="floating" style="position: absolute; top: 30%; left: 35vw; opacity: 0.15; animation-delay: 1200ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 65%; left: 40vw; opacity: 0.15; animation-delay: 2800ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <!-- Sparkle icons -->
+        <div class="floating" style="position: absolute; top: 25%; left: 50vw; opacity: 0.15; animation-delay: 600ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0L9.937 15.5Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 45%; left: 65vw; opacity: 0.15; animation-delay: 1800ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0L9.937 15.5Z" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <!-- Edit icons -->
+        <div class="floating" style="position: absolute; top: 70%; left: 70vw; opacity: 0.15; animation-delay: 3200ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 35%; left: 80vw; opacity: 0.15; animation-delay: 1000ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <!-- More varied icons -->
+        <div class="floating" style="position: absolute; top: 55%; left: 85vw; opacity: 0.15; animation-delay: 2600ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 25%; left: 92vw; opacity: 0.15; animation-delay: 1400ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="floating" style="position: absolute; top: 65%; left: 95vw; opacity: 0.15; animation-delay: 3000ms;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0L9.937 15.5Z" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <!-- Layer 2: Small Scattered Stars (Procedural) -->
+        <div class="twinkle-animation" style="position: absolute; top: 15%; left: 8vw; animation-delay: 500ms; width: 4px; height: 4px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 8px rgba(94,60,246,0.4);"></div>
+        <div class="twinkle-animation" style="position: absolute; top: 45%; left: 25vw; animation-delay: 1500ms; width: 4px; height: 4px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 8px rgba(0,224,255,0.4);"></div>
+        <div class="twinkle-animation" style="position: absolute; top: 80%; left: 60vw; animation-delay: 2500ms; width: 4px; height: 4px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 8px rgba(168,85,247,0.4);"></div>
+        <div class="twinkle-animation" style="position: absolute; top: 35%; left: 75vw; animation-delay: 3500ms; width: 4px; height: 4px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 8px rgba(94,60,246,0.4);"></div>
+        <div class="twinkle-animation" style="position: absolute; top: 70%; left: 90vw; animation-delay: 1000ms; width: 4px; height: 4px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 8px rgba(0,224,255,0.4);"></div>
+        
+        <!-- Layer 3: Gradient Overlays for Atmospheric Depth -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,224,255,0.03) 0%, transparent 50%, rgba(168,85,247,0.03) 100%);"></div>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 128px; background: linear-gradient(180deg, rgba(94,60,246,0.05) 0%, transparent 100%);"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 128px; background: linear-gradient(0deg, rgba(0,224,255,0.03) 0%, transparent 100%);"></div>
+    </div>
+
+    <div class="verify-container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="/original-logo-without-background.png" alt="SlohGPT" />
+        </div>
+
+        <!-- Title -->
+        <h1 class="title">Overenie emailu</h1>
+
+        <!-- Message -->
+        <div class="message">
+            Poslali sme vám overovací email.<br>
+            Kliknite na odkaz v emaile na dokončenie registrácie.<br><br>
+            Ak ste email nedostali, skontrolujte priečinok spam.
+        </div>
+
+        <!-- Resend Button -->
+        <button class="resend-btn" onclick="resendVerificationEmail()">
+            Poslať email znova
+        </button>
+
+        <!-- Back to Login -->
+        <a href="/login.html" class="back-link">
+            Späť na prihlásenie
+        </a>
+
+        <!-- Success/Error Messages -->
+        <div class="success-message" id="success-message"></div>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        // Get email from URL parameter or localStorage
+        let userEmail = '';
+        
+        // Try to get email from URL parameter first
+        const urlParams = new URLSearchParams(window.location.search);
+        userEmail = urlParams.get('email');
+        
+        // If not in URL, try localStorage (fallback)
+        if (!userEmail) {
+            userEmail = localStorage.getItem('pendingVerificationEmail');
+        }
+        
+        // If we have email, show it in the message
+        if (userEmail) {
+            const messageDiv = document.querySelector('.message');
+            messageDiv.innerHTML = `
+                Poslali sme vám overovací email na <strong>${userEmail}</strong>.<br>
+                Kliknite na odkaz v emaile na dokončenie registrácie.<br><br>
+                Ak ste email nedostali, skontrolujte priečinok spam.
+            `;
+        }
+        
+        async function resendVerificationEmail() {
+            const resendBtn = document.querySelector('.resend-btn');
+            const successDiv = document.getElementById('success-message');
+            const errorDiv = document.getElementById('error-message');
+            
+            // Clear previous messages
+            successDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            // Show loading state
+            const originalText = resendBtn.textContent;
+            resendBtn.textContent = 'Posielam...';
+            resendBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/auth/resend-verification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: userEmail })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    successDiv.textContent = 'Overovací email bol poslaný!';
+                    successDiv.style.display = 'block';
+                } else {
+                    errorDiv.textContent = data.error || 'Chyba pri posielaní emailu.';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Resend verification error:', error);
+                errorDiv.textContent = 'Chyba pri posielaní emailu.';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset button
+                resendBtn.textContent = originalText;
+                resendBtn.disabled = false;
+            }
+        }
+        
+        // Check if user came with an error
+        const error = urlParams.get('error');
+        if (error) {
+            // Show error message
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            const resendBtn = document.querySelector('.resend-btn');
+            const backLink = document.querySelector('.back-link');
+            
+            // Hide resend button and back link
+            resendBtn.style.display = 'none';
+            backLink.style.display = 'none';
+            
+            // Show error
+            if (error === 'missing_token') {
+                errorDiv.textContent = 'Neplatný overovací odkaz.';
+            } else {
+                errorDiv.textContent = decodeURIComponent(error);
+            }
+            errorDiv.style.display = 'block';
+            
+            // Show resend button and back link again
+            resendBtn.style.display = 'block';
+            backLink.style.display = 'block';
+        }
+        
+    </script>
+</body>
+</html>

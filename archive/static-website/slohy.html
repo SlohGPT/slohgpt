@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rýchly sloh - SlohGPT | Napíš sloh za 5 minút pomocou AI</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Rýchly sloh pomocou AI. Zadaj typ slohu a tému, získaj štruktúru a celý sloh za pár minút. Ideálne pre stredoškolských študentov.">
+    <meta name="keywords" content="rýchly sloh, AI sloh, písanie slohov, stredná škola, slovenský jazyk, domáce úlohy">
+    <meta name="author" content="SlohGPT">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Rýchly sloh - SlohGPT | Napíš sloh za 5 minút">
+    <meta property="og:description" content="Rýchly sloh pomocou AI. Zadaj typ a tému, získaj štruktúru a celý sloh za pár minút.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://slohgpt.sk/slohy.html">
+    <meta property="og:image" content="https://slohgpt.sk/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicones.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicones.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="favicones.png" sizes="180x180">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Preload + load Google Fonts early (no late swap) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=optional">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=optional">
+    
+    <!-- Preload Font Awesome CSS -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Preload header logo -->
+    <link rel="preload" as="image" href="logo-outlined-v2.png" imagesrcset="logo-outlined-v2.png">
+    
+    <!-- Prefetch other page for instant navigation -->
+    <link rel="prefetch" href="index.html">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navigation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Rýchly sloh specific styles */
+        .quick-essay-hero {
+            padding: clamp(8rem, 15vw, 12rem) 0 clamp(4rem, 8vw, 6rem) 0;
+            background: var(--hero-gradient);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .quick-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-xl);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .quick-hero-badge i {
+            color: #fbbf24;
+        }
+        
+        .quick-hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quick-hero-subtitle {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quick-essay-main {
+            padding: 24px 0 16px;
+            background: transparent;
+        }
+        
+        .quick-essay-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .essay-generator-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .essay-generator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0.8;
+        }
+        
+        .essay-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .essay-type-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .essay-type-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .essay-type-button.selected {
+            background: var(--accent-gradient);
+            border-color: #00f2fe;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .topic-input-group {
+            margin-bottom: 2rem;
+        }
+        
+        .topic-input-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: var(--transition);
+        }
+        
+        .topic-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .topic-input:focus {
+            outline: none;
+            border-color: #00f2fe;
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .generate-button {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            min-height: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generate-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .generate-button:hover::before {
+            left: 100%;
+        }
+        
+        .generate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .generate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Results Section */
+        .essay-results {
+            display: none;                /* hidden by default */
+            margin-top: 24px;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .35s ease, transform .35s ease;
+        }
+        .essay-results.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .results-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-title {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .essay-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            filter: blur(2px);
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+        }
+        
+        .essay-preview::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.3) 100%);
+            pointer-events: none;
+        }
+        
+        .preview-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .preview-section h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .preview-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .preview-section li {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .preview-section li::before {
+            content: '•';
+            color: #4facfe;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .preview-section p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        
+        .unlock-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .unlock-btn {
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 60px;
+        }
+        
+        .unlock-preview {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .unlock-preview:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .unlock-full {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: var(--shadow-lg);
+            font-size: 1.2rem;
+            padding: 1.5rem 2rem;
+        }
+        
+        .unlock-full:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .pricing-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .essay-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .essay-type-button {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.85rem;
+                min-height: 50px;
+            }
+            
+            .topic-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .generate-button {
+                padding: 1.25rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .unlock-buttons {
+                gap: 0.75rem;
+        }
+
+        .unlock-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .unlock-full {
+                padding: 1.25rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .essay-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Modern Slohy Design - High Contrast & Eye-Catching */
+        .main-container {
+            padding-top: 100px;           /* below fixed header */
+            padding-bottom: 24px;         /* minimal bottom space */
+            min-height: auto;             /* remove 100vh that forces extra space */
+            display: block;               /* stop vertical centering */
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+
+
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: clamp(2rem, 8vw, 4rem) 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight-gradient {
+            background: linear-gradient(135deg, #FFD166, #4FACFE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            font-weight: 900;
+        }
+
+        .highlight-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #FFD166, #4FACFE);
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Generator Section */
+        .essay-generator-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .essay-generator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0.8;
+        }
+
+        .generator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #4facfe);
+        }
+
+        /* Card Header */
+        .card-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .card-title {
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+
+        .essay-type-button, .essay-type-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.25rem 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .essay-type-button::before, .essay-type-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .essay-type-button:hover::before, .essay-type-btn:hover::before {
+            left: 100%;
+        }
+
+        .essay-type-button:hover, .essay-type-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .essay-type-button.selected, .essay-type-btn.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .essay-type-button i, .essay-type-btn i {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .essay-type-button.selected i, .essay-type-btn.selected i {
+            opacity: 1;
+        }
+
+        .essay-type-button, .essay-type-btn { cursor: pointer; }
+        .essay-type-button.selected, .essay-type-btn.selected {
+            outline: 2px solid #4facfe;
+            box-shadow: 0 0 0 4px rgba(79,172,254,0.2);
+            border-radius: var(--border-radius);
+        }
+
+        /* Topic Section */
+        .topic-section {
+            margin-bottom: 2rem;
+        }
+
+        .topic-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .topic-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .topic-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .topic-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Generate Button */
+        .generate-section {
+            text-align: center;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 16px;
+            padding: 1.25rem 3rem;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 220px;
+            justify-content: center;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .generate-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-container {
+                padding-top: 100px;
+            }
+            
+            .hero-section {
+                padding: clamp(1.5rem, 6vw, 2.5rem) 1rem;
+            }
+            
+            .generator-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            
+            .essay-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .essay-type-button, .essay-type-btn {
+                padding: 1rem 0.75rem;
+                min-height: 70px;
+                font-size: 0.9rem;
+            }
+            
+            .topic-textarea {
+                padding: 1rem 1.25rem;
+                min-height: 100px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .generate-btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                min-width: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding-top: 120px;
+            }
+            
+            .essay-types-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .essay-type-button, .essay-type-btn {
+                padding: 1rem;
+                min-height: 60px;
+            }
+        }
+
+        /* Results Section - Updated Design */
+        .essay-results {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto 0;
+            display: none;                /* hidden by default */
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .35s ease, transform .35s ease;
+        }
+        
+        .essay-results.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .results-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-title {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        /* Informational Sections Styles */
+        .info-sections {
+            margin-top: 4rem;
+            padding: 2rem 0;
+        }
+        
+        .info-section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .info-section.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-icon {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .section-header h2 {
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        /* Steps Container */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .step-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .step-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s;
+        }
+        
+        .step-item:hover::before {
+            left: 100%;
+        }
+        
+        .step-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .step-content h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .step-animation {
+            margin-top: 1rem;
+            font-size: 2rem;
+            color: #4facfe;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--success-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+        
+        .benefit-card h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .benefit-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+                text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 0.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        /* Mobile Responsiveness for Info Sections */
+        @media (max-width: 768px) {
+            .info-sections {
+                margin-top: 2rem;
+                padding: 1rem 0;
+            }
+            
+            .info-section {
+                margin-bottom: 3rem;
+            }
+            
+            .section-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .step-item {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo-outlined-v2.png" alt="SlohGPT" class="logo-image">
+                </a>
+            </div>
+            <nav class="nav">
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="slohy.html" class="nav-link">Rýchly sloh</a>
+                    <a href="index.html" class="nav-link">Vygeneruj sloh</a>
+                    <a href="index.html#how-it-works" class="nav-link">Ako to funguje</a>
+                    <a href="index.html#why-slohgpt" class="nav-link">Prečo SlohGPT</a>
+                    <a href="index.html#faq" class="nav-link">FAQ</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+        <!-- Main Container -->
+        <div class="main-container quick-essay-main">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Napíš sloh za <span class="highlight-gradient">5 minút</span><br>
+                    pomocou AI
+                </h1>
+                <p class="hero-subtitle">
+                    Zadaj typ slohu a tému. Zvyšok vybavĺ SlohGPT.
+                </p>
+        </div>
+            </div>
+
+        <!-- Essay Generator Section -->
+        <div class="essay-generator-card">
+            <h2 style="color: white; text-align: center; margin-bottom: 2rem; font-size: clamp(1.5rem, 4vw, 2rem);">
+                Vygeneruj svoj sloh
+            </h2>
+            
+            <!-- Essay Types Selection -->
+            <div class="essay-types-grid" id="essayTypesGrid">
+                <button class="essay-type-btn" data-type="rozpravanie">
+                    <i class="fas fa-book-open"></i>
+                    <span>Rozprávanie</span>
+                </button>
+                <button class="essay-type-btn" data-type="uvaha">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Úvaha</span>
+                </button>
+                <button class="essay-type-btn" data-type="vyklad">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Výklad</span>
+                </button>
+                <button class="essay-type-btn" data-type="charakteristika">
+                    <i class="fas fa-user"></i>
+                    <span>Charakteristika</span>
+                </button>
+                <button class="essay-type-btn" data-type="opis">
+                    <i class="fas fa-eye"></i>
+                    <span>Opis</span>
+                </button>
+                <button class="essay-type-btn" data-type="prejav">
+                    <i class="fas fa-microphone"></i>
+                    <span>Prejav</span>
+                </button>
+                <button class="essay-type-btn" data-type="zivotopis">
+                    <i class="fas fa-scroll"></i>
+                    <span>Životopis</span>
+                </button>
+                <button class="essay-type-btn" data-type="diskusia">
+                    <i class="fas fa-comments"></i>
+                    <span>Diskusia</span>
+                </button>
+            </div>
+            
+            <!-- Topic Input -->
+            <div class="topic-input-group">
+                <label for="topicInput" class="topic-input-label">Téma slohu</label>
+                <textarea 
+                    id="topicInput" 
+                    class="topic-input" 
+                    placeholder="Napíš svoju tému... Napríklad: 'Zima v mojom meste', 'Moja budúcnosť', 'Význam priateľstva' atď."
+                    rows="4"
+                ></textarea>
+            </div>
+            
+            <!-- Generate Button -->
+            <button class="generate-button" id="generateBtn" disabled>
+                    <i class="fas fa-magic"></i>
+                Vygenerovať sloh
+                </button>
+            </div>
+
+        <!-- Essay Preview Section (Hidden by default) -->
+        <section class="essay-preview-section" id="essayPreview" style="display: none;">
+            <div class="container">
+                <div class="preview-column">
+                    <h2>Osnova slohu</h2>
+                    <div class="preview-content blurred-preview" id="previewContent">
+                        <div class="preview-item">
+                            <h3>📝 Štruktúra a osnova</h3>
+                            <ul>
+                                <li>Úvod - zaujímavý začiatok a predstavenie témy</li>
+                                <li>Hlavná časť - rozvinutie myšlienok s konkrétnymi príkladmi</li>
+                                <li>Záver - zhrnutie a osobné zamyslenie</li>
+                            </ul>
+                        </div>
+                        <div class="preview-item">
+                            <h3>🎯 Jazykové prostriedky na mieru</h3>
+                            <ul>
+                                <li>Metafory a prirovnania pre tvoju tému</li>
+                                <li>Vhodné slovné spojenia a výrazy</li>
+                                <li>Štýlové figúry pre lepší dojem</li>
+                            </ul>
+                        </div>
+                        <div class="preview-item">
+                            <h3>💡 Tipy od učiteľov</h3>
+                            <p>Personalizované rady, ako napísať sloh tak, aby ťa učiteľ ocenil a dostal si najlepšiu známku.</p>
+            </div>
+        </div>
+
+                    <!-- Cenník - 3-kartový grid -->
+                    <div class="cennik-grid">
+                        <!-- 1€ Náhľad -->
+                        <div class="cennik-karta cennik-nahľad">
+                            <h3 class="cennik-nadpis">🔎 Náhľad – 1€</h3>
+                            <p class="cennik-text">Krátka ochutnávka, ako by mohol sloh vyzerať.</p>
+                            <button class="btn-cennik" data-product="preview" data-price="1" onclick="unlockPreview()">
+                                Ukáž mi náhľad
+                            </button>
+        </div>
+
+                        <!-- 5€ Tréner - Hlavný produkt -->
+                        <div class="cennik-karta cennik-trener cennik-odporucame">
+                            <div class="cennik-badge cennik-badge-odporucame">Odporúčame</div>
+                            <h3 class="cennik-nadpis">🤝 Tréner slohu – 5€</h3>
+                            <p class="cennik-text">Napíš, s čím bojuješ (úvod, štruktúra, nápady) a dostaneš 3 tipy + krátky vzor. Pomoc, nie hotový podvod.</p>
+                            <div class="cennik-input-group">
+                                <input type="text" id="coachProblem" class="cennik-input" placeholder="Napíš, čo ti robí problém…">
+                            </div>
+                            <button class="btn-cennik btn-cennik-trener" data-product="coaching" data-price="5">
+                                Začni trénovať
+                </button>
+            </div>
+
+                        <!-- 15€ Celý sloh -->
+                        <div class="cennik-karta cennik-cely">
+                            <div class="cennik-badge cennik-badge-premium">Prémiové</div>
+                            <h3 class="cennik-nadpis">👑 Celý sloh – 15€</h3>
+                            <p class="cennik-text">Kompletný sloh pripravený na odovzdanie. Len pre tých, ktorí to naozaj chcú.</p>
+                            <button class="btn-cennik" data-product="full" data-price="15" onclick="buyFullEssay()">
+                                Napíš mi sloh
+                            </button>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Upsells Container -->
+        <section id="upsells" class="upsell-grid" aria-label="Upsells" style="display: none;">
+            <article class="upsell-card upsell-coaching" data-upsell="coaching" role="group" aria-label="5 € Coaching Tool">
+                <div class="upsell-card__badge">New</div>
+                <h3 class="upsell-card__title">5 € Coaching Tool</h3>
+                <p class="upsell-card__desc">
+                    Rýchly tréner: vyhodnotí tvoju osnovu a dá 3 konkrétne úpravy, 5 min tipy a 1 príklad v tvojom žánri.
+                </p>
+                <ul class="upsell-card__bullets">
+                    <li>3 custom pripomienky k tvojej osnove</li>
+                    <li>Mini-rubrika podľa NÚCEM (jasne, jednoduché body)</li>
+                    <li>1 krátky vzorový odsek</li>
+                </ul>
+                <div class="upsell-card__cta-row">
+                    <button class="btn btn-upsell" id="btnCoaching" data-product="coaching" data-price="5" aria-label="Pridať 5 € Coaching Tool">
+                        Pridať trénera za 5 €
+                    </button>
+                    <label class="inline-bump">
+                        <input type="checkbox" id="chkCoachingBump" />
+                        Pridať ako order-bump k plnému slohu
+                    </label>
+                    </div>
+                <small class="upsell-card__fine">Digitálna služba. Doručenie hneď po zaplatení.</small>
+            </article>
+        </section>
+        </section>
+        
+        <!-- Informational Sections -->
+        <div class="info-sections">
+            <!-- How It Works Section -->
+            <div class="info-section how-it-works-quick" id="howItWorksQuick">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-cogs"></i>
+                </div>
+                    <h2>Ako to funguje</h2>
+                    <p>Jednoducho a rýchlo k dokonalému slohu</p>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-item" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Vyber typ slohu</h3>
+                            <p>Rozprávanie, úvaha, charakteristika... Máme všetky typy slohov.</p>
+            </div>
+                        <div class="step-animation">
+                            <i class="fas fa-list-ul"></i>
+            </div>
+        </div>
+                    
+                    <div class="step-item" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Zadaj tému</h3>
+                            <p>Napíš, o čom chceš písať. AI ti pomôže s nápadmi a štruktúrou.</p>
+        </div>
+                        <div class="step-animation">
+                            <i class="fas fa-edit"></i>
+        </div>
+    </div>
+
+                    <div class="step-item" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Získaj návrh</h3>
+                            <p>AI vytvorí štruktúru, jazykové prostriedky a personalizované tipy.</p>
+                        </div>
+                        <div class="step-animation">
+                    <i class="fas fa-magic"></i>
+            </div>
+        </div>
+
+                    <div class="step-item" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Napíš sloh</h3>
+                            <p>Použij náš návrh a napíš sloh, ktorý ťa dostane na jednotku!</p>
+                        </div>
+                        <div class="step-animation">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+            <!-- Benefits Section -->
+            <div class="info-section benefits-quick" id="benefitsQuick">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-rocket"></i>
+            </div>
+                    <h2>Prečo SlohGPT</h2>
+                    <p>Výhody, ktoré ti zmenia život</p>
+            </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-benefit="time">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+        </div>
+                        <h3>Ušetrí čas</h3>
+                        <p>Namiesto hodín hľadania nápadov napíšeš sloh za 5 minút.</p>
+    </div>
+
+                    <div class="benefit-card" data-benefit="stress">
+                        <div class="benefit-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h3>Zníži stres</h3>
+                        <p>Žiadne viac prázdnych stránok a pocitu, že nevieš, čo napísať.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-benefit="grades">
+                        <div class="benefit-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Lepšie známky</h3>
+                        <p>Štruktúrované slohy s bohatým jazykom = vyššie hodnotenie.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-benefit="confidence">
+                        <div class="benefit-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Viac sebavedomia</h3>
+                        <p>Keď vieš, ako napísať dobrý sloh, písanie ťa už nebude stresovať.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="info-section stats-quick" id="statsQuick">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2>Výsledky hovoria za všetko</h2>
+                    <p>Tisíce spokojných študentov</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item" data-stat="users">
+                        <div class="stat-number" data-target="5000">0</div>
+                        <div class="stat-label">Spokojných študentov</div>
+                    </div>
+                    
+                    <div class="stat-item" data-stat="essays">
+                        <div class="stat-number" data-target="15000">0</div>
+                        <div class="stat-label">Vygenerovaných slohov</div>
+                    </div>
+                    
+                    <div class="stat-item" data-stat="time">
+                        <div class="stat-number" data-target="95">0</div>
+                        <div class="stat-label">% úspory času</div>
+                    </div>
+                    
+                    <div class="stat-item" data-stat="satisfaction">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">% spokojnosť</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <img src="logo-outlined-v2.png" alt="SlohGPT" class="logo-original">
+                        <h3>SlohGPT</h3>
+                        <p>Pomocou AI napíš sloh za 5 minút. Ušetrí čas, zníži stres a zlepší známky.</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Produkt</h4>
+                            <a href="index.html#generator">Vygeneruj sloh</a>
+                            <a href="index.html#how-it-works">Ako to funguje</a>
+                            <a href="index.html#why-slohgpt">Prečo SlohGPT</a>
+                            <a href="slohy.html">Rýchly sloh</a>
+                    </div>
+                        <div class="footer-column">
+                            <h4>Podpora</h4>
+                            <a href="index.html#faq">FAQ</a>
+                            <a href="mailto:podpora@slohgpt.sk">Kontakt</a>
+                            <a href="#help">Pomoc</a>
+                            <a href="#tutorials">Návody</a>
+                    </div>
+                        <div class="footer-column">
+                            <h4>Právne</h4>
+                    <a href="#terms">Obchodné podmienky</a>
+                            <a href="#privacy">Ochrana súkromia</a>
+                            <a href="#cookies">Cookies</a>
+                            <a href="#refund">Reklamácie</a>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SlohGPT. Všetky práva vyhradené.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>

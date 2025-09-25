@@ -1,0 +1,390 @@
+/* Modern Navigation CSS - Fixed Hover Effects & Sharp Logo */
+/* This file MUST be loaded AFTER styles.css to override any conflicts */
+
+/* Reset for navigation */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header - Modern translucent + blur effect */
+.header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+    
+    background: rgba(255, 255, 255, 0.85) !important; /* translucent white */
+    backdrop-filter: blur(5px) !important;           /* blur behind nav */
+    -webkit-backdrop-filter: blur(12px) !important;   /* Safari support */
+    
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important; /* subtle shadow like Medix */
+}
+
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.9) !important; /* slightly more opaque when scrolled */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Container - Exact same for both pages */
+.header .container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 1rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    background: transparent !important; /* Allow blur effect to show through */
+}
+
+@media (min-width: 640px) {
+    .header .container {
+        padding: 0 1.25rem !important;
+    }
+}
+
+/* Logo - Sharp and crisp */
+.logo {
+    display: flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    background: transparent !important; /* Allow blur effect to show through */
+}
+
+.logo-image {
+    height: clamp(65px, 15vw, 85px) !important;
+    width: auto !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1)) !important;
+    /* High-quality image rendering */
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: crisp-edges !important;
+    image-rendering: high-quality !important;
+    image-rendering: auto !important;
+    /* Ensure smooth scaling */
+    transform-origin: center !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    /* Additional quality improvements */
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    /* Prevent any compression artifacts */
+    object-fit: contain !important;
+    object-position: center !important;
+}
+
+/* Adaptive logo - becomes white when background is similar */
+.logo-image.adaptive {
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2)) !important;
+}
+
+.logo-image:hover {
+    transform: scale(1.05) !important;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.2)) !important;
+}
+
+.logo-image.adaptive:hover {
+    filter: brightness(0) invert(1) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.3)) !important;
+}
+
+.logo a {
+    text-decoration: none !important;
+    display: block !important;
+    background: transparent !important; /* Allow blur effect to show through */
+}
+
+/* Navigation - Exact same for both pages */
+.header .nav {
+    display: flex !important;
+    align-items: center !important;
+    background: transparent !important; /* Allow blur effect to show through */
+}
+
+.header .nav .nav-menu {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: transparent !important; /* Allow blur effect to show through */
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    padding: 1.5rem !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    animation: slideInDown 0.3s ease-out !important;
+}
+
+.header .nav .nav-menu.active {
+    display: flex !important;
+}
+
+/* Nav Links - Translucent with subtle blur effect */
+.header .nav .nav-link {
+    position: relative !important;
+    display: inline-block !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Smooth transitions */
+    font-size: 1rem !important; /* Mobile font size */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    line-height: 1.6 !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.1) !important; /* Subtle translucent white */
+    backdrop-filter: blur(5px) !important; /* Subtle blur effect */
+    -webkit-backdrop-filter: blur(8px) !important; /* Safari support */
+    /* Let text define width naturally */
+    text-align: center !important;
+    flex-shrink: 0 !important;
+    /* Lock metrics to prevent font swap layout shifts */
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    font-size-adjust: 0.5 !important; /* helps keep x-height consistent when fonts swap */
+    letter-spacing: 0.01em !important;
+}
+
+/* Hover: smooth color + underline grows from center - SAME BACKGROUND */
+.header .nav .nav-link::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 8px !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: linear-gradient(135deg, #6B4EFF, #00A7C2) !important; /* your brand purple gradient */
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), left 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 1px !important;
+}
+
+.header .nav .nav-link:hover {
+    background: transparent !important;
+    color: #6B4EFF !important; /* keep your brand hover */
+}
+
+.header .nav .nav-link:hover::after {
+    width: 80% !important;
+    left: 10% !important;
+}
+
+/* Active page link - same white background, gradient text only */
+.header .nav .nav-link.active {
+    background: transparent !important; /* Allow blur effect to show through */
+    background: linear-gradient(135deg, #6B4EFF, #00A7C2) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 600 !important;
+}
+.header .nav .nav-link.active::after {
+    width: 80% !important;
+    left: 10% !important;
+}
+
+/* Click feedback (pressed state) */
+.header .nav .nav-link:active {
+    opacity: 0.85 !important;
+    background: transparent !important; /* Allow blur effect to show through */
+}
+
+/* Hamburger - Exact same for both pages */
+.header .nav .hamburger {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    background: transparent !important; /* Allow blur effect to show through */
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.header .nav .hamburger:hover {
+    background: rgba(107, 78, 255, 0.1) !important; /* Subtle hover effect */
+}
+
+.header .nav .hamburger span {
+    width: 24px !important;
+    height: 2px !important;
+    background: #333 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 1px !important;
+}
+
+.header .nav .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px) !important;
+}
+
+.header .nav .hamburger.active span:nth-child(2) {
+    opacity: 0 !important;
+}
+
+.header .nav .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px) !important;
+}
+
+
+
+/* Tablet/Medium screens - Show hamburger menu to avoid cramped nav */
+@media (min-width: 769px) and (max-width: 1130px) {
+    .header .nav .hamburger {
+        display: block !important;
+    }
+    
+    .header .nav .nav-menu {
+        display: none !important;
+    }
+    
+    .header .nav .nav-menu.active {
+        display: flex !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        flex-direction: column !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+        padding: 1rem !important;
+        gap: 0.5rem !important;
+        z-index: 1000 !important;
+    }
+}
+
+/* Desktop navigation - Exact same for both pages */
+@media (min-width: 1131px) {
+    /* Use a metric-stable system stack for nav only */
+    .header .nav,
+    .header .nav * {
+        font-family: -apple-system, system-ui, "Segoe UI", Roboto, Arial, "Inter" !important;
+        font-synthesis-weight: none !important; /* don't fake bold */
+        font-synthesis-style: none !important;  /* don't fake italic */
+    }
+    .header .nav {
+        justify-content: flex-start !important;
+    }
+    
+    /* Container hardening for consistent breathing space */
+    .header .container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    
+    .header .nav .nav-menu {
+        display: flex !important;
+        position: static !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        flex-wrap: nowrap !important;
+        gap: 16px !important;            /* fixed px gap */
+        padding-right: 32px !important;  /* keep right breathing room */
+        margin-left: 32px !important;    /* keep left breathing room from logo */
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        animation: none !important;
+    }
+    
+    .header .nav .hamburger {
+        display: none !important;
+    }
+    
+    /* Link metrics lock with transparent background */
+    .header .nav .nav-link {
+        width: auto !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.6 !important;
+        font-weight: 600 !important;
+        font-size: 1.125rem !important; /* 18px - desktop font size */
+        font-size-adjust: 0.5 !important;
+        padding: 0.75rem 1.5rem !important; /* Natural padding for text-based width */
+        text-align: center !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-radius: 12px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .header .nav .nav-link::after {
+        bottom: 6px !important;
+    }
+}
+
+/* Prevent layout shift during font loading */
+.header { 
+    min-height: 80px !important; /* same as current visual height so bar doesn't shrink while text is loading */
+    transition: box-shadow 0.3s ease !important; /* Only transition shadow */
+}
+
+/* Mobile header adjustments */
+@media (max-width: 767px) {
+    .header {
+        min-height: 90px !important;
+    }
+    
+    .header .container {
+        padding: 0.75rem 1.5rem !important;
+    }
+}
+
+.header.scrolled {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* Mobile-first responsive improvements */
+@media (max-width: 767px) {
+    .header .nav .nav-menu {
+        padding: 1.5rem !important;
+        gap: 0.75rem !important;
+        background: rgba(255, 255, 255, 0.95) !important; /* Blurred translucent on mobile */
+    }
+    
+    .header .nav .nav-link {
+        padding: 1.25rem 1rem !important;
+        font-size: 1.125rem !important;
+        text-align: center !important;
+        width: 100% !important;
+        justify-content: center !important;
+        background: rgba(255, 255, 255, 0.95) !important; /* Blurred translucent on mobile */
+        border-radius: 8px !important;
+    }
+    
+    .header .nav .nav-link::after {
+        bottom: 16px !important;
+    }
+}
+
+/* Cool animations for mobile menu */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile menu - consistent white background */
+@media (max-width: 767px) {
+    .header .nav .nav-menu {
+        background: transparent !important; /* Allow blur effect to show through */
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    }
+}

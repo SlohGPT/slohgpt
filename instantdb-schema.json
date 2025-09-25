@@ -1,0 +1,19 @@
+{
+  "users": {
+    "id": "string",
+    "email": "string",
+    "name": "string",
+    "passwordHash": "string",
+    "emailVerified": "boolean",
+    "emailVerificationToken": "string",
+    "createdAt": "number",
+    "updatedAt": "number"
+  },
+  "emailVerifications": {
+    "id": "string",
+    "userId": "string",
+    "token": "string",
+    "expiresAt": "number",
+    "createdAt": "number"
+  }
+}

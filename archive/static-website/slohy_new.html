@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rýchly sloh - SlohGPT | Napíš sloh za 5 minút pomocou AI</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Rýchly sloh pomocou AI. Zadaj typ slohu a tému, získaj štruktúru a celý sloh za pár minút. Ideálne pre stredoškolských študentov.">
+    <meta name="keywords" content="rýchly sloh, AI sloh, písanie slohov, stredná škola, slovenský jazyk, domáce úlohy">
+    <meta name="author" content="SlohGPT">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Rýchly sloh - SlohGPT | Napíš sloh za 5 minút">
+    <meta property="og:description" content="Rýchly sloh pomocou AI. Zadaj typ a tému, získaj štruktúru a celý sloh za pár minút.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://slohgpt.sk/slohy.html">
+    <meta property="og:image" content="https://slohgpt.sk/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicones.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicones.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="favicones.png" sizes="180x180">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navigation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Rýchly sloh specific styles */
+        .quick-essay-hero {
+            padding: clamp(8rem, 15vw, 12rem) 0 clamp(4rem, 8vw, 6rem) 0;
+            background: var(--hero-gradient);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .quick-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-xl);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .quick-hero-badge i {
+            color: #fbbf24;
+        }
+        
+        .quick-hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quick-hero-subtitle {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quick-essay-main {
+            padding: clamp(3rem, 8vw, 5rem) 0;
+            background: transparent;
+        }
+        
+        .quick-essay-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .essay-generator-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .essay-generator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0.8;
+        }
+        
+        .essay-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .essay-type-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .essay-type-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .essay-type-button.selected {
+            background: var(--accent-gradient);
+            border-color: #00f2fe;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .topic-input-group {
+            margin-bottom: 2rem;
+        }
+        
+        .topic-input-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .topic-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: var(--transition);
+        }
+        
+        .topic-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .topic-input:focus {
+            outline: none;
+            border-color: #00f2fe;
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .generate-button {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            min-height: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generate-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .generate-button:hover::before {
+            left: 100%;
+        }
+        
+        .generate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .generate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Results Section */
+        .essay-results {
+            margin-top: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .essay-results.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .results-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(2rem, 5vw, 3rem);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-title {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .essay-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            filter: blur(2px);
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+        }
+        
+        .essay-preview::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.3) 100%);
+            pointer-events: none;
+        }
+        
+        .preview-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .preview-section h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .preview-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .preview-section li {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .preview-section li::before {
+            content: '•';
+            color: #4facfe;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .preview-section p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        
+        .unlock-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .unlock-btn {
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 60px;
+        }
+        
+        .unlock-preview {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .unlock-preview:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .unlock-full {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: var(--shadow-lg);
+            font-size: 1.2rem;
+            padding: 1.5rem 2rem;
+        }
+        
+        .unlock-full:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .pricing-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .essay-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .essay-type-button {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.85rem;
+                min-height: 50px;
+            }
+            
+            .topic-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .generate-button {
+                padding: 1.25rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .unlock-buttons {
+                gap: 0.75rem;
+            }
+            
+            .unlock-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .unlock-full {
+                padding: 1.25rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .essay-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo-outlined-v2.png" alt="SlohGPT" class="logo-image">
+                </a>
+            </div>
+            <nav class="nav">
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="slohy.html" class="nav-link active">Rýchly sloh</a>
+                    <a href="index.html#generator" class="nav-link">Vygeneruj sloh</a>
+                    <a href="index.html#how-it-works" class="nav-link">Ako to funguje</a>
+                    <a href="index.html#why-slohgpt" class="nav-link">Prečo SlohGPT</a>
+                    <a href="index.html#faq" class="nav-link">FAQ</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Quick Essay Hero Section -->
+    <section class="quick-essay-hero">
+        <div class="container">
+            <div class="quick-hero-content">
+                <div class="quick-hero-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>Najrýchlejší spôsob písania slohov</span>
+                </div>
+                <h1 class="quick-hero-title">
+                    Napíš sloh za <span class="highlight">5 minút</span>
+                </h1>
+                <p class="quick-hero-subtitle">
+                    Vyber typ slohu, zadaj tému a získaj okamžite štruktúru, jazykové prostriedky a celý sloh.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Essay Main Section -->
+    <section class="quick-essay-main">
+        <div class="quick-essay-container">
+            <div class="essay-generator-card">
+                <h2 style="color: white; text-align: center; margin-bottom: 2rem; font-size: clamp(1.5rem, 4vw, 2rem);">
+                    Vygeneruj svoj sloh
+                </h2>
+                
+                <!-- Essay Types Selection -->
+                <div class="essay-types-grid" id="essayTypesGrid">
+                    <button class="essay-type-button" data-type="rozpravanie">Rozprávanie</button>
+                    <button class="essay-type-button" data-type="uvaha">Úvaha</button>
+                    <button class="essay-type-button" data-type="vyklad">Výklad</button>
+                    <button class="essay-type-button" data-type="charakteristika">Charakteristika</button>
+                    <button class="essay-type-button" data-type="opis">Opis</button>
+                    <button class="essay-type-button" data-type="prejav">Prejav</button>
+                    <button class="essay-type-button" data-type="zivotopis">Životopis</button>
+                    <button class="essay-type-button" data-type="diskusia">Diskusia</button>
+                </div>
+                
+                <!-- Topic Input -->
+                <div class="topic-input-group">
+                    <label for="topicInput" class="topic-input-label">Téma slohu</label>
+                    <textarea 
+                        id="topicInput" 
+                        class="topic-input" 
+                        placeholder="Napíš svoju tému... Napríklad: 'Zima v mojom meste', 'Moja budúcnosť', 'Význam priateľstva' atď."
+                        rows="4"
+                    ></textarea>
+                </div>
+                
+                <!-- Generate Button -->
+                <button class="generate-button" id="generateBtn" disabled>
+                    <i class="fas fa-magic"></i>
+                    Vygenerovať sloh
+                </button>
+            </div>
+            
+            <!-- Results Section -->
+            <div class="essay-results" id="essayResults">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h3 class="results-title" id="resultsTitle">Návrh slohu</h3>
+                        <p class="results-subtitle">Pre lepší prehľad si odomkni celý návrh</p>
+                    </div>
+                    
+                    <!-- Preview Content -->
+                    <div class="essay-preview" id="essayPreview">
+                        <div class="preview-section">
+                            <h4>📝 Štruktúra slohu</h4>
+                            <ul id="structurePreview">
+                                <li>Úvod - zaujímavý začiatok</li>
+                                <li>Hlavná časť - rozvinutie témy</li>
+                                <li>Záver - zhrnutie myšlienok</li>
+                            </ul>
+                        </div>
+                        <div class="preview-section">
+                            <h4>🎯 Jazykové prostriedky</h4>
+                            <ul id="languagePreview">
+                                <li>Metafory a prirovnania</li>
+                                <li>Opisné adjektíva</li>
+                                <li>Štýlové figúry</li>
+                            </ul>
+                        </div>
+                        <div class="preview-section">
+                            <h4>💡 Tipy a rady</h4>
+                            <p id="tipsPreview">Personalizované rady pre tvoj typ slohu a tému.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Unlock Buttons -->
+                    <div class="unlock-buttons">
+                        <button class="unlock-btn unlock-preview" onclick="unlockPreview()">
+                            🔓 Odomkni celý návrh za 1€
+                        </button>
+                        <p class="pricing-text">Získaj detailnú štruktúru, jazykové prostriedky a personalizované tipy</p>
+                        
+                        <button class="unlock-btn unlock-full" onclick="unlockFullEssay()">
+                            <i class="fas fa-crown"></i> Získať celý sloh za 10€
+                        </button>
+                        <p class="pricing-text">Kompletne napísaný sloh pripravený na odovzdanie</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <img src="logo-outlined-v2.png" alt="SlohGPT" class="logo-original">
+                        <h3>SlohGPT</h3>
+                        <p>Pomocou AI napíš sloh za 5 minút. Ušetrí čas, zníži stres a zlepší známky.</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Produkt</h4>
+                            <a href="index.html#generator">Vygeneruj sloh</a>
+                            <a href="index.html#how-it-works">Ako to funguje</a>
+                            <a href="index.html#why-slohgpt">Prečo SlohGPT</a>
+                            <a href="slohy.html">Rýchly sloh</a>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Podpora</h4>
+                            <a href="index.html#faq">FAQ</a>
+                            <a href="mailto:podpora@slohgpt.sk">Kontakt</a>
+                            <a href="#help">Pomoc</a>
+                            <a href="#tutorials">Návody</a>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Právne</h4>
+                            <a href="#terms">Obchodné podmienky</a>
+                            <a href="#privacy">Ochrana súkromia</a>
+                            <a href="#cookies">Cookies</a>
+                            <a href="#refund">Reklamácie</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SlohGPT. Všetky práva vyhradené.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Slohy.html specific JavaScript
+        let selectedEssayType = '';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSlohyPage();
+        });
+        
+        function initializeSlohyPage() {
+            const essayTypeButtons = document.querySelectorAll('.essay-type-button');
+            const topicInput = document.getElementById('topicInput');
+            const generateBtn = document.getElementById('generateBtn');
+            const essayResults = document.getElementById('essayResults');
+            
+            // Essay type selection
+            essayTypeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove selected class from all buttons
+                    essayTypeButtons.forEach(btn => btn.classList.remove('selected'));
+                    // Add selected class to clicked button
+                    this.classList.add('selected');
+                    selectedEssayType = this.dataset.type;
+                    updateGenerateButton();
+                });
+            });
+            
+            // Topic input validation
+            topicInput.addEventListener('input', function() {
+                updateGenerateButton();
+            });
+            
+            // Generate button click
+            generateBtn.addEventListener('click', function() {
+                if (selectedEssayType && topicInput.value.trim()) {
+                    generateEssay();
+                }
+            });
+        }
+        
+        function updateGenerateButton() {
+            const generateBtn = document.getElementById('generateBtn');
+            const topicInput = document.getElementById('topicInput');
+            
+            if (selectedEssayType && topicInput.value.trim()) {
+                generateBtn.disabled = false;
+                generateBtn.style.opacity = '1';
+            } else {
+                generateBtn.disabled = true;
+                generateBtn.style.opacity = '0.7';
+            }
+        }
+        
+        function generateEssay() {
+            const generateBtn = document.getElementById('generateBtn');
+            const topicInput = document.getElementById('topicInput');
+            const essayResults = document.getElementById('essayResults');
+            const resultsTitle = document.getElementById('resultsTitle');
+            
+            // Show loading state
+            const originalText = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generujem...';
+            generateBtn.disabled = true;
+            
+            // Update results title
+            resultsTitle.textContent = `${getEssayTypeName(selectedEssayType)}: "${topicInput.value.trim()}"`;
+            
+            // Simulate API call
+            setTimeout(() => {
+                updatePreviewContent();
+                showResults();
+                
+                // Reset button
+                generateBtn.innerHTML = originalText;
+                generateBtn.disabled = false;
+                
+                // Scroll to results
+                setTimeout(() => {
+                    essayResults.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 300);
+            }, 2000);
+        }
+        
+        function getEssayTypeName(type) {
+            const typeMap = {
+                'rozpravanie': 'Rozprávanie',
+                'uvaha': 'Úvaha',
+                'vyklad': 'Výklad',
+                'charakteristika': 'Charakteristika',
+                'opis': 'Opis',
+                'prejav': 'Prejav',
+                'zivotopis': 'Životopis',
+                'diskusia': 'Diskusia'
+            };
+            return typeMap[type] || 'Sloh';
+        }
+        
+        function updatePreviewContent() {
+            const structurePreview = document.getElementById('structurePreview');
+            const languagePreview = document.getElementById('languagePreview');
+            const tipsPreview = document.getElementById('tipsPreview');
+            const topicValue = document.getElementById('topicInput').value.trim();
+            
+            // Dynamic content based on essay type
+            const contentMap = {
+                'rozpravanie': {
+                    structure: [
+                        'Úvod - zaujímavý začiatok a predstavenie situácie',
+                        'Rozvinutie - chronologický priebeh udalostí',
+                        'Vrchol - najdôležitejší moment príbehu',
+                        'Záver - poučenie alebo zamyslenie'
+                    ],
+                    language: [
+                        'Priame reči pre oživenie príbehu',
+                        'Opisné adjektíva pre atmosféru',
+                        'Časové spojky pre plynulý prechod'
+                    ],
+                    tips: `Pre tému "${topicValue}" sa zameraj na osobné zážitky a konkrétne detaily. Používaj živý jazyk a vyhni sa všeobecným frázam.`
+                },
+                'uvaha': {
+                    structure: [
+                        'Úvod - predstavenie témy a vlastného postoja',
+                        'Rozvinutie - argumenty a protiargumenty',
+                        'Príklady z vlastnej skúsenosti',
+                        'Záver - zhrnutie a finálne stanovisko'
+                    ],
+                    language: [
+                        'Filozofické otázky pre zamyslenie',
+                        'Osobné zážitky ako príklady',
+                        'Rečnícke otázky pre zapojenie čitateľa'
+                    ],
+                    tips: `Pri úvahe o téme "${topicValue}" buď úprimný a osobný. Spoj vlastné skúsenosti s všeobecnými pravdami.`
+                }
+            };
+            
+            const content = contentMap[selectedEssayType] || contentMap['rozpravanie'];
+            
+            // Update structure
+            structurePreview.innerHTML = content.structure.map(item => `<li>${item}</li>`).join('');
+            
+            // Update language tools
+            languagePreview.innerHTML = content.language.map(item => `<li>${item}</li>`).join('');
+            
+            // Update tips
+            tipsPreview.textContent = content.tips;
+        }
+        
+        function showResults() {
+            const essayResults = document.getElementById('essayResults');
+            essayResults.classList.add('show');
+        }
+        
+        function unlockPreview() {
+            console.log('Unlock preview for 1€ clicked');
+            
+            if (confirm('Presmerujeme ťa na platobný systém Stripe. Pokračovať?')) {
+                alert('Demo: Platba 1€ prebehla úspešne! ✅\n\nV skutočnej verzii by sa preview odomkol.');
+                
+                // Remove blur effect
+                const preview = document.getElementById('essayPreview');
+                if (preview) {
+                    preview.style.filter = 'none';
+                    preview.style.pointerEvents = 'auto';
+                    preview.style.userSelect = 'auto';
+                }
+            }
+        }
+        
+        function unlockFullEssay() {
+            console.log('Buy full essay for 10€ clicked');
+            
+            if (confirm('Presmerujeme ťa na platobný systém Stripe pre nákup celého slohu za 10€. Pokračovať?')) {
+                alert('Demo: Platba 10€ prebehla úspešne! ✅\n\nV skutočnej verzii by sa vygeneroval celý sloh.');
+                showFullEssaySuccess();
+            }
+        }
+        
+        function showFullEssaySuccess() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            overlay.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 3rem;
+                    border-radius: 20px;
+                    text-align: center;
+                    max-width: 500px;
+                    margin: 1rem;
+                ">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <h2 style="color: #667eea; margin-bottom: 1rem;">Ďakujeme!</h2>
+                    <p style="margin-bottom: 2rem; color: #666;">Tvoj personalizovaný sloh bude pripravený do 5 minút. Pošleme ti ho na email.</p>
+                    <button onclick="this.closest('div').parentElement.remove()" style="
+                        background: #667eea;
+                        color: white;
+                        border: none;
+                        padding: 1rem 2rem;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-weight: 600;
+                    ">Zavrieť</button>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+        }
+        
+        // Font loading optimization
+        document.documentElement.classList.add('fonts-pending');
+        
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () {
+                document.documentElement.classList.remove('fonts-pending');
+                document.documentElement.classList.add('fonts-ready');
+            });
+        } else {
+            document.documentElement.classList.remove('fonts-pending');
+            document.documentElement.classList.add('fonts-ready');
+        }
+    </script>
+</body>
+</html>

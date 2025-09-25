@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ac7dc435-f557-447c-b4d3-ea6ce364d74d",
+    "email": "test@test.com",
+    "name": "test",
+    "passwordHash": "$2b$12$khmQvJRmRk7wl/x1m.POS.SDa0CWPPTYVcFPYck/im7rVOUA5z1JO",
+    "emailVerified": true,
+    "emailVerificationToken": null,
+    "createdAt": 1758490264299,
+    "updatedAt": 1758490264299
+  }
+]

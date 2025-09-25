@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vytvoriť účet - SlohGPT</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="preload" href="/original-logo-without-background.png" as="image">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        .left-section {
+            width: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 2rem 2rem 2rem;
+        }
+        
+        .right-section {
+            width: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .right-content {
+            width: 100%;
+            height: 100%;
+            background: #0b0e1a;
+            border-radius: calc(0.5rem * 1.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            color: white;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .register-header {
+            flex-shrink: 0;
+        }
+        
+        .register-form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 0;
+        }
+        
+        .logo {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            margin-left: -21px;
+        }
+        
+        .title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #374151;
+            background: #1a1a1a;
+            color: white;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-btn:hover {
+            background: #2a2a2a;
+            border-color: #4b5563;
+            transform: translateY(-1px);
+        }
+        
+        .social-btn-google:hover {
+            background: #2a2a2a;
+            border-color: #4285f4;
+        }
+        
+        .social-btn-apple:hover {
+            background: #2a2a2a;
+            border-color: #ffffff;
+        }
+        
+        .separator {
+            position: relative;
+            text-align: center;
+            margin: 0.75rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #374151;
+        }
+        
+        .separator-text {
+            background: #1a1a1a;
+            color: #9ca3af;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+        
+        .label {
+            color: #d1d5db;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .input {
+            padding: 0.625rem 1rem;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 0.875rem;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .input:disabled {
+            background: #2a2a2a;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .edit-btn {
+            background: none;
+            border: none;
+            color: #8b5cf6;
+            font-size: 0.875rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.5rem;
+        }
+        
+        .edit-btn:hover {
+            color: #a78bfa;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        /* Error message element (scoped so it doesn't hide the whole input-group) */
+        .input-group > .error {
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: errorFadeIn 0.3s ease-out;
+        }
+        
+        .error-icon {
+            display: inline-block;
+            margin-right: 0.4rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Input error states */
+        .input-group.error .input {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+        }
+        
+        .input-group.error .label {
+            color: #dc2626 !important;
+        }
+        
+        .input-group.error .input:focus {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+        }
+        
+        @keyframes errorFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .password-strength {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        .password-strength.weak {
+            color: #dc2626;
+        }
+        
+        .password-strength.medium {
+            color: #f59e0b;
+        }
+        
+        .password-strength.strong {
+            color: #10b981;
+        }
+        
+        .submit-btn {
+            padding: 0.625rem 1rem;
+            background: white;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .switch {
+            text-align: center;
+            margin-top: 2rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        
+        .switch-link {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .switch-link:hover {
+            color: #a78bfa;
+        }
+        
+        /* Floating Background Styles */
+        .floating-background {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .floating {
+            position: absolute;
+            opacity: 0.15;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .twinkle-animation {
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+        
+        .blink-caret {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Live Preview Card Styles */
+        .hero-preview-card {
+            max-width: min(680px, calc(100vw - 2rem));
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(11,14,26,0.95);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.3);
+            border: 1px solid rgba(94,60,246,0.25);
+            backdrop-filter: blur(14px);
+            transition: transform 0.2s ease-out;
+            position: relative;
+            z-index: 1;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        
+        
+        .hero-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            justify-content: flex-start;
+        }
+        
+        .window-dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            justify-content: flex-start;
+        }
+        
+        .window-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+        }
+        
+        .window-dot.red { background: #EF4444; }
+        .window-dot.yellow { background: #F59E0B; }
+        .window-dot.green { background: #22C55E; }
+        
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            min-height: 100px;
+        }
+        
+        .genre-line {
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+            font-weight: 600;
+            text-align: center;
+            min-height: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .topic-line {
+            width: 100%;
+            background: rgba(94,60,246,0.12);
+            color: rgba(255,255,255,0.85);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 44px;
+            transition: background-color 0.2s ease;
+            word-break: break-word;
+            hyphens: auto;
+        }
+        
+        .topic-line.active {
+            background: rgba(94,60,246,0.2);
+        }
+        
+        .sample-row {
+            position: relative;
+            width: 100%;
+            min-height: 44px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 8px 0;
+        }
+        
+        .purple-line {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: rgba(94,60,246,0.1);
+            transition: background-color 0.2s ease;
+        }
+        
+        .purple-line.active {
+            background: rgba(94,60,246,0.3);
+        }
+        
+        .sample-text {
+            margin-left: 16px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.75);
+            width: calc(100% - 16px);
+            word-break: break-word;
+            hyphens: auto;
+        }
+        
+        @media (max-width: 900px) {
+            .right-section {
+                display: none;
+            }
+            
+            .left-section {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 1.5rem;
+            }
+            
+            .title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Section - Register Form -->
+    <div class="left-section">
+        <div class="register-container">
+            <div class="register-header">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="/original-logo-without-background.png" alt="SlohGPT" />
+            </div>
+
+            <!-- Title -->
+            <h1 class="title">Vytvoriť účet</h1>
+
+            <!-- Social Login Buttons -->
+            <div class="social-buttons">
+                <button class="social-btn social-btn-google" onclick="handleGoogleRegister()">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Pokračovať s Google
+                </button>
+
+                <button class="social-btn social-btn-apple" onclick="handleAppleRegister()">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    Pokračovať s Apple
+                </button>
+            </div>
+
+            <!-- Separator -->
+            <div class="separator">
+                <span class="separator-text">ALEBO</span>
+                </div>
+            </div>
+
+            <div class="register-form-section">
+
+            <!-- Step 1: Email -->
+            <div class="step active" id="step1">
+                <form class="form" onsubmit="handleEmailStep(event)">
+                    <div class="input-group" id="email-group">
+                        <label class="label">Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Email"
+                            class="input"
+                            required
+                        />
+                        <div id="error-step1" class="error"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Pokračovať
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2: Password -->
+            <div class="step" id="step2">
+                <form class="form" onsubmit="handlePasswordStep(event)">
+                    <div class="input-group" id="email-display-group">
+                        <label class="label">Email</label>
+                        <div style="display: flex; align-items: center;">
+                            <input
+                                id="email-display"
+                                type="email"
+                                class="input"
+                                disabled
+                                style="flex: 1;"
+                            />
+                            <button type="button" class="edit-btn" onclick="editEmail()">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="password-group">
+                        <label class="label">Heslo</label>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Heslo (min. 6 znakov)"
+                            class="input"
+                            required
+                            minlength="6"
+                            oninput="checkPasswordStrength()"
+                        />
+                        <div id="password-strength" class="password-strength"></div>
+                        <div id="error-step2" class="error"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Vytvoriť účet
+                    </button>
+                </form>
+            </div>
+
+            <!-- Sign In Link -->
+            <div class="switch">
+                <span>Už máte účet? </span>
+                <a href="/login.html" class="switch-link">
+                    Prihlásiť sa
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Section - Floating Background + Live Preview -->
+    <div class="right-section">
+        <div class="right-content">
+            <!-- Floating Background Elements -->
+            <div class="floating-background">
+            <!-- Floating Icons -->
+            <div class="floating" style="top: 20%; left: 2vw; animation-delay: 0ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 60%; left: 4vw; animation-delay: 1500ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                    <path d="M12 2L13.09 8.26L20 9L15 14L16.18 21L12 17.77L7.82 21L9 14L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 40%; left: 15vw; animation-delay: 800ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 75%; left: 20vw; animation-delay: 2200ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 30%; left: 35vw; animation-delay: 1200ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                    <path d="M4 6H20V8H4V6ZM4 11H20V13H4V11ZM4 16H20V18H4V16Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 65%; left: 40vw; animation-delay: 2800ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 25%; left: 50vw; animation-delay: 600ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                    <path d="M12 2L13.09 8.26L20 9L15 14L16.18 21L12 17.77L7.82 21L9 14L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 45%; left: 65vw; animation-delay: 1800ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 70%; left: 70vw; animation-delay: 3200ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 35%; left: 80vw; animation-delay: 1000ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                    <path d="M4 6H20V8H4V6ZM4 11H20V13H4V11ZM4 16H20V18H4V16Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 55%; left: 85vw; animation-delay: 2600ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 25%; left: 92vw; animation-delay: 1400ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M12 2L13.09 8.26L20 9L15 14L16.18 21L12 17.77L7.82 21L9 14L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 65%; left: 95vw; animation-delay: 3000ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #00E0FF;">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 85%; left: 10vw; animation-delay: 1900ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #A855F7;">
+                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="floating" style="top: 12%; left: 22vw; animation-delay: 2400ms;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM17 12H7V10H17V12ZM15 16H7V14H15V16ZM17 8H7V6H17V8Z" fill="currentColor"/>
+                </svg>
+            </div>
+            
+            <!-- Small Glowing Dots -->
+            <div class="twinkle-animation" style="position: absolute; top: 15%; left: 8vw; animation-delay: 500ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 45%; left: 25vw; animation-delay: 1500ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 80%; left: 60vw; animation-delay: 2500ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 35%; left: 75vw; animation-delay: 3500ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 70%; left: 90vw; animation-delay: 1000ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 25%; left: 12vw; animation-delay: 2000ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 60%; left: 45vw; animation-delay: 3000ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 10%; left: 55vw; animation-delay: 800ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 75%; left: 30vw; animation-delay: 1800ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 50%; left: 85vw; animation-delay: 1200ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 20%; left: 18vw; animation-delay: 2200ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 55%; left: 38vw; animation-delay: 400ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 85%; left: 72vw; animation-delay: 1600ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 5%; left: 28vw; animation-delay: 2800ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 40%; left: 65vw; animation-delay: 600ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 90%; left: 15vw; animation-delay: 2400ms; width: 3px; height: 3px; border-radius: 50%; background: #5E3CF6; box-shadow: 0 0 6px rgba(94,60,246,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 65%; left: 52vw; animation-delay: 1000ms; width: 3px; height: 3px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 6px rgba(168,85,247,0.6);"></div>
+            <div class="twinkle-animation" style="position: absolute; top: 30%; left: 88vw; animation-delay: 3200ms; width: 3px; height: 3px; border-radius: 50%; background: #00E0FF; box-shadow: 0 0 6px rgba(0,224,255,0.6);"></div>
+        </div>
+        
+        <!-- Live Preview Card -->
+        <div class="hero-preview-card">
+            <!-- Header -->
+            <div class="hero-preview-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color: #5E3CF6;">
+                    <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
+                <span style="font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7);">
+                    Živá ukážka nástroja
+                </span>
+            </div>
+            
+            <!-- Window Dots -->
+            <div class="window-dots">
+                <div class="window-dot red"></div>
+                <div class="window-dot yellow"></div>
+                <div class="window-dot green"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="preview-content">
+                <div class="genre-line" id="genre-text"></div>
+                <div class="topic-line" id="topic-text"></div>
+                <div class="sample-row">
+                    <div class="purple-line" id="purple-line"></div>
+                    <div class="sample-text" id="sample-text"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEmail = '';
+        
+        // Demo data sets for auto-cycling
+        const demoSets = [
+            {
+                genre: "Úvaha",
+                topic: "Technológie v živote mladých ľudí",
+                text: "Dnešná mládež žije v digitálnom svete, kde technológie nie sú len nástrojom, ale súčasťou identity. Smartfóny, sociálne siete a online platformy formujú spôsob, akým mladí ľudia komunikujú, učia sa a budujú vzťahy."
+            },
+            {
+                genre: "Rozprávanie",
+                topic: "Môj najobľúbenejší výlet",
+                text: "Bol krásny slnečný deň, keď sme sa s rodinou vybrali na nezabudnuteľný výlet do Tatier. Ráno sme sa zobudili do zvukov vtákov a svetla, ktoré sa prelievalo cez okná."
+            },
+            {
+                genre: "Úvaha",
+                topic: "Význam priateľstva v živote",
+                text: "Priateľstvo je jednou z najcennejších hodnôt, ktoré môže človek vo svojom živote získať. Skutoční priatelia sú tam pre nás v dobrých aj zlých časoch."
+            },
+            {
+                genre: "Charakteristika",
+                topic: "Môj obľúbený literárny hrdina",
+                text: "Harry Potter nie je len obyčajný chlapec s jazvou na čele, ale symbol odvahy a vytrvalosti. Jeho príbeh nás učí, že skutočná sila pochádza z lásky a priateľstva."
+            }
+        ];
+        
+        // Typewriter animation variables
+        let currentSetIndex = 0;
+        let startGenre = false;
+        let startTopic = false;
+        let startContent = false;
+        let showCaret = false;
+        let genreText = '';
+        let topicText = '';
+        let contentText = '';
+        let genreIndex = 0;
+        let topicIndex = 0;
+        let contentIndex = 0;
+        
+        function animatePreview() {
+            const currentSet = demoSets[currentSetIndex];
+            const genreFull = `Žáner: ${currentSet.genre}`;
+            const topicFull = `Téma: "${currentSet.topic}"`;
+            const contentFull = currentSet.text;
+            
+            // Reset all flags
+            startGenre = false;
+            startTopic = false;
+            startContent = false;
+            showCaret = false;
+            genreText = '';
+            topicText = '';
+            contentText = '';
+            genreIndex = 0;
+            topicIndex = 0;
+            contentIndex = 0;
+            
+            // Clear content
+            document.getElementById('genre-text').textContent = '';
+            document.getElementById('topic-text').textContent = '';
+            document.getElementById('sample-text').textContent = '';
+            document.getElementById('topic-text').classList.remove('active');
+            document.getElementById('purple-line').classList.remove('active');
+            
+            // Start genre animation immediately
+            setTimeout(() => {
+                startGenre = true;
+                animateGenre(genreFull);
+            }, 200);
+        }
+        
+        function animateGenre(text) {
+            if (genreIndex < text.length) {
+                genreText += text[genreIndex];
+                document.getElementById('genre-text').textContent = genreText;
+                genreIndex++;
+                setTimeout(() => animateGenre(text), 60);
+            } else {
+                // Start topic animation
+                setTimeout(() => {
+                    startTopic = true;
+                    animateTopic();
+                }, 200);
+            }
+        }
+        
+        function animateTopic() {
+            const topicFull = `Téma: "${demoSets[currentSetIndex].topic}"`;
+            if (topicIndex < topicFull.length) {
+                topicText += topicFull[topicIndex];
+                document.getElementById('topic-text').textContent = topicText;
+                document.getElementById('topic-text').classList.add('active');
+                topicIndex++;
+                setTimeout(() => animateTopic(), 60);
+            } else {
+                // Start content animation
+                setTimeout(() => {
+                    startContent = true;
+                    animateContent();
+                }, 200);
+            }
+        }
+        
+        function animateContent() {
+            const contentFull = demoSets[currentSetIndex].text;
+            if (contentIndex < contentFull.length) {
+                contentText += contentFull[contentIndex];
+                document.getElementById('sample-text').textContent = `"${contentText}"`;
+                document.getElementById('purple-line').classList.add('active');
+                contentIndex++;
+                setTimeout(() => animateContent(), 40);
+            } else {
+                // Show caret
+                showCaret = true;
+                document.getElementById('sample-text').innerHTML = `"${contentText}"<span class="blink-caret"></span>`;
+                
+                // Wait 3 seconds, then cycle to next demo
+                setTimeout(() => {
+                    currentSetIndex = (currentSetIndex + 1) % demoSets.length;
+                    animatePreview();
+                }, 3000);
+            }
+        }
+        
+        // Start animation on page load immediately
+        setTimeout(() => {
+            animatePreview();
+        }, 100);
+        
+        function handleGoogleRegister() {
+            console.log('Google register');
+            // TODO: Implement Google OAuth
+            alert('Google registrácia - Coming soon!');
+        }
+        
+        function handleAppleRegister() {
+            console.log('Apple register');
+            // TODO: Implement Apple OAuth
+            alert('Apple registrácia - Coming soon!');
+        }
+        
+        async function handleEmailStep(event) {
+            event.preventDefault();
+            clearErrors(); // Clear any previous errors
+            
+            const email = document.getElementById('email').value;
+            
+            if (!email || !email.includes('@')) {
+                showError('Zadajte platný email.');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Kontrolujem...';
+            submitBtn.disabled = true;
+            
+            // Check if email already exists
+            try {
+                const response = await fetch('/api/auth/check-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.exists) {
+                    showError('Tento email je už registrovaný. Použite iný email alebo sa prihláste.');
+                    return;
+                }
+                
+                // Email is available, proceed to step 2
+                currentEmail = email;
+                
+                // Move to step 2
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
+                
+                // Set the email in step 2
+                document.getElementById('email-display').value = email;
+                
+                console.log('Email step completed:', email);
+                
+            } catch (error) {
+                console.error('Email check error:', error);
+                showError('Chyba pri overovaní emailu. Skúste to znova.');
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        async function handlePasswordStep(event) {
+            event.preventDefault();
+            clearErrors(); // Clear any previous errors
+            
+            const password = document.getElementById('password').value;
+            
+            if (!password) {
+                showError('Zadajte heslo.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Heslo musí mať aspoň 6 znakov.');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Vytváram účet...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: currentEmail,
+                        password: password,
+                        name: currentEmail.split('@')[0] // Use email prefix as name
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store email for verification page
+                    localStorage.setItem('pendingVerificationEmail', currentEmail);
+                    // Redirect to verification page
+                    window.location.href = `/verify.html?email=${encodeURIComponent(currentEmail)}`;
+                } else {
+                    showError(data.error || 'Registrácia zlyhala.');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('Chyba pri registrácii.');
+            } finally {
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        
+        function editEmail() {
+            // Go back to step 1
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            
+            // Clear the password fields
+            document.getElementById('password').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('password-strength').textContent = '';
+            document.getElementById('password-match').textContent = '';
+        }
+        
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthDiv = document.getElementById('password-strength');
+            
+            if (password.length === 0) {
+                strengthDiv.textContent = '';
+                strengthDiv.className = 'password-strength';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            if (strength < 2) {
+                strengthDiv.textContent = 'Slabé heslo';
+                strengthDiv.className = 'password-strength weak';
+            } else if (strength < 4) {
+                strengthDiv.textContent = 'Stredné heslo';
+                strengthDiv.className = 'password-strength medium';
+            } else {
+                strengthDiv.textContent = 'Silné heslo';
+                strengthDiv.className = 'password-strength strong';
+            }
+        }
+        
+        
+        function showError(message) {
+            // Determine which step is active and show error in the correct div
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            let errorDiv, inputGroup;
+            
+            if (step1.classList.contains('active')) {
+                errorDiv = document.getElementById('error-step1');
+                inputGroup = document.getElementById('email-group');
+            } else if (step2.classList.contains('active')) {
+                errorDiv = document.getElementById('error-step2');
+                inputGroup = document.getElementById('password-group');
+            } else {
+                // Fallback to step 1 if we can't determine
+                errorDiv = document.getElementById('error-step1');
+                inputGroup = document.getElementById('email-group');
+            }
+            
+            // Add error class to input group for styling
+            inputGroup.classList.add('error');
+            
+            errorDiv.innerHTML = message;
+            errorDiv.style.display = 'block';
+            
+            // Clear error when user starts typing
+            const input = inputGroup.querySelector('.input');
+            if (input) {
+                const clearErrorOnInput = () => {
+                    errorDiv.style.display = 'none';
+                    inputGroup.classList.remove('error');
+                    input.removeEventListener('input', clearErrorOnInput);
+                };
+                input.addEventListener('input', clearErrorOnInput);
+            }
+        }
+        
+        function clearErrors() {
+            // Clear all error states
+            document.querySelectorAll('.input-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            document.querySelectorAll('.error').forEach(error => {
+                error.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
