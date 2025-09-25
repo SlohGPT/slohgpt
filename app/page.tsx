@@ -322,7 +322,7 @@ export default function HomePage() {
                     <div className="comparison-vs">vs</div>
                     <div className="comparison-option affordable">
                       <span className="comparison-label">SlohGPT</span>
-                      <span className="comparison-price">8.99€</span>
+                      <span className="comparison-price">7.99€</span>
                       <span className="comparison-note">za celý sloh</span>
                     </div>
                   </div>

@@ -62,9 +62,9 @@ export default function StepThree({
             // Redirect to pricing page
             window.location.href = '/pricing'
           }}
-          aria-label="Chcem celý sloh za €8.99"
+          aria-label="Chcem celý sloh za €7.99"
         >
-          Chcem celý sloh za €8.99
+          Chcem celý sloh za €7.99
         </button>
         <a 
           href="#" 

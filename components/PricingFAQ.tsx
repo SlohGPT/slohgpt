@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 const pricingFaqData = [
   {
     question: "Koľko stojí jeden sloh?",
-    answer: "Jeden sloh stojí €8.99. To je menej ako doučovanie za €25/hod. Za túto cenu dostanete kompletný sloh s vysvetlením, ako ho napísať.",
+    answer: "Jeden sloh stojí €7.99. To je menej ako doučovanie za €25/hod. Za túto cenu dostanete kompletný sloh s vysvetlením, ako ho napísať.",
     category: "pricing"
   },
   {
@@ -21,7 +21,7 @@ const pricingFaqData = [
   },
   {
     question: "Je cena za sloh alebo za mesiac?",
-    answer: "Cena €8.99 je za jeden sloh. Nie je to mesačný poplatok. Platíte len za to, čo skutočne použijete.",
+    answer: "Cena €7.99 je za jeden sloh. Nie je to mesačný poplatok. Platíte len za to, čo skutočne použijete.",
     category: "pricing"
   },
   {

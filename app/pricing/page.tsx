@@ -60,7 +60,7 @@ export default function PricingPage() {
   }, [])
 
   // Essay quantity and pricing functions - Psychologically optimized
-  const basePrice = 8.99
+  const basePrice = 7.99
   
   // Strategic discount tiers using psychological pricing principles:
   // 1. Anchor effect: Single essay establishes value perception
@@ -1062,9 +1062,9 @@ export default function PricingPage() {
                     // Here you would typically redirect to payment or checkout
                     alert('Presmerovanie na platbu...')
                   }}
-                  aria-label="Začať teraz za €8.99"
+                  aria-label="Začať teraz za €7.99"
                 >
-                  ✨ Začať teraz - €8.99
+                  ✨ Začať teraz - €7.99
             </button>
 
                 <button 
