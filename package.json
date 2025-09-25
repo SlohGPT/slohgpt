@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@instantdb/admin": "^0.21.18",
-    "@instantdb/react": "^0.21.18",
     "@stripe/stripe-js": "^7.9.0",
     "@supabase/supabase-js": "^2.57.4",
     "bcryptjs": "^3.0.2",
