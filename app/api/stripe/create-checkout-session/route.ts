@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/pricing`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://slohgpt.vercel.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://slohgpt.vercel.app'}/pricing`,
       customer_email: email, // Optional: pre-fill email if provided
       metadata: {
         source: 'homepage_cta',

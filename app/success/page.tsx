@@ -14,7 +14,7 @@ function SuccessPageContent() {
     const timer = setTimeout(() => {
       // Redirect to the auth system register page
       // We'll pass the session_id as a parameter for account linking
-      const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3100'}/register?payment_success=true&session_id=${sessionId}`
+      const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.slohgpt.vercel.app'}/register?payment_success=true&session_id=${sessionId}`
       window.location.href = authUrl
     }, 3000)
 
@@ -50,7 +50,7 @@ function SuccessPageContent() {
           <p className="redirect-notice">
             Presmerovávame vás na registráciu...
           </p>
-          <Link href={`${process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3100'}/register?payment_success=true&session_id=${sessionId}`} className="success-button">
+          <Link href={`${process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.slohgpt.vercel.app'}/register?payment_success=true&session_id=${sessionId}`} className="success-button">
             Pokračovať na registráciu
           </Link>
         </div>
