@@ -101,6 +101,18 @@ export default function PricingPage() {
 
   const currentPricing = calculatePrice(essayQuantity)
 
+  // Dynamic price anchors for psychological pricing
+  const getPriceAnchor = (quantity: number) => {
+    const anchors = {
+      1: "Menej ako jedna veľká pizza, čo zmizne za 10 minút 🍕",
+      2: "Menej ako nové Nike ponožky, ktoré aj tak stratíš 🧦",
+      3: "Menej ako 1 hodina súkromného doučka 🤓",
+      4: "Menej ako piatok večer v meste 🥳",
+      5: "Menej ako dve nočné jazdy taxíkom domov 🚕"
+    }
+    return anchors[quantity as keyof typeof anchors] || anchors[1]
+  }
+
   // Ensure this only runs on client to prevent hydration mismatch
   useEffect(() => {
     setIsClient(true)
@@ -657,7 +669,7 @@ export default function PricingPage() {
                 </div>
                   )}
                 </div>
-                <p className="sgpt-price-anchor">Menej ako doučovanie za €25/hod</p>
+                <p className="sgpt-price-anchor">{getPriceAnchor(essayQuantity)}</p>
               </div>
               <ul className="sgpt-features-list">
                 <li className="sgpt-feature-item">
