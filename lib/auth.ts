@@ -1,4 +1,4 @@
-import { instantdb } from './instantdb'
+import instantdb from './instantdb'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 
