@@ -30,10 +30,20 @@ export default function FinalCTA() {
             <div className="final-cta-actions">
               <button
                 className="cta-primary"
-                onClick={() => scrollTo('#idemo-card')}
-                aria-label="Vyskúšať ukážku zdarma"
+                onClick={async () => {
+                  try {
+                    // Redirect directly to Stripe checkout
+                    const { redirectToCheckout } = await import('@/lib/stripe')
+                    await redirectToCheckout(process.env.NEXT_PUBLIC_STRIPE_COMPLETE_ESSAY_PRICE_ID!)
+                  } catch (error) {
+                    console.error('Checkout error:', error)
+                    // Fallback to demo section if Stripe fails
+                    scrollTo('#idemo-card')
+                  }
+                }}
+                aria-label="Začať teraz za €7.99"
               >
-                ✨ Vyskúšaj demo teraz
+                ✨ Začať teraz - €7.99
               </button>
 
               <button
