@@ -81,7 +81,6 @@ const ModernHero: React.FC<ModernHeroProps> = ({ onDemoClick }) => {
                 whiteSpace: 'nowrap' // Prevent wrapping within sentence
               }}>
                 Je to tvoja <span className="text-gradient-primary" style={{ fontWeight: 900 }}>tajná zbraň</span> na slohy.
-                <br /><small style={{fontSize: '0.6em', opacity: 0.7}}>🚀 Deployment test - Updated!</small>
               </span>
             </h1>
             
