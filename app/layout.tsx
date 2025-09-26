@@ -5,6 +5,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingBackground from '@/components/FloatingBackground'
 import StickyCTA from '@/components/StickyCTA'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ 
   subsets: ['latin'], 
@@ -105,6 +107,8 @@ export default function RootLayout({
         </main>
         <Footer />
         <StickyCTA />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
