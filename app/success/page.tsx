@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import Head from 'next/head'
+// Head component not needed in app directory - metadata is handled in layout.tsx
 
 function SuccessPageContent() {
   const searchParams = useSearchParams()
@@ -39,11 +39,7 @@ function SuccessPageContent() {
 
   return (
     <>
-      <Head>
-        <title>Platba úspešná - SlohGPT | AI Pre Slohy</title>
-        <meta name="description" content="Platba za SlohGPT bola úspešne dokončená. Teraz si môžete vytvoriť účet a začať používať AI Pre Slohy." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      {/* SEO metadata is handled in layout.tsx for app directory */}
       
       <div className="success-page">
         <div className="success-container">

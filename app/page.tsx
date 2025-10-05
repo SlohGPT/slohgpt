@@ -5,83 +5,12 @@ import FAQ from '@/components/FAQ'
 import ModernHero from '@/components/modern/ModernHero'
 import InteractiveDemo from '@/components/InteractiveDemo'
 import FinalCTA from '@/components/FinalCTA'
-import Head from 'next/head'
+// Head component not needed in app directory - metadata is handled in layout.tsx
 
 export default function HomePage() {
   return (
     <>
-      <Head>
-        {/* Additional SEO Meta Tags for Homepage */}
-        <meta name="geo.region" content="SK" />
-        <meta name="geo.country" content="Slovakia" />
-        <meta name="language" content="sk" />
-        <meta name="revisit-after" content="7 days" />
-        <meta name="rating" content="general" />
-        <meta name="distribution" content="global" />
-        
-        {/* Additional Structured Data for Homepage */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "SlohGPT",
-              "alternateName": ["AI Pre Slohy", "AI Na Slohy", "AI Slohy"],
-              "url": "https://slohgpt.sk",
-              "description": "AI nástroj pre slovenské slohy. Pomáha stredoškolským študentom napísať sloh za 5 minút pomocou AI.",
-              "inLanguage": "sk",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://slohgpt.sk/?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "SlohGPT",
-                "url": "https://slohgpt.sk"
-              }
-            })
-          }}
-        />
-        
-        {/* FAQ Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "Čo je SlohGPT?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "SlohGPT je AI nástroj špecializovaný na slovenské slohy. Pomáha stredoškolským študentom napísať sloh za 5 minút pomocou AI technológie."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Aké typy slohov podporuje SlohGPT?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "SlohGPT podporuje všetky hlavné typy slohov: úvahu, charakteristiku, rozprávanie, opis, správu, úradný list a ďalšie typy podľa NÚCEM kritérií."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Je SlohGPT legálny na použitie?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Áno, SlohGPT je legálny nástroj na pomoc pri písaní slohov. Nie je to podvádzanie, ale inteligentná pomôcka, ktorá učí študentov správnu štruktúru a jazykové prostriedky."
-                  }
-                }
-              ]
-            })
-          }}
-        />
-      </Head>
+      {/* SEO metadata is handled in layout.tsx for app directory */}
       
       {/* No local background here anymore */}
       <section id="home-page-content">

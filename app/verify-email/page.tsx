@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Head from 'next/head'
+// Head component not needed in app directory - metadata is handled in layout.tsx
 
 function VerifyEmailContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -41,11 +41,7 @@ function VerifyEmailContent() {
   
   return (
     <>
-      <Head>
-        <title>Overenie emailu - SlohGPT | AI Pre Slohy</title>
-        <meta name="description" content="Overenie emailovej adresy pre SlohGPT účet. Dokončite registráciu a začnite používať AI Pre Slohy." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      {/* SEO metadata is handled in layout.tsx for app directory */}
       
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
