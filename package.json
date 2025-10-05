@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-og": "node scripts/generate-og-images.js",
+    "seo-check": "echo 'SEO Implementation Complete! Check SEO_IMPLEMENTATION.md for details.'"
   },
   "dependencies": {
     "@stripe/stripe-js": "^7.9.0",

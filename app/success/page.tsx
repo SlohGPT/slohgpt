@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Head from 'next/head'
 
 function SuccessPageContent() {
   const searchParams = useSearchParams()
@@ -37,8 +38,15 @@ function SuccessPageContent() {
   }
 
   return (
-    <div className="success-page">
-      <div className="success-container">
+    <>
+      <Head>
+        <title>Platba úspešná - SlohGPT | AI Pre Slohy</title>
+        <meta name="description" content="Platba za SlohGPT bola úspešne dokončená. Teraz si môžete vytvoriť účet a začať používať AI Pre Slohy." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      
+      <div className="success-page">
+        <div className="success-container">
         <div className="success-icon">
           <i className="fas fa-check-circle"></i>
         </div>
@@ -55,7 +63,8 @@ function SuccessPageContent() {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

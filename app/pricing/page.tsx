@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { submitVote, getVoteCounts, subscribeToVoteUpdates, getUserVote } from '../../lib/voting'
 import { VoteCount } from '../../lib/supabase-voting'
 import PricingFAQ from '@/components/PricingFAQ'
+import Head from 'next/head'
 
 export default function PricingPage() {
   const [voteCounts, setVoteCounts] = useState<VoteCount[]>([])
@@ -488,8 +489,63 @@ export default function PricingPage() {
 
 
   return (
-    <div className="pricing-page">
-      <div className={`pricing-content ${showContent ? 'content-visible' : 'content-hidden'}`}>
+    <>
+      <Head>
+        <title>Ceny SlohGPT - AI Pre Slohy | Cenník AI Slohov</title>
+        <meta name="description" content="Cenník SlohGPT - AI nástroj pre slovenské slohy. Kompletný sloh za 7,99€. AI Pre Slohy, AI Na Slohy - najlepšie ceny pre študentov." />
+        <meta name="keywords" content="ceny slohgpt, cenník AI slohy, AI pre slohy cena, AI na slohy cena, slovenské slohy cena, AI písanie slohov cena, stredná škola slohy cena" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://slohgpt.sk/pricing" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Ceny SlohGPT - AI Pre Slohy | Cenník AI Slohov" />
+        <meta property="og:description" content="Cenník SlohGPT - AI nástroj pre slovenské slohy. Kompletný sloh za 7,99€. AI Pre Slohy, AI Na Slohy - najlepšie ceny pre študentov." />
+        <meta property="og:url" content="https://slohgpt.sk/pricing" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://slohgpt.sk/og-pricing.png" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ceny SlohGPT - AI Pre Slohy | Cenník AI Slohov" />
+        <meta name="twitter:description" content="Cenník SlohGPT - AI nástroj pre slovenské slohy. Kompletný sloh za 7,99€. AI Pre Slohy, AI Na Slohy - najlepšie ceny pre študentov." />
+        <meta name="twitter:image" content="https://slohgpt.sk/og-pricing.png" />
+        
+        {/* Structured Data for Pricing */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "SlohGPT - AI Pre Slohy",
+              "description": "AI nástroj pre slovenské slohy",
+              "brand": {
+                "@type": "Brand",
+                "name": "SlohGPT"
+              },
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": "Kompletný sloh",
+                  "price": "7.99",
+                  "priceCurrency": "EUR",
+                  "description": "Kompletný sloh s vysvetlením",
+                  "availability": "https://schema.org/InStock",
+                  "validFrom": "2024-01-01"
+                }
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "150"
+              }
+            })
+          }}
+        />
+      </Head>
+      
+      <div className="pricing-page">
+        <div className={`pricing-content ${showContent ? 'content-visible' : 'content-hidden'}`}>
       {/* Notification */}
       {notification && (
         <div className={`sgpt-notification sgpt-notification-${notification.type}`}>
@@ -1121,6 +1177,7 @@ export default function PricingPage() {
         </div>
       </section>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

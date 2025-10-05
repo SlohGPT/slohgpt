@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Head from 'next/head'
 
 function VerifyEmailContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -39,7 +40,14 @@ function VerifyEmailContent() {
   }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <>
+      <Head>
+        <title>Overenie emailu - SlohGPT | AI Pre Slohy</title>
+        <meta name="description" content="Overenie emailovej adresy pre SlohGPT účet. Dokončite registráciu a začnite používať AI Pre Slohy." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold text-center mb-6">
           Overenie Emailu
@@ -78,7 +86,8 @@ function VerifyEmailContent() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

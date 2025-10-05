@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Allow all search engines to crawl the site
+Allow: /api/auth/check-email
+Allow: /api/auth/login
+Allow: /api/auth/register
+Allow: /api/auth/verify-email
+
+# Disallow sensitive areas
+Disallow: /api/debug/
+Disallow: /api/stripe/webhook
+Disallow: /dashboard
+Disallow: /verify-email
+Disallow: /success
+
+# Sitemap location
+Sitemap: https://slohgpt.sk/sitemap.xml
+
+# Crawl delay (optional - helps prevent overloading)
+Crawl-delay: 1
+
+# Additional directives for Slovak search engines
+User-agent: SeznamBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

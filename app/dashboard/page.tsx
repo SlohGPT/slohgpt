@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
@@ -54,7 +55,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Head>
+        <title>Dashboard SlohGPT - Moje AI Slohy | SlohGPT</title>
+        <meta name="description" content="Dashboard SlohGPT - spravuj svoje AI slohy, sleduj pokrok a vytváraj nové slohy pomocou AI. AI Pre Slohy, AI Na Slohy." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      
+      <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex justify-between items-center mb-6">
@@ -100,6 +108,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

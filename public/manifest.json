@@ -1,0 +1,68 @@
+{
+  "name": "SlohGPT - AI Pre Slohy",
+  "short_name": "SlohGPT",
+  "description": "AI nástroj pre slovenské slohy. Napíš sloh za 5 minút pomocou AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0E1A",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "sk",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Napíš sloh",
+      "short_name": "Sloh",
+      "description": "Začni písať nový sloh",
+      "url": "/?action=write",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Ceny",
+      "short_name": "Ceny",
+      "description": "Pozri si ceny",
+      "url": "/pricing",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
