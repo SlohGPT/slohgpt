@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Sparkles } from 'lucide-react'
+import { scrollToElement } from '@/lib/scroll-utils'
 
 export default function StickyCTA() {
   const [isVisible, setIsVisible] = useState(false)
@@ -60,13 +61,7 @@ export default function StickyCTA() {
   }, [isMobile, showOnCurrentPage])
 
   const handleDemoClick = () => {
-    const demoSection = document.getElementById('idemo-card')
-    if (demoSection) {
-      demoSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
-    }
+    scrollToElement('idemo-card', 80)
   }
 
   // Don't render if not mobile or not on allowed pages

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { scrollToElement } from '@/lib/scroll-utils'
 
 const essayTypes = [
   { id: 'rozpravanie', icon: 'fas fa-book-open', label: 'Rozprávanie' },
@@ -37,13 +38,7 @@ export default function GeneratorCard() {
       
       // Smooth scroll to preview
       setTimeout(() => {
-        const previewElement = document.getElementById('essayPreview')
-        if (previewElement) {
-          previewElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          })
-        }
+        scrollToElement('essayPreview', 80)
       }, 300)
       
     } catch (error) {

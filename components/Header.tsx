@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { scrollToElement } from '@/lib/scroll-utils'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -330,10 +331,7 @@ export default function Header() {
                 onClick={(e) => {
                   setIsMobileMenuOpen(false)
                   setTimeout(() => {
-                    const element = document.getElementById('idemo-card')
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }
+                    scrollToElement('idemo-card', 80)
                   }, 100)
                 }}
               >

@@ -1,12 +1,11 @@
 'use client'
 
 import FloatingBackground from './FloatingBackground'
+import { scrollToSelector } from '@/lib/scroll-utils'
 
 export default function FinalCTA() {
   const scrollTo = (selector: string) => {
-    const el = document.querySelector(selector)
-    if (!el) return
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    scrollToSelector(selector, 80)
   }
 
   return (

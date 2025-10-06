@@ -4,6 +4,7 @@ import React from 'react';
 import HeroLivePreview from '@/components/modern/HeroLivePreview';
 import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { scrollToElement } from '@/lib/scroll-utils';
 
 interface ModernHeroProps {
   onDemoClick?: () => void;
@@ -11,14 +12,8 @@ interface ModernHeroProps {
 
 const ModernHero: React.FC<ModernHeroProps> = ({ onDemoClick }) => {
   const handleDemoClick = () => {
-    // Scroll to the interactive demo section
-    const demoSection = document.getElementById('idemo-card');
-    if (demoSection) {
-      demoSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    // Scroll to the interactive demo section with offset
+    scrollToElement('idemo-card', 80);
     
     // Call the original onDemoClick if provided
     if (onDemoClick) {

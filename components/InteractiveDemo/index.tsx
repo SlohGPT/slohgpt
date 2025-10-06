@@ -5,6 +5,7 @@ import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import StepThree from './StepThree'
 import type { Step } from '../../types'
+import { scrollToElement } from '@/lib/scroll-utils'
 
 export default function InteractiveDemo() {
   const [currentStep, setCurrentStep] = useState<Step>(1)
@@ -34,7 +35,22 @@ export default function InteractiveDemo() {
     if (!root) return
     const card = root.querySelector(`[data-step="${step}"]`) as HTMLElement | null
     if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      // Use requestAnimationFrame to ensure smooth scrolling on mobile
+      requestAnimationFrame(() => {
+        const elementPosition = card.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - 80
+        
+        // Try smooth scrolling first, fallback to instant if not supported
+        try {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        } catch (error) {
+          // Fallback for older browsers or mobile issues
+          window.scrollTo(0, offsetPosition)
+        }
+      })
     }
   }
 
