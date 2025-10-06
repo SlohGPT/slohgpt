@@ -108,7 +108,7 @@ export default function StickyCTA() {
             color: '#ffffff',
             lineHeight: 1.2
           }}>
-            Napíš sloh za 10 minút
+            Napíš sloh za pár minút
           </span>
           <span style={{
             fontSize: 'var(--font-size-xs)',

@@ -46,38 +46,37 @@ export default function Footer() {
                 className="logo-original"
               />
               <h3>SlohGPT</h3>
-              <p>Pomocou AI napíš sloh za 5 minút. Ušetrí čas, zníži stres a zlepší známky.</p>
+              <p>Pomocou AI napíš sloh za pár minút. Ušetrí čas, zníži stres a zlepší známky.</p>
             </div>
             
             <div className="footer-links">
               <div className="footer-column">
                 <h4>Produkt</h4>
-                <Link href="/#generator">Vygeneruj sloh</Link>
-                <Link href="/#how-it-works">Ako to funguje</Link>
-                <Link href="/#why-slohgpt">Prečo SlohGPT</Link>
+                <Link href="/#idemo-card">Vygeneruj sloh</Link>
+                <Link href="/pricing#how-it-works">Ako to funguje</Link>
+                <Link href="/#benefits">Prečo SlohGPT</Link>
               </div>
               
               <div className="footer-column">
                 <h4>Podpora</h4>
                 <Link href="/#faq">FAQ</Link>
-                <Link href="mailto:podpora@slohgpt.sk">Kontakt</Link>
-                <Link href="#help">Pomoc</Link>
-                <Link href="#tutorials">Návody</Link>
+                <Link href="mailto:slohgpt@gmail.com">Kontakt</Link>
+                <Link href="/pricing#faq">Pomoc</Link>
               </div>
               
               <div className="footer-column">
                 <h4>Právne</h4>
-                <Link href="#terms">Obchodné podmienky</Link>
-                <Link href="#privacy">Ochrana súkromia</Link>
-                <Link href="#cookies">Cookies</Link>
-                <Link href="#refund">Reklamácie</Link>
+                <Link href="/obchodne-podmienky">Obchodné podmienky</Link>
+                <Link href="/ochrana-sukromia">Ochrana súkromia</Link>
+                <Link href="/cookies">Cookies</Link>
+                <Link href="/podmienky-pouzivania">Podmienky používania</Link>
               </div>
             </div>
           </div>
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 SlohGPT. Všetky práva vyhradené.</p>
+          <p>&copy; 2025 SlohGPT. Všetky práva vyhradené.</p>
           <div className="footer-social">
             <a href="#" aria-label="Facebook">
               <i className="fab fa-facebook-f"></i>

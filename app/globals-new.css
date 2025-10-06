@@ -1,0 +1,26 @@
+/* SlohGPT - Organized CSS Architecture */
+
+/* ===== UTILITIES ===== */
+@import '../styles/utils/variables.css';
+@import '../styles/utils/base.css';
+
+/* ===== COMPONENTS ===== */
+@import '../styles/components/header.css';
+@import '../styles/components/mobile-menu.css';
+@import '../styles/components/floating-background.css';
+@import '../styles/components/interactive-demo.css';
+@import '../styles/components/generator-card.css';
+@import '../styles/components/faq.css';
+@import '../styles/components/cta.css';
+@import '../styles/components/footer.css';
+
+/* ===== PAGES ===== */
+@import '../styles/pages/home.css';
+@import '../styles/pages/pricing.css';
+@import '../styles/pages/legal.css';
+@import '../styles/pages/dashboard.css';
+
+/* ===== UTILITIES (Additional) ===== */
+@import '../styles/utils/utilities.css';
+@import '../styles/utils/animations.css';
+@import '../styles/utils/responsive.css';

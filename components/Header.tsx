@@ -118,9 +118,21 @@ export default function Header() {
   }
 
   const navLinks = [
-    { href: '/', label: 'Domov' },
-    { href: '/pricing', label: 'Cenník' },
+    { href: '/', label: 'Domov', key: 'domov' },
+    { href: '/pricing', label: 'Cenník', key: 'cennik' },
+    { href: '/#benefits', label: 'Prečo SlohGPT?', key: 'benefits' },
+    { href: '/#examples', label: 'Príklady', key: 'examples' },
   ]
+
+  // Legal page specific navigation
+  const legalNavLinks = [
+    { href: '/podmienky-pouzivania', label: 'Podmienky používania', key: 'podmienky' },
+    { href: '/ochrana-sukromia', label: 'Ochrana súkromia', key: 'sukromie' },
+    { href: '/obchodne-podmienky', label: 'Obchodné podmienky', key: 'obchodne' },
+    { href: '/cookies', label: 'Cookies', key: 'cookies' },
+  ]
+
+  const isLegalPage = ['/podmienky-pouzivania', '/ochrana-sukromia', '/obchodne-podmienky', '/cookies'].includes(pathname)
 
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
@@ -198,126 +210,142 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Mobile Menu Backdrop */}
+      {/* Mobile Menu */}
       {isMobile && isMobileMenuOpen && (
-        <div 
-          className={`mobile-menu-backdrop ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile Menu Panel */}
-      {isMobile && (
+        <div className="mobileMenu">
+          <div className="menuOverlay" onClick={() => setIsMobileMenuOpen(false)}></div>
         <div 
           id="mobile-menu"
           ref={mobileMenuRef}
-          className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}
+            className="menuContent"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
         >
-          <div className="mobile-menu-header">
-            <div className="mobile-menu-logo">
+        {/* Mobile Menu Content */}
+          {/* Header with Logo and Close Button */}
+          <div className="menuHeader">
+            {/* Logo in Menu */}
+            <div className="menuLogo">
               <img
                 src="/original-logo-without-background.png"
                 alt="SlohGPT"
-                className="mobile-logo-image"
+                className="logoImage"
               />
-              <span id="mobile-menu-title" className="sr-only">Navigačné menu</span>
             </div>
-            <button
-              className="mobile-menu-close"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Zavrieť menu"
-            >
-              <i className="fas fa-times"></i>
+
+            {/* Close Button */}
+            <button className="closeButton" onClick={() => setIsMobileMenuOpen(false)}>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
             </button>
           </div>
         
-        {/* Mobile Menu Auth CTA */}
-        <div className="mobile-menu-auth">
-          <a
-            href="/login.html" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="mobile-auth-primary"
-            onClick={() => setIsMobileMenuOpen(false)}
-            style={{
-              display: 'block',
-              padding: '0.75rem 1rem',
-              borderRadius: '8px',
-              textAlign: 'center',
-              fontWeight: '600',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
-              color: 'white',
-              border: 'none',
-              boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3)',
-              margin: '0 2rem 1rem 2rem'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-1px)'
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.4)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 92, 246, 0.3)'
-            }}
-          >
-            Prihlásiť sa
-          </a>
-        </div>
+          {/* Navigation Items */}
+          <nav className="menuNav">
+            <Link
+              href="/" 
+              className={`menuItem ${pathname === '/' ? 'menuItemActive' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+              </svg>
+              Domov
+            </Link>
 
-        {/* Mobile Menu CTA */}
-        <div className="mobile-menu-cta">
-          <Link 
-            href="/#idemo-card" 
-            className="menu-cta cta-primary" 
-            role="button"
-            onClick={(e) => {
-              setIsMobileMenuOpen(false)
-              // Small delay to ensure menu closes before scroll
-              setTimeout(() => {
-                const element = document.getElementById('idemo-card')
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }
-              }, 100)
-            }}
-          >
-            Demo zdarma
-          </Link>
-        </div>
+            <Link 
+              href="/pricing" 
+              className={`menuItem ${pathname === '/pricing' ? 'menuItemActive' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              Cenník
+            </Link>
 
-        {/* Mobile Menu Navigation */}
-        <nav className="mobile-nav" aria-label="Hlavná navigácia">
-          <ul className="mobile-nav-list">
-            {navLinks.map((link) => (
-              <li key={link.href} className="mobile-nav-item">
-                <Link 
-                  href={link.href}
-                  className={`mobile-nav-link ${pathname === link.href ? 'is-current' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-current={pathname === link.href ? 'page' : undefined}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            
-            {/* Additional mobile-only links */}
-            <li className="mobile-nav-item">
-              <Link 
-                href="/kontakt" 
-                className="mobile-nav-link"
+            <Link 
+              href="/#benefits" 
+              className="menuItem"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <path d="M12 17h.01"/>
+              </svg>
+              Prečo SlohGPT?
+            </Link>
+
+            <Link 
+              href="/#examples" 
+              className="menuItem"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14,2 14,8 20,8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10,9 9,9 8,9"/>
+              </svg>
+              Príklady
+            </Link>
+
+            {/* Action Buttons */}
+            <div className="historySection">
+              <div className="historyTitle">Akcie</div>
+              <div className="historyItems">
+              <a
+                href="/login.html" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                  className="historyItem"
                 onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 3H19C20.1 3 21 3.9 21 5V19C21 20.1 20.1 21 19 21H15"/>
+                    <path d="M10 17L15 12L10 7"/>
+                    <path d="M15 12H3"/>
+                  </svg>
+                  <span>Prihlásiť sa</span>
+                </a>
+              <Link 
+                href="/#idemo-card" 
+                  className="historyItem"
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false)
+                  setTimeout(() => {
+                    const element = document.getElementById('idemo-card')
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+                  }, 100)
+                }}
               >
-                Kontakt
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                  </svg>
+                  <span>Demo zdarma</span>
               </Link>
-            </li>
-          </ul>
+              </div>
+            </div>
         </nav>
+        </div>
       </div>
       )}
     </header>

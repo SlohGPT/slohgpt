@@ -1,0 +1,1988 @@
+/* INTERACTIVE DEMO (idemo-card wrapper) */
+#idemo-card,
+#home-page-content #idemo-card,
+#home-page-content > section #idemo-card {
+  background: transparent !important;
+}
+
+/* SUPERCHARGED CTA */
+#home-page-content > section.supercharged-cta-section {
+  background: transparent !important;
+}
+
+/* PRICING SHOWCASE (root section only; keep glass on cards) */
+#home-page-content > section.pricing-showcase {
+  background: transparent !important;
+}
+
+/* Kill any full-bleed overlays that hide the BG */
+#home-page-content > section.modern-hero::before,
+#home-page-content > section.supercharged-cta-section::before,
+#home-page-content > section.pricing-showcase::before {
+  content: none !important;
+}
+
+/* Ensure the BG can be seen through section stacks */
+#home-page-content > section.modern-hero,
+#home-page-content > section.supercharged-cta-section,
+#home-page-content > section.pricing-showcase {
+  position: relative;
+  z-index: 1;           /* content above BG (z=0) */
+}
+
+/* Inner "cards" keep their glass look (examples) */
+.pricing-card,
+.cta-card,
+.demo-card,
+.hero-inner-card {
+  background: rgba(255,255,255,0.06);           /* or your glass token */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* --- Ensure all homepage sections let the global navy+icons show through --- */
+
+/* Make section wrappers transparent so the global navy + icons show through */
+#home-page-content > section.modern-hero,
+#home-page-content > section.supercharged-cta-section,
+#home-page-content > section.pricing-showcase,
+#home-page-content > section.problem-solution-section,
+#home-page-content > section.help-improve-essays-section,
+#home-page-content > section.social-proof-section,
+#home-page-content > section.faq-section,
+.modern-hero,
+.pricing-showcase,
+.supercharged-cta-section,
+.idemo-section,
+#idemo-card {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Remove full‑bleed overlays that were adding gradients/tints */
+#home-page-content > section.modern-hero::before,
+#home-page-content > section.supercharged-cta-section::before,
+#home-page-content > section.pricing-showcase::before,
+#home-page-content > section.problem-solution-section::before,
+#home-page-content > section.help-improve-essays-section::before,
+#home-page-content > section.social-proof-section::before,
+#home-page-content > section.faq-section::before,
+#idemo-card::before {
+  content: none !important;
+}
+
+/* Keep glass effects only on inner cards (do NOT apply to the whole section) */
+.hero-inner-card,
+.demo-card,
+.cta-card,
+.problem-card,
+.faq-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Pricing cards have their own opaque styling */
+.pricing-card {
+  background: #0F172A !important;   /* fully solid, no transparency */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255,255,255,0.12);
+  opacity: 1 !important;
+}
+
+/* Ensure wrappers/variants don't reduce opacity */
+.pricing-card.dimmed,
+.pricing-card.featured,
+.pricing-card.popular {
+  opacity: 1 !important;
+  background: #0b0f1c !important;   /* force solid for all variants */
+}
+
+/* Pricing cards container should remain transparent to show floating background in gaps */
+.pricing-cards {
+  opacity: 1 !important;
+  background: transparent !important;   /* let floating background show through gaps */
+}
+
+/* Modern Student Pain Point Section */
+.student-pain-section {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 4vw, 3rem) 0 0 0;
+
+  margin: 0;
+}
+
+.pain-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Header styling */
+.pain-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.pain-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: painFadeIn 0.6s ease-out 0.2s forwards;
+}
+
+.pain-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  text-align: center; /* Center on all screens */
+  animation: painFadeIn 0.6s ease-out 0.4s forwards;
+}
+
+/* Modern card grid - Mobile First */
+.pain-cards {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column on mobile */
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+@media (min-width: 481px) {
+  .pain-cards {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .pain-cards {
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns on desktop */
+    gap: var(--space-8);
+  }
+}
+
+.pain-card {
+  background: rgba(255, 255, 255, 0.05); /* Transparent background like before */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(94, 60, 246, 0.2);
+  border-radius: var(--border-radius);
+  padding: var(--space-5);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+  .pain-card {
+    padding: var(--space-8);
+    background: rgba(255, 255, 255, 0.05); /* More transparent on desktop */
+  }
+}
+
+.pain-card:nth-child(1) { animation: painCardSlide 0.8s ease-out 0.6s forwards; }
+.pain-card:nth-child(2) { animation: painCardSlide 0.8s ease-out 0.8s forwards; }
+.pain-card:nth-child(3) { animation: painCardSlide 0.8s ease-out 1.0s forwards; }
+
+.pain-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5E3CF6, #A855F7, #00E0FF);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pain-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pain-card:hover::before {
+  opacity: 1;
+}
+
+.pain-card-icon {
+  margin-bottom: 1.5rem;
+}
+
+.icon-bg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.icon-bg.clock {
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.2) 0%, rgba(255, 107, 107, 0.05) 70%);
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+}
+
+.icon-bg.brain {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(168, 85, 247, 0.05) 70%);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+}
+
+.icon-bg.stress {
+  background: radial-gradient(circle, rgba(0, 224, 255, 0.2) 0%, rgba(0, 224, 255, 0.05) 70%);
+  box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+}
+
+.pain-card:hover .icon-bg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.pain-card-content h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.pain-card-content p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Solution section */
+.pain-solution {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: painFadeIn 0.8s ease-out 1.2s forwards;
+}
+
+.solution-arrow {
+  font-size: 2.5rem;
+  color: #5E3CF6;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+.solution-text {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.solution-highlight {
+  background: linear-gradient(135deg, hsl(250 85% 60%), hsl(250 85% 70%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.solution-cta {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* Animations */
+
+@keyframes painFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes painCardSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .student-pain-section {
+    padding: 1.5rem 0 2.5rem 0;
+  }
+  
+  .pain-title {
+    font-size: 2rem;
+  }
+  
+  .pain-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .pain-card {
+    padding: 1.5rem;
+  }
+  
+  .icon-bg {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+  
+  .solution-text {
+    font-size: 1.3rem;
+  }
+}
+
+/* Make FAQ wrapper transparent so it inherits the global dark base */
+#home-page-content > section.sgpt-faq-section,
+#home-page-content > section.clean-faq-section,
+#home-page-content > section.faq-section {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Remove any pseudo-elements that add a tint or gradient */
+#home-page-content > section.sgpt-faq-section::before,
+#home-page-content > section.clean-faq-section::before,
+#home-page-content > section.faq-section::before {
+  content: none !important;
+}
+
+/* ===== Final CTA ===== */
+.final-cta-section {
+  padding: clamp(2rem, 4vw, 3rem) 0;
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+  z-index: 1;
+}
+
+.final-cta-card {
+  background: rgba(11, 14, 26, 0.85);
+  border-radius: 20px;
+  box-shadow: 
+    rgba(255, 255, 255, 0.06) 0px 1px 0px inset, 
+    rgba(0, 0, 0, 0.25) 0px 10px 30px,
+    0 0 40px rgba(139, 92, 246, 0.4),
+    0 0 80px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  margin: 0 auto;
+  max-width: 920px;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-cta-title {
+  margin: 0 0 .5rem 0;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  font-size: clamp(1.9rem, 4.8vw, 3rem);
+  color: #fff;
+}
+
+.final-cta-title .title-line {
+  display: block;
+}
+
+.final-cta-title .accent {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.final-cta-sub {
+  color: rgba(255,255,255,.92);
+  margin: 0 0 1.25rem 0;
+  font-size: clamp(1rem, 2.4vw, 1.125rem);
+  text-align: center; /* Center on all screens */
+}
+
+.final-cta-actions {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+/* Buttons – consistent with your gradient/pill style */
+.final-cta-card .cta-primary,
+.final-cta-card .cta-secondary {
+  padding: .95rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform .18s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+  cursor: pointer;
+}
+
+.final-cta-card .cta-primary {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(139,92,246,.35);
+}
+.final-cta-card .cta-primary:hover { transform: translateY(-2px); }
+
+.final-cta-card .cta-secondary {
+  background: rgba(255,255,255,.06);
+  color: #fff;
+}
+.final-cta-card .cta-secondary:hover {
+  background: rgba(255,255,255,.12);
+}
+
+.final-cta-bullets {
+  display: flex; gap: 1rem; justify-content: center;
+  color: rgba(255,255,255,.88); font-size: .95rem; flex-wrap: wrap;
+}
+.final-cta-bullets li { list-style: none; position: relative; padding-left: 1.25rem; }
+.final-cta-bullets li::before {
+  content: '•'; position: absolute; left: .35rem; top: 0; color: #8b5cf6;
+}
+
+/* Final CTA floating background inside card */
+.final-cta-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.final-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta-reassurance {
+  margin: 2rem 0 0 0;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  text-align: center; /* Already centered, keeping it */
+}
+
+/* Final CTA — match other sections: wrapper shows global floating BG */
+#home-page-content > section.final-cta-section,
+.final-cta-section {
+  background: transparent !important;
+  position: relative;
+  isolation: isolate; /* keep card shadows above background */
+}
+
+.final-cta-section::before,
+.final-cta-section::after {
+  content: none !important; /* kill any leftover overlays */
+}
+
+/* ===== Modern FAQ Section ===== */
+.modern-faq-section {
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+  position: relative;
+  background: transparent !important;
+  z-index: 1;
+}
+
+/* Full Width Container */
+.faq-container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* FAQ Header */
+.faq-header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 2.5rem);
+}
+
+.faq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(139, 92, 246, 0.1);
+  color: #a855f7;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.faq-header .section-title {
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.01em;
+}
+
+.faq-header .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  margin: 0;
+  /* max-width: 600px; */ /* Removed for better centering */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Two Column Layout */
+.faq-layout-wide {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Left Sidebar */
+.faq-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.faq-support-card {
+  background: rgba(11, 14, 26, 0.85);
+  border-radius: 12px;
+  box-shadow: rgba(255, 255, 255, 0.06) 0px 1px 0px inset, rgba(0, 0, 0, 0.25) 0px 10px 30px;
+  border: 1px solid rgba(94, 60, 246, 0.25);
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.support-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.support-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.support-header h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.support-header p {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.support-options {
+  margin-bottom: 2rem;
+}
+
+.support-option {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.support-option:last-child {
+  border-bottom: none;
+}
+
+/* Mobile-only telephone support option */
+.mobile-only-telephone {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-telephone {
+    display: flex;
+  }
+}
+
+.option-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a855f7;
+  flex-shrink: 0;
+}
+
+.option-content h4 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.option-content p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.option-btn {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: #a855f7;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #8b5cf6;
+}
+
+.support-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  color: #8b5cf6;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Right Content Area */
+.faq-content {
+  min-width: 0; /* Prevents grid overflow */
+}
+
+/* Category Filters */
+.faq-filters-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 2rem;
+}
+
+.faq-filters {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.filter-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.filter-pill.active {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+}
+
+.filter-pill i {
+  font-size: 0.875rem;
+}
+
+/* FAQ Grid */
+.faq-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-card {
+  background: rgba(11, 14, 26, 0.85);
+  border-radius: 12px;
+  box-shadow: rgba(255, 255, 255, 0.06) 0px 1px 0px inset, rgba(0, 0, 0, 0.25) 0px 10px 30px;
+  border: 1px solid rgba(94, 60, 246, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.faq-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+  transform: translateY(-2px);
+}
+
+.faq-card-header {
+  width: 100%;
+  padding: 1.5rem;
+  border: none;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.faq-card-header:hover {
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.faq-question-text {
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.faq-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.1);
+  color: #a855f7;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-card:hover .faq-icon {
+  background: rgba(139, 92, 246, 0.2);
+  color: #8b5cf6;
+}
+
+.faq-icon i {
+  transition: transform 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.faq-icon i.rotated {
+  transform: rotate(180deg);
+}
+
+/* Visible state triggers smooth entrance */
+.faq-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.faq-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  border-top: 1px solid transparent;
+}
+
+.faq-card-body.expanded {
+  max-height: 300px;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.faq-answer-text {
+  padding: 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .faq-container-wide {
+    padding: 0 1.5rem;
+  }
+  
+  .faq-layout-wide {
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-container-wide {
+    padding: 0 1rem;
+  }
+  
+  .faq-layout-wide {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .faq-sidebar {
+    position: static;
+    order: 2;
+  }
+  
+  .faq-content {
+    order: 1;
+  }
+  
+  .faq-filters-container {
+    justify-content: center;
+  }
+  
+  .faq-filters {
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .filter-pill {
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .faq-card-header {
+    padding: 1.25rem;
+  }
+  
+  .faq-question-text {
+    font-size: 1rem;
+  }
+  
+  .faq-answer-text {
+    padding: 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .faq-support-card {
+    padding: 1.5rem;
+  }
+  
+  .support-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-header .section-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+  
+  .support-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .support-option {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    border-bottom: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  
+  .support-stats {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* Responsive Hero Titles */
+.desktop-title {
+  display: block;
+}
+
+.mobile-title {
+  display: none;
+}
+
+/* Switch to mobile title at exactly 768px and below */
+@media (max-width: 768px) {
+  .desktop-title {
+    display: none !important;
+  }
+  
+  .mobile-title {
+    display: block !important;
+  }
+}
+
+/* Fix step circles maintaining perfect circular shape on mobile */
+@media (max-width: 768px) {
+  .idemo-circle,
+  .demo-circle,
+  .step-circle {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 480px) {
+  .idemo-circle,
+  .demo-circle,
+  .step-circle {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* === NEW PRICING IMPROVEMENTS === */
+
+/* Price anchoring */
+.sgpt-price-anchor {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.sgpt-price-anchor .emoji {
+  font-style: normal;
+  display: inline-block;
+  transform: none;
+}
+
+/* ===== GENERAL 400px MOBILE OPTIMIZATIONS ===== */
+@media (max-width: 400px) {
+  /* Container and layout improvements */
+  .container {
+    padding: 0.75rem 0.5rem !important;
+    max-width: 100% !important;
+  }
+  
+  .main-container {
+    padding-top: 55px !important;
+  }
+  
+  /* Typography optimizations for very small screens */
+  body, html {
+    font-size: 14px !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2 !important;
+  }
+  
+  p {
+    line-height: 1.5 !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Touch target improvements */
+  button, .btn, .cta-button, .sgpt-cta {
+    min-height: 44px !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Better spacing for very small screens */
+  .section {
+    padding: 1.5rem 0 !important;
+  }
+  
+  /* Improve form inputs on very small screens */
+  input, textarea, select {
+    padding: 0.75rem !important;
+    font-size: 16px !important; /* Prevent iOS zoom */
+    border-radius: 8px !important;
+  }
+  
+  /* Card spacing improvements */
+  .sgpt-pricing-card,
+  .guarantee-card,
+  .nucem-card,
+  .trust-point {
+    margin-bottom: 1rem !important;
+    border-radius: 8px !important;
+  }
+  
+  /* FAQ and accordion improvements */
+  .faq-question {
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .faq-answer-content {
+    padding: 0.75rem !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* How it works CTA improvements */
+  .cta-button-demo,
+  .cta-button-pricing {
+    padding: 1rem 1.25rem !important;
+    font-size: 0.95rem !important;
+    min-height: 48px !important;
+  }
+  
+  /* Final CTA improvements */
+  .final-cta-actions {
+    gap: 0.75rem !important;
+  }
+  
+  .final-cta-card .cta-primary,
+  .final-cta-card .cta-secondary {
+    padding: 1rem 1.25rem !important;
+    font-size: 0.95rem !important;
+    min-height: 48px !important;
+  }
+  
+  /* Reduce excessive margins/padding on small screens */
+  .modern-hero,
+  .sgpt-pricing-section,
+  .sgpt-comparison-modern,
+  .how-it-works-section,
+  .simple-trust-section,
+  .final-cta-section {
+    margin: 1rem 0 0 0 !important;
+    padding: 1.5rem 0 0 0 !important;
+  }
+}
+
+/* Trust badges styling */
+.sgpt-trust-section {
+  margin: 3rem 0;
+  text-align: center;
+}
+
+.sgpt-trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0 0 0;
+  flex-wrap: wrap;
+}
+
+.sgpt-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sgpt-trust-item i {
+  color: #10b981;
+  font-size: 1.1rem;
+}
+
+/* Slovak Guarantee */
+.sgpt-guarantee-section {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.sgpt-guarantee-icon {
+  font-size: 3rem;
+  color: #8b5cf6;
+  margin-bottom: 1rem;
+}
+
+.sgpt-guarantee-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.sgpt-guarantee-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* NÚCEM Section */
+.sgpt-nucem-section {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.sgpt-nucem-section h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #06b6d4;
+  margin-bottom: 1rem;
+}
+
+.sgpt-nucem-section p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Testimonials Section */
+.sgpt-testimonials-section {
+  margin: 3rem 0;
+  text-align: center;
+}
+
+.sgpt-testimonials-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.sgpt-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.sgpt-testimonial-item {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.sgpt-testimonial-item:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.1);
+}
+
+.sgpt-testimonial-content {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.sgpt-testimonial-author {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* FAQ Section */
+.sgpt-faq-section {
+  margin: 4rem 0;
+}
+
+.sgpt-faq-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sgpt-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.sgpt-faq-item {
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.sgpt-faq-item:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+
+.sgpt-faq-item h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.sgpt-faq-item p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .sgpt-trust-badges {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .sgpt-trust-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .sgpt-faq-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sgpt-faq-title {
+    font-size: 2rem;
+  }
+  
+  .sgpt-guarantee-section,
+  .sgpt-nucem-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .sgpt-testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sgpt-testimonial-item {
+    padding: 1.25rem;
+  }
+}
+
+/* ===== SINGLE SOURCE OF TRUTH FOR MOBILE COMPARISON TABLE ===== */
+/* This block overrides ALL other mobile table rules to prevent conflicts */
+@media (max-width: 768px) {
+  /* Single source of truth for the table grid on mobile */
+  .sgpt-table-header,
+  .sgpt-table-row {
+    display: grid !important;
+    grid-template-columns: 1.2fr 0.9fr 0.9fr !important; /* Features | SlohGPT | Generic */
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .sgpt-table-row {
+    min-height: 56px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  .sgpt-table-row:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Feature cell: fill full first track, left-aligned */
+  .sgpt-feature-name {
+    padding: 0.9rem 0.75rem !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;            /* ensure no inner 50% widths can shrink it */
+    box-sizing: border-box !important; /* consistent sizing */
+    display: flex !important;
+    height: 100% !important;
+  }
+  
+  .sgpt-feature-name i {
+    min-width: 18px !important;
+    width: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Brand columns: centered checks/crosses */
+  .sgpt-feature-slohgpt,
+  .sgpt-feature-generic {
+    padding: 0.9rem 0.75rem !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Kill margins that cause the "split" illusion */
+  .sgpt-feature-slohgpt {
+    margin: 0 !important;                  /* remove 0 4px variants that cut the track */
+    border-left: 2px solid !important;     /* thinner looks crisper on small screens */
+    border-right: 2px solid !important;
+    border-image: linear-gradient(45deg,
+      rgba(139, 92, 246, 0.95),
+      rgba(168, 85, 247, 0.95),
+      rgba(236, 72, 153, 0.95)
+    ) 1 !important;
+    border-radius: 0 !important;           /* radius handled by header/bottom row only */
+  }
+
+  /* Close the frame only on the last row */
+  .sgpt-table-row:last-child .sgpt-feature-slohgpt {
+    border-bottom: 2px solid !important;
+    border-image: linear-gradient(45deg,
+      rgba(139, 92, 246, 0.95),
+      rgba(168, 85, 247, 0.95),
+      rgba(236, 72, 153, 0.95)
+    ) 1 !important;
+    border-radius: 0 0 14px 14px !important;
+  }
+
+  /* Align header cap and borders to tracks */
+  .sgpt-table-header .sgpt-table-slohgpt-column {
+    position: relative !important;
+    overflow: visible !important;
+  }
+  
+  .sgpt-table-header .sgpt-table-slohgpt-column::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important; 
+    right: 0 !important;
+    top: -10px !important;
+    height: 10px !important;
+    border-left: 2px solid transparent !important;
+    border-right: 2px solid transparent !important;
+    border-image: linear-gradient(45deg,
+      rgba(139, 92, 246, 0.95),
+      rgba(168, 85, 247, 0.95),
+      rgba(236, 72, 153, 0.95)
+    ) 1 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* === COMPARISON TABLE: Canonical grid === */
+/* Desktop / tablet (default) */
+.sgpt-table-row,
+.sgpt-table-header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr; /* Features / SlohGPT / General */
+  align-items: stretch;
+  gap: 0;
+}
+
+/* Narrow phones: keep 3 cols, widen Features track */
+@media (max-width: 768px) {
+  .sgpt-table-row,
+  .sgpt-table-header {
+    grid-template-columns: 2.2fr 1fr 1fr;
+  }
+}
+
+/* Extra-narrow phones (the problem zone): still 3 cols, no stacking */
+@media (max-width: 400px) {
+  .sgpt-table-row,
+  .sgpt-table-header {
+    grid-template-columns: 2.6fr 1fr 1fr; /* push more room to Features */
+  }
+}
+
+/* Features cell must behave like a single flex item, not a mini-grid */
+.sgpt-feature-name {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100% !important;
+  max-width: none !important;      /* remove 16–18ch clamps */
+  white-space: normal;              /* let text wrap naturally */
+  overflow: visible;                /* no clipping that creates odd boxes */
+}
+
+/* Icon sizing stays fixed; text can wrap to 2 lines max */
+.sgpt-feature-name i {
+  min-width: 18px;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.sgpt-feature-name span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* at most 2 lines */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Kill any pseudo-elements that could overlay/clone the cell */
+@media (max-width: 400px) {
+  .sgpt-feature-name::before,
+  .sgpt-feature-name::after {
+    content: none !important;
+  }
+}
+
+/* Align highlight to the track edges without pushing layout */
+.sgpt-feature-slohgpt {
+  margin: 0 !important;           /* remove stray horizontal margins */
+  border-left: 3px solid;
+  border-right: 3px solid;
+  border-image: linear-gradient(45deg,#8b5cf6,#a855f7,#ec4899) 1;
+  border-radius: 0;                /* bottom radius handled on last row if desired */
+  box-sizing: border-box;
+}
+
+/* Header cells respect the same tracks; no internal flex that adds phantom nodes */
+.sgpt-table-feature-column,
+.sgpt-table-slohgpt-column,
+.sgpt-table-generic-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Remove any header ::before cap that might push a phantom block on tiny widths */
+@media (max-width: 480px) {
+  .sgpt-table-feature-column::before,
+  .sgpt-table-slohgpt-column::before,
+  .sgpt-table-generic-column::before {
+    content: unset !important;
+  }
+}
+
+/* ===== CANONICAL MOBILE GRID (wins all conflicts) ===== */
+@media (max-width: 768px) {
+  .sgpt-table-header,
+  .sgpt-table-row {
+    display: grid !important;
+    grid-template-columns: 2.2fr 1fr 1fr !important;  /* Features | SlohGPT | Generic */
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .sgpt-table-row { min-height: 56px !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; }
+  .sgpt-table-row:last-child { border-bottom: none !important; }
+
+  /* Features cell fills its whole track */
+  .sgpt-feature-name {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.9rem 0.75rem !important;
+  }
+  .sgpt-feature-name i { min-width: 18px !important; width: 18px !important; flex-shrink: 0 !important; }
+}
+
+/* Extra-narrow phones: give more room to Features but keep 3 columns */
+@media (max-width: 480px) {
+  .sgpt-table-header,
+  .sgpt-table-row { grid-template-columns: 2.6fr 1fr 1fr !important; }
+}
+
+/* === SlohGPT column highlight — rows === */
+@media (max-width: 768px) {
+  .sgpt-feature-slohgpt {
+    /* kill any older margins that shift borders off-track */
+    margin: 0 !important;
+
+    /* consistent vertical edges */
+    border-left: 3px solid !important;
+    border-right: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+
+    /* no rounding here; bottom row will close frame */
+    border-radius: 0 !important;
+
+    /* sizing */
+    padding: 0.9rem 0.75rem !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Close the pink frame on the very last row */
+  .sgpt-table-row:last-child .sgpt-feature-slohgpt {
+    border-bottom: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+    border-radius: 0 0 14px 14px !important;
+  }
+}
+
+/* === SlohGPT column highlight — header (top cap + match edges) === */
+@media (max-width: 768px) {
+  /* Remove the old pseudo-cap so it can't misalign */
+  .sgpt-table-header .sgpt-table-slohgpt-column::before { content: none !important; }
+
+  .sgpt-table-header .sgpt-table-slohgpt-column {
+    /* draw borders on the cell edge, not inside padding */
+    border-left: 3px solid !important;
+    border-right: 3px solid !important;
+    border-top: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+    border-radius: 14px 14px 0 0 !important;
+
+    /* ensure no extra "internal" borders interfere */
+    border-bottom: 0 !important;
+    padding-left: 0.5rem; padding-right: 0.5rem; /* you can tweak; doesn't affect border position */
+    box-sizing: border-box;
+  }
+
+  /* Make right edge look equally thick: remove any left border on the next column */
+  .sgpt-table-header .sgpt-table-generic-column,
+  .sgpt-table-row .sgpt-feature-generic {
+    border-left: 0 !important;
+  }
+}
+
+/* Slightly thinner on very small screens so it doesn't look too heavy */
+@media (max-width: 420px) {
+  .sgpt-feature-slohgpt { border-left-width: 2px !important; border-right-width: 2px !important; }
+  .sgpt-table-header .sgpt-table-slohgpt-column { border-width: 2px 2px 0 2px !important; }
+  .sgpt-table-header .sgpt-table-slohgpt-column::before {
+    border-left-width: 2px !important;
+    border-right-width: 2px !important;
+  }
+}
+
+/* Safety net for header/row alignment */
+@media (max-width: 768px) {
+  .sgpt-feature-name {
+    display: flex !important;
+    gap: 0.5rem;
+    width: 100% !important;
+    max-width: none !important;
+    white-space: normal !important;
+    overflow: visible !important;
+  }
+  .sgpt-feature-name span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* --- SlohGPT header width fix on mobile --- */
+@media (max-width: 480px) {
+  .sgpt-table-header .sgpt-table-slohgpt-column {
+    margin: 0 !important;                 /* kill the 0 4px that makes it wider */
+    box-sizing: border-box !important;    /* borders included in the track width */
+    padding: 0.9rem 0.75rem !important;   /* match body cell padding */
+    border-left: 3px solid !important;    /* match body border thickness */
+    border-right: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+  }
+}
+
+/* Extra-narrow phones keep the same alignment */
+@media (max-width: 400px) {
+  .sgpt-table-header .sgpt-table-slohgpt-column {
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    padding: 0.85rem 0.6rem !important;   /* tiny tweak for very small screens */
+    border-left: 3px solid !important;
+    border-right: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+  }
+}
+
+/* Canonical mobile grid — header and rows MUST share tracks */
+@media (max-width: 480px) {
+  .sgpt-table-header,
+  .sgpt-table-row {
+    grid-template-columns: 2.2fr 1fr 1fr !important; /* or your preferred split */
+    gap: 0 !important;
+  }
+}
+@media (max-width: 480px) {
+  .sgpt-table-header,
+  .sgpt-table-row {
+    grid-template-columns: 2.6fr 1fr 1fr !important; /* current tiny-screen split */
+  }
+}
+
+/* === MOBILE COMPARISON TABLE — CANONICAL === */
+@media (max-width: 768px) {
+  /* Header + rows MUST share the same tracks */
+  .sgpt-table-header,
+  .sgpt-table-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+
+  /* Kill the old pseudo-cap that can misalign */
+  .sgpt-table-header .sgpt-table-slohgpt-column::before { content: none !important; }
+
+  /* Make the SlohGPT ROW cells draw the vertical gradient edges */
+  .sgpt-feature-slohgpt {
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    border-left: 3px solid !important;
+    border-right: 3px solid !important;
+    border-image: linear-gradient(45deg,#8b5cf6,#a855f7,#ec4899) 1 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Make the SlohGPT HEADER cell match the same track exactly */
+  .sgpt-table-header .sgpt-table-slohgpt-column {
+    margin: 0 !important;                 /* <-- fixes the width drift */
+    box-sizing: border-box !important;
+    padding: 0.9rem 0.75rem !important;   /* safe padding that doesn't move borders */
+    border-left: 3px solid !important;
+    border-right: 3px solid !important;
+    border-top: 3px solid !important;     /* closes the top of the rectangle */
+    border-bottom: 0 !important;
+    border-image: linear-gradient(45deg,#8b5cf6,#a855f7,#ec4899) 1 !important;
+    border-radius: 14px 14px 0 0 !important;
+  }
+
+  /* Avoid a "double-thick" right edge: remove any left border on the neighbor column */
+  .sgpt-table-header .sgpt-table-generic-column,
+  .sgpt-table-row .sgpt-feature-generic {
+    border-left: 0 !important;
+  }
+}
+
+/* Extra room for the feature text on screens ≤480px, keep tracks identical */
+@media (max-width: 480px) {
+  .sgpt-table-header,
+  .sgpt-table-row {
+    grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+  /* Slightly thinner frame so it doesn't look heavy on smaller screens */
+  .sgpt-feature-slohgpt { border-left-width: 2px !important; border-right-width: 2px !important; }
+  .sgpt-table-header .sgpt-table-slohgpt-column { border-width: 2px 2px 0 2px !important; }
+}
+
+/* Ensure the frame closes at the bottom only once */
+@media (max-width: 768px) {
+  .sgpt-table-row:last-child .sgpt-feature-slohgpt {
+    border-bottom: 3px solid !important;
+    border-image: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899) 1 !important;
+    border-radius: 0 0 14px 14px !important;
+  }
+}
+
+/* Optional safety: Ensure the logo can't force extra width */
+@media (max-width: 480px) {
+  .sgpt-table-slohgpt-column .sgpt-brand-logo img {
+    max-width: 100% !important;
+    width: clamp(120px, 42vw, 180px) !important;
+    height: auto !important;
+  }
+}
+
+/* Logo switching for mobile - Default: show full logos, hide icons */
+.sgpt-logo-icon,
+.generic-logo-icon {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  /* Hide full logos on screens 480px and below */
+  .sgpt-logo-full,
+  .generic-logo-full {
+    display: none !important;
+  }
+
+  /* Show compact icons instead */
+  .sgpt-logo-icon,
+  .generic-logo-icon {
+    display: block !important;
+    max-width: clamp(32px, 8vw, 48px);   /* responsive sizing */
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .sgpt-logo-wrapper,
+  .generic-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* ========================================
+   CANONICAL COLORS FOR MOBILE/TABLET PARITY
+   ======================================== */
+
+:root {
+  /* Desktop palette — reuse for mobile */
+  --sgpt-green: #22c55e;  /* desktop check green */
+  --sgpt-red:   #ef4444;  /* desktop cross red */
+  --sgpt-row-bg: rgba(12, 16, 28, 0.90);     /* table panel bg */
+  --sgpt-row-sep: rgba(255, 255, 255, 0.06);  /* row separator */
+  --sgpt-cell-bg: rgba(30, 36, 58, 0.18);     /* subtle cell fill like desktop */
+}
+
+/* === MOBILE/TABLET COLOR PARITY WITH DESKTOP === */
+@media (max-width: 768px) {
+  /* Table container + rows */
+  .sgpt-comparison-table-modern,
+  .sgpt-comparison-modern,
+  .sgpt-table-body {
+    background: transparent !important;
+  }
+
+  .sgpt-table-row {
+    background: var(--sgpt-row-bg) !important;
+    border-bottom: 1px solid var(--sgpt-row-sep) !important;
+  }
+
+  .sgpt-table-row:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Header row tone matches desktop panel */
+  .sgpt-table-header {
+    background: var(--sgpt-row-bg) !important;
+    border-bottom: 1px solid var(--sgpt-row-sep) !important;
+  }
+
+  /* Cell surfaces (slight tint like desktop) */
+  .sgpt-feature-name,
+  .sgpt-feature-slohgpt,
+  .sgpt-feature-generic {
+    background: var(--sgpt-cell-bg) !important;
+  }
+
+  /* Checks and crosses — exact desktop colors */
+  .sgpt-check,
+  .sgpt-feature-slohgpt .sgpt-check,
+  .sgpt-feature-generic .sgpt-check,
+  .sgpt-table-row .fa-check,
+  .sgpt-table-row .fa-circle-check,
+  .sgpt-table-row .icon-check {
+    color: var(--sgpt-green) !important;
+    fill: var(--sgpt-green) !important;
+    stroke: var(--sgpt-green) !important;
+  }
+
+  .sgpt-x,
+  .sgpt-feature-slohgpt .sgpt-x,
+  .sgpt-feature-generic .sgpt-x,
+  .sgpt-table-row .fa-times,
+  .sgpt-table-row .fa-xmark,
+  .sgpt-table-row .fa-circle-xmark,
+  .sgpt-table-row .icon-x {
+    color: var(--sgpt-red) !important;
+    fill: var(--sgpt-red) !important;
+    stroke: var(--sgpt-red) !important;
+  }
+
+  /* If the checks/crosses are SVG with currentColor, ensure they inherit */
+  .sgpt-table-row svg {
+    color: inherit;
+  }
+
+  /* Add breathing room between feature icon and text */
+  .sgpt-feature-name {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;                 /* small space requested */
+    padding-inline: 0.9rem;       /* small horizontal padding for balance */
+  }
+  .sgpt-feature-name i,
+  .sgpt-feature-name svg {
+    flex-shrink: 0;
+  }
+
+  /* Optional: hide any stray "FUNKCIE" label overlay if it appears empty */
+  .sgpt-table-feature-column .sgpt-feature-title:empty {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   CANONICAL COLORS FOR MOBILE/TABLET PARITY
+   ======================================== */
+
+:root {
+  /* Desktop palette — reuse for mobile */
+  --sgpt-green: #22c55e;  /* desktop check green */
+  --sgpt-red:   #ef4444;  /* desktop cross red */
+  --sgpt-row-bg: rgba(12, 16, 28, 0.90);     /* table panel bg */
+  --sgpt-row-sep: rgba(255, 255, 255, 0.06);  /* row separator */
+  --sgpt-cell-bg: rgba(30, 36, 58, 0.18);     /* subtle cell fill like desktop */
+}
+
+/* === MOBILE/TABLET COLOR PARITY WITH DESKTOP === */
+@media (max-width: 768px) {
+  /* Table container + rows */
+  .sgpt-comparison-table-modern,
+  .sgpt-comparison-modern,
+  .sgpt-table-body {
+    background: transparent !important;
+  }
+
+  .sgpt-table-row {
+    background: var(--sgpt-row-bg) !important;
+    border-bottom: 1px solid var(--sgpt-row-sep) !important;
+  }
+
+  .sgpt-table-row:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Header row tone matches desktop panel */
+  .sgpt-table-header {
+    background: var(--sgpt-row-bg) !important;
+    border-bottom: 1px solid var(--sgpt-row-sep) !important;
+  }
+
+  /* Cell surfaces (slight tint like desktop) */
+  .sgpt-feature-name,
+  .sgpt-feature-slohgpt,
+  .sgpt-feature-generic {
+    background: var(--sgpt-cell-bg) !important;
+  }
+
+  /* Checks and crosses — exact desktop colors */
+  .sgpt-check,
+  .sgpt-feature-slohgpt .sgpt-check,
+  .sgpt-feature-generic .sgpt-check,
+  .sgpt-table-row .fa-check,
+  .sgpt-table-row .fa-circle-check,
+  .sgpt-table-row .icon-check {
+    color: var(--sgpt-green) !important;
+    fill: var(--sgpt-green) !important;
+    stroke: var(--sgpt-green) !important;
+  }
+
+  .sgpt-x,
+  .sgpt-feature-slohgpt .sgpt-x,
+  .sgpt-feature-generic .sgpt-x,
+  .sgpt-table-row .fa-times,
+  .sgpt-table-row .fa-xmark,
+  .sgpt-table-row .fa-circle-xmark,
+  .sgpt-table-row .icon-x {
+    color: var(--sgpt-red) !important;
+    fill: var(--sgpt-red) !important;
+    stroke: var(--sgpt-red) !important;
+  }
+
+  /* If the checks/crosses are SVG with currentColor, ensure they inherit */
+  .sgpt-table-row svg {
+    color: inherit;
+  }
+
+  /* Add breathing room between feature icon and text */
+  .sgpt-feature-name {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;                 /* small space requested */
+    padding-inline: 0.9rem;       /* small horizontal padding for balance */
+  }
+  .sgpt-feature-name i,
+  .sgpt-feature-name svg {
+    flex-shrink: 0;
+  }
+
+  /* Optional: hide any stray "FUNKCIE" label overlay if it appears empty */
+  .sgpt-table-feature-column .sgpt-feature-title:empty {
+    display: none !important;
+  }
+}

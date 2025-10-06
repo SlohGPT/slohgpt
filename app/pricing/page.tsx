@@ -775,7 +775,7 @@ export default function PricingPage() {
                 </li>
               </ul>
               <div className="sgpt-vote-section">
-                <p className="sgpt-vote-description">Chceš, aby sme AI Coach spustili ako prvý?</p>
+                <p className="sgpt-vote-description">Chceš, aby sme AI Coach spustili neskôr?</p>
                 <div className="sgpt-vote-buttons">
                   <button 
                     className={`sgpt-vote-button sgpt-vote-up ${userVotes['ai-coach'] === 'up' ? 'active' : ''}`}
@@ -810,9 +810,9 @@ export default function PricingPage() {
           <div className="sgpt-trust-section">
             <div className="sgpt-trust-badges">
               <div className="sgpt-trust-item">
-              <i className="fas fa-shield-alt"></i>
+                <i className="fas fa-shield-alt"></i>
                 <span>Zabezpečené platby cez Stripe</span>
-            </div>
+              </div>
               <div className="sgpt-trust-item">
                 <i className="fas fa-lock"></i>
                 <span>SSL šifrovanie</span>
@@ -941,7 +941,7 @@ export default function PricingPage() {
       </div>
 
       {/* How It Works Section */}
-      <section className="how-it-works-section">
+      <section id="how-it-works" className="how-it-works-section">
         <div className="container">
           <div className="how-it-works-header">
             <h2>Ako to funguje?</h2>
@@ -1022,7 +1022,7 @@ export default function PricingPage() {
                 Ceny
               </button>
             </div>
-            <p className="cta-note">Začni už dnes - bez registrácie</p>
+            <p className="cta-note">Začni už dnes</p>
           </div>
         </div>
       </section>
@@ -1035,7 +1035,7 @@ export default function PricingPage() {
               <i className="fas fa-seedling"></i>
               <span>Sme tu noví</span>
             </div>
-            <h2>Úprimne hovoríme</h2>
+            <h2>Sme úprimní</h2>
             <p>SlohGPT je nový projekt. Ešte nie sme dokonalí, ale každý deň sa zlepšujeme. Chceme ťa naučiť písať lepšie slohy, nie len ti dať hotový text na kopírovanie.</p>
             
             <div className="trust-points">
@@ -1068,7 +1068,9 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ Section */}
-      <PricingFAQ />
+      <section id="faq">
+        <PricingFAQ />
+      </section>
 
       {/* Final CTA Section */}
       <section id="final-cta" className="final-cta-section">

@@ -15,17 +15,17 @@ const faqData = [
   },
   {
     question: "Stojí to za to? Nevyhodím peniaze?",
-    answer: "14,99€ za sloh, ktorý vám ušetrí 2 hodiny práce a zlepší známku? To je menej ako káva. Plus máte 100% garanciu vrátenia peňazí ak nie ste spokojní.",
+    answer: "7.99€ za sloh, ktorý vám ušetrí 2 hodiny práce a zlepší známku? To je menej ako 1 pizza, ktorá je fuč po pár minútach. ",
     category: "objection"
   },
   {
     question: "Ako dlho to trvá? Potrebujem to na zajtra!",
-    answer: "Perfektne! SlohGPT vytvorí sloh za 5 minút. Stačí vybrať typ, zadať tému a máte hotový sloh s vysvetleniami. Ideálne pre last-minute situácie.",
+    answer: "Perfektne! SlohGPT vytvorí sloh za 1 minútu. Stačí vybrať typ, zadať tému a máte hotový sloh s vysvetleniami. Ideálne pre last-minute situácie.",
     category: "urgency"
   },
   {
     question: "Aké typy slohov podporuje?",
-    answer: "Všetky hlavné typy: úvaha, rozprávanie, charakteristika, popis, výklad, argumentácia. AI rozumie slovenským slohovým žánrom a štýlovým prostriedkom.",
+    answer: "Všetky hlavné typy: úvaha, rozprávanie, umelecký opis, charakteristika osoby, beletrizovaný životopis, výklad, diskusný príspevok, slávnostný prejav. AI rozumie slovenským slohovým žánrom a štýlovým prostriedkom.",
     category: "feature"
   },
   {

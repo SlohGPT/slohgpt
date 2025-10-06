@@ -99,7 +99,7 @@ const ModernHero: React.FC<ModernHeroProps> = ({ onDemoClick }) => {
                 marginBottom: 'var(--space-2)',
                 fontSize: '0.9em',
                 fontWeight: 900,
-                color: 'rgba(255, 255, 255, 0.8)'
+                color: 'rgba(255, 255, 255, 1)'
               }}>
                 Tajná zbraň pre slohy
               </span>

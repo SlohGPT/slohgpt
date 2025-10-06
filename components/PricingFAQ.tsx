@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 const pricingFaqData = [
   {
     question: "Koľko stojí jeden sloh?",
-    answer: "Jeden sloh stojí €7.99. To je menej ako doučovanie za €25/hod. Za túto cenu dostanete kompletný sloh s vysvetlením, ako ho napísať.",
+    answer: "Jeden sloh stojí €7.99. To je menej ako pizza, ktorá je fuč za 10 minút. Za túto cenu dostanete kompletný sloh s vysvetlením, ako ho napísať.",
     category: "pricing"
   },
   {
@@ -26,12 +26,12 @@ const pricingFaqData = [
   },
   {
     question: "Môžem zmeniť alebo zrušiť objednávku?",
-    answer: "Áno, môžete zmeniť tému slohu alebo zrušiť objednávku do 24 hodín od objednania. Po tom máte 7 dní na vrátenie peňazí.",
+    answer: "Áno, môžete zmeniť tému slohu kedykoľvek pred vytvorením slohu. Po vytvorení slohu máte 7 dní na vrátenie peňazí ak nie ste spokojní.",
     category: "payment"
   },
   {
     question: "Dostanem faktúru?",
-    answer: "Áno, automaticky dostanete elektronickú faktúru na váš email. Faktúra je vhodná pre školy a rodičov.",
+    answer: "Áno, automaticky dostanete elektronickú faktúru na váš email.",
     category: "payment"
   },
   {
@@ -41,8 +41,23 @@ const pricingFaqData = [
   },
   {
     question: "Aké typy slohov podporuje?",
-    answer: "Všetky hlavné typy: úvaha, rozprávanie, charakteristika, popis, výklad, argumentácia. AI rozumie slovenským slohovým žánrom a štýlovým prostriedkom.",
+    answer: "Všetky hlavné typy: úvaha, rozprávanie, umelecký opis, charakteristika osoby, beletrizovaný životopis, výklad, diskusný príspevok, slávnostný prejav. AI rozumie slovenským slohovým žánrom a štýlovým prostriedkom.",
     category: "feature"
+  },
+  {
+    question: "Je to podvádzanie?",
+    answer: "Nie. SlohGPT je vzdelávací nástroj. Dostanete sloh + vysvetlenie prečo funguje. Naučíte sa štruktúru a techniky pre budúce slohy. Nie je to o kopírovaní, ale o učení sa.",
+    category: "guarantee"
+  },
+  {
+    question: "Ako dlho to trvá?",
+    answer: "Sloh je hotový za 1-2 minúty. Stačí vybrať typ, zadať tému a máte hotovo. Ideálne pre last-minute situácie alebo keď potrebujete inšpiráciu.",
+    category: "feature"
+  },
+  {
+    question: "Stojí to za to?",
+    answer: "€7.99 za sloh, ktorý vám ušetrí 2+ hodiny práce? To je menej ako pizza, ktorá je fuč za 10 minút. Plus máte 7-dňovú garanciu vrátenia peňazí.",
+    category: "pricing"
   }
 ]
 

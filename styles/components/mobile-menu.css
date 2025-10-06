@@ -1,0 +1,483 @@
+/* Mobile Menu */
+/* Old mobile menu styles removed to prevent conflicts */
+
+.mobile-nav-link {
+    display: block !important;
+    padding: var(--space-4) 0 !important; /* Vertical padding for touch targets, no horizontal for alignment */
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.9) !important; /* White text */
+    font-family: var(--font-inter) !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important; /* Slightly larger for readability */
+    border-radius: 0 !important; /* No border radius */
+    transition: opacity 0.2s ease !important; /* Only opacity transition */
+    background: transparent !important; /* No background */
+    backdrop-filter: none !important; /* No blur */
+    -webkit-backdrop-filter: none !important; /* No blur */
+    border: none !important; /* No borders */
+    min-height: var(--touch-target-min) !important; /* Touch target height */
+    text-align: left !important; /* Left aligned text */
+    line-height: 1.5 !important; /* Good line height for touch targets */
+}
+
+.mobile-nav-link:hover {
+    background: rgba(255, 255, 255, 0.1) !important; /* Subtle background like Mistral */
+    color: #ffffff !important; /* Brighter white on hover */
+    backdrop-filter: none !important; /* No blur */
+    -webkit-backdrop-filter: none !important; /* No blur */
+    border: none !important; /* No borders */
+    text-decoration: none !important; /* No underlines like Mistral */
+}
+
+.mobile-nav-link.is-current {
+    background: rgba(139, 92, 246, 0.2) !important; /* Purple background for current */
+    color: #ffffff !important; /* Full white for current page */
+    backdrop-filter: none !important; /* No blur */
+    -webkit-backdrop-filter: none !important; /* No blur */
+    border: none !important; /* No borders */
+    text-decoration: none !important; /* No underlines */
+    border-left: 3px solid #8b5cf6 !important; /* Left border indicator */
+}
+
+/* Responsive Design - Unified Mobile Menu */
+@media (max-width: 1130px) {
+    .nav-menu {
+        display: none !important;
+    }
+    
+    .hamburger {
+        display: block !important;
+    }
+    
+    /* Purple Hamburger Button */
+    .hamburger {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;                 /* we want the box, not extra padding */
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: calc(var(--header-h) - (2 * var(--header-pad-y))) !important;
+        height: calc(var(--header-h) - (2 * var(--header-pad-y))) !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+        position: static !important;
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+    }
+    
+    .hamburger:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .hamburger i {
+        font-size: clamp(18px, 50%, 22px) !important;
+        color: rgba(255, 255, 255, 0.9) !important; /* Simple white color instead of gradient */
+        transition: all 0.3s ease !important;
+    }
+    
+    .hamburger:hover i {
+        color: #ffffff !important; /* Simple white on hover */
+    }
+    
+    /* Mobile Menu Backdrop - Covers entire screen and blurs everything below */
+    .mobile-menu-backdrop {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        z-index: var(--z-overlay) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .mobile-menu-backdrop.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Prevent body scroll when menu is open */
+    body.mobile-menu-open {
+        overflow: hidden !important;
+    }
+    
+    /* Mobile Menu Panel - Mobile First - Above header */
+    .mobile-menu {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: min(90vw, 320px) !important; /* Responsive width, max 320px */
+        height: 100vh !important;
+        min-height: 100vh !important; /* Remove excessive min-height */
+        
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.98) 0%, 
+            rgba(22, 33, 62, 0.98) 50%, 
+            rgba(15, 52, 96, 0.98) 100%) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        z-index: var(--z-modal) !important;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4) !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        bottom: 0 !important;
+    }
+    
+    .mobile-menu.active {
+        right: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Mobile Menu Navigation - Mobile First Touch Targets */
+    .mobile-nav-list {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+    
+    .mobile-nav-item {
+        margin: 0 !important;
+    }
+    
+    .mobile-nav-link {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        min-height: var(--touch-target-min) !important; /* 48px touch target */
+        padding: var(--space-4) 0 !important; /* Vertical padding only for left alignment */
+        font-size: 1.05rem !important; /* Slightly larger for readability */
+        font-weight: 600 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        border: none !important; /* No borders */
+        background: transparent !important; /* No background */
+        transition: opacity 0.2s ease !important; /* Only opacity transition */
+        text-align: left !important; /* Left aligned text */
+        line-height: 1.5 !important; /* Good line height for touch targets */
+        margin-bottom: var(--space-5) !important; /* 20px spacing between links */
+    }
+    
+    .mobile-nav-link:hover,
+    .mobile-nav-link:focus {
+        background: transparent !important; /* No background */
+        color: #ffffff !important; /* Brighter white */
+        transform: none !important; /* No movement */
+        text-decoration: underline !important; /* Subtle underline feedback */
+        text-decoration-thickness: 1px !important;
+        text-underline-offset: 4px !important;
+    }
+    
+    .mobile-nav-link.is-current {
+        background: transparent !important; /* No background */
+        color: rgba(255, 255, 255, 1) !important; /* Full white for current page */
+        border: none !important; /* No borders */
+        padding: var(--space-4) 0 !important; /* Same padding as normal links */
+        text-decoration: underline !important; /* 2px underline for current page */
+        text-decoration-thickness: 2px !important;
+        text-underline-offset: 4px !important;
+    }
+    
+/* Screen reader only utility */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Focus visible styles for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid rgba(59, 130, 246, 0.8) !important;
+    outline-offset: 2px !important;
+    border-radius: var(--border-radius) !important;
+}
+
+/* Improve focus indicators on interactive elements */
+button:focus-visible,
+a:focus-visible,
+.mobile-nav-link:focus-visible,
+.sgpt-cta-button:focus-visible,
+.sgpt-vote-button:focus-visible {
+    outline: 2px solid rgba(59, 130, 246, 0.8) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Skip to main content link for keyboard users */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--hero-gradient);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    z-index: var(--z-tooltip);
+    transition: top 0.3s ease;
+}
+
+.skip-to-main:focus {
+    top: 6px;
+}
+
+/* Hide skip-to-main on mobile - only show on desktop/keyboard */
+@media (max-width: 768px) {
+    .skip-to-main {
+        display: none !important; /* Never show on mobile/touch devices */
+    }
+}
+
+/* Improve color contrast for better accessibility */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --text-light: #ffffff;
+    }
+    
+    .pain-card,
+    .power-benefit-card,
+    .sgpt-pricing-card {
+        background: rgba(0, 0, 0, 0.9) !important;
+        border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    }
+}
+
+/* Ensure all interactive elements meet minimum size requirements */
+button,
+a[role="button"],
+.btn,
+.mobile-nav-link,
+.sgpt-cta-button,
+.sgpt-vote-button,
+.idemo-select,
+.idemo-option {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+}
+
+/* Improve keyboard navigation for dropdown menus */
+.idemo-dropdown {
+    position: relative;
+}
+
+.idemo-select[aria-expanded="true"] + .idemo-options {
+    display: block;
+}
+
+.idemo-option:focus {
+    background: rgba(94, 60, 246, 0.2);
+    outline: 2px solid rgba(59, 130, 246, 0.8);
+}
+
+/* Motion preferences - additional accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .sticky-cta {
+        transition: none !important;
+    }
+    
+    .hero-preview-card {
+        transition: none !important;
+    }
+    
+    /* Remove all transform-based animations for users who prefer reduced motion */
+    *:hover {
+        transform: none !important;
+    }
+    }
+    
+    /* Mobile Menu Header - will be replaced with responsive version */
+    
+    /* Align gray line with navigation bar line */
+    .mobile-menu-header::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 1px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .mobile-menu-logo {
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Mobile logo - will be replaced with responsive version */
+    
+    /* Mobile close button - will be replaced with responsive version */
+    
+    .mobile-menu-close:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .mobile-menu-close i {
+        font-size: 1.6rem !important;
+        color: white !important;
+    }
+
+    /* Reveal the X when the panel is active - updated for responsive system */
+    .mobile-menu.active .mobile-menu-close {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Mobile Menu Content */
+    .mobile-menu-content {
+        padding: 2rem 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        background: transparent !important;
+        position: relative !important; /* establish stacking context */
+    }
+    
+    /* Main CTA Button */
+    .mobile-menu-main-button {
+        text-align: center !important;
+        margin-bottom: 1rem !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    .mobile-cta-button {
+        display: block !important;
+        width: 100% !important;
+        padding: 1.5rem 2rem !important;
+        background: linear-gradient(135deg, #00f2fe, #4facfe) !important;
+        color: white !important;
+        text-decoration: none !important;
+        border-radius: 15px !important;
+        font-size: 1.3rem !important;
+        font-weight: 700 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4) !important;
+        text-align: center !important;
+        border: none !important;
+        cursor: pointer !important;
+        opacity: 0 !important;
+        transform: translateX(20px) !important;
+        animation: slideInFromRight 0.4s ease 0.1s forwards !important;
+        position: relative !important;
+        z-index: 1 !important;
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+    }
+    
+    .mobile-cta-button:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5) !important;
+        background: linear-gradient(135deg, #00d4ff, #3d8bfe) !important;
+    }
+    
+    /* Mobile Menu Links Container */
+    .mobile-menu-links {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        position: relative !important;
+        z-index: 2 !important; /* ensure links sit above CTA area */
+        margin-top: 0.5rem !important;
+    }
+    
+    .mobile-nav-link {
+        display: block !important;
+        padding: var(--space-4) 0 !important; /* Vertical padding only for left alignment */
+        font-size: 1.05rem !important; /* Consistent size */
+        font-weight: 600 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        border-radius: 0 !important; /* No border radius */
+        transition: opacity 0.2s ease !important; /* Only opacity transition */
+        position: relative !important;
+        background: transparent !important; /* No background */
+        border: none !important; /* No borders */
+        text-align: left !important; /* Left aligned text */
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+        backdrop-filter: none !important; /* No blur */
+        min-height: var(--touch-target-min) !important; /* Touch target height */
+        line-height: 1.5 !important; /* Good line height for touch targets */
+        margin-bottom: var(--space-5) !important; /* 20px spacing between links */
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+    }
+
+    /* No animations for links - keep them simple and clean */
+    .mobile-menu.active .mobile-nav-link {
+        animation: none !important; /* No slide-in animations */
+    }
+    
+    /* Remove staggered animations - plain text links don't need fancy entrances */
+    .mobile-nav-link:nth-child(1),
+    .mobile-nav-link:nth-child(2),
+    .mobile-nav-link:nth-child(3) {
+        animation: none !important; /* No animations */
+    }
+    
+    .mobile-nav-link:hover {
+        background: transparent !important; /* No background */
+        color: #ffffff !important; /* Brighter white */
+        transform: none !important; /* No movement */
+        text-decoration: underline !important; /* Subtle underline feedback */
+        text-decoration-thickness: 1px !important;
+        text-underline-offset: 4px !important;
+        box-shadow: none !important; /* No shadow */
+    }
+    
+    .mobile-nav-link.is-current {
+        background: transparent !important; /* No background */
+        color: rgba(255, 255, 255, 1) !important; /* Full white for current page */
+        font-weight: 600 !important; /* Same weight as other links */
+        border: none !important; /* No borders */
+        box-shadow: none !important; /* No shadow */
+        text-decoration: underline !important; /* 2px underline for current page */
+        text-decoration-thickness: 2px !important;
+        text-underline-offset: 4px !important;
+    }
+    
+    .mobile-nav-link.is-current:hover {
+        transform: none !important; /* No movement */
+        box-shadow: none !important; /* No shadow */
+        color: rgba(255, 255, 255, 1) !important; /* Keep same color */
+        text-decoration: underline !important; /* Keep underline */
+        text-decoration-thickness: 2px !important;
+        text-underline-offset: 4px !important;
+    }
+}
+
+/* Slide in from right animation */
+@keyframes slideInFromRight {
+    from {
+        opacity: 0 !important;
+        transform: translateX(20px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}

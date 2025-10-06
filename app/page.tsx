@@ -88,7 +88,7 @@ export default function HomePage() {
                 Náš príbeh
               </div>
               <h2 className="our-story-title">
-                Poznáme tvoju bolesť
+                Sme v tom s tebou
               </h2>
               <p className="our-story-subtitle">
                 Sme študenti ako ty. Zažili sme každý jeden z týchto problémov na vlastnej koži.
@@ -101,8 +101,8 @@ export default function HomePage() {
               {/* Left Side - Story Text */}
               <div className="our-story-text">
                 <div className="story-paragraph">
-                  Poznáme ten pocit, keď <span className="story-highlight">civíš na prázdnu stránku</span> prvých 5-10 minút 
-                  bez jediného nápadu. Vieš, že čas uteká, stres narastá a ty stále nevieš, ako začať.
+                  Poznáme ten pocit, keď <span className="story-highlight">čumíš na prázdny papier</span> prvých 5-10 minút 
+                  bez jediného nápadu. Vieš, že čas uteká, stres rastie, ale ty stále nevieš, ako začať.
                 </div>
                 
                 {/* Mobile couple after paragraph 1 */}
@@ -117,8 +117,8 @@ export default function HomePage() {
                 </div>
                 
                 <div className="story-paragraph">
-                  Poznáme frustráciu, keď napíšeš vetu, potom ju <span className="story-highlight">preškrtneš</span> - 
-                  ale každé škrtnutie sa počíta ako chyba. Sloh musí byť čistý, ale ty si nie si istý svojím textom.
+                 Vieme aké je, keď napíšeš vetu a hneď potom ju <span className="story-highlight">preškrtneš</span>. Ale 
+                  každé škrtanec sa počíta ako chyba. Sloh musí byť čistý, ale ty si neistý svojím textom.
                 </div>
                 
                 {/* Mobile couple after paragraph 2 */}
@@ -134,7 +134,7 @@ export default function HomePage() {
                 
                 <div className="story-paragraph">
                   Poznáme bezradnosť pri <span className="story-highlight">jazykových prostriedkoch a frazeologizmoch</span>. 
-                  Nevieš, ktoré použiť, ako vytvoriť metaforu, ani ako postaviť správnu osnovu.
+                  Nevieš, ktoré použiť, ako vytvoriť metaforu a ani ako postaviť správnu osnovu.
                 </div>
                 
                 {/* Mobile couple after paragraph 3 */}
@@ -144,12 +144,12 @@ export default function HomePage() {
                   </div>
                   <div className="mobile-story-content">
                     <h4 className="mobile-story-title">Jazykové prostriedky</h4>
-                    <p className="mobile-story-description">Frazeologizmy, metafory, osnova</p>
+                    <p className="mobile-story-description">Nevieš, ktoré je čo</p>
                   </div>
                 </div>
                 
                 <div className="story-paragraph solution">
-                  <span className="story-highlight">Preto sme vytvorili SlohGPT</span> - nástroj, ktorý ti ušetrí prvých 10 minút, 
+                  <span className="story-highlight">Preto sme vytvorili SlohGPT</span> - nástroj, ktorý ti ušetrí prvých 5-20 minút, 
                   naučí ťa používať jazykové prostriedky, ukáže vhodné frazeologizmy a pomôže vytvoriť silnú osnovu. 
                   Už nikdy nebudeš sedieť nad prázdnou stránkou so stresom a spotenými rukami.
                 </div>
@@ -195,7 +195,7 @@ export default function HomePage() {
                     </div>
                     <div className="pain-content">
                       <h4 className="pain-title">Jazykové prostriedky</h4>
-                      <p className="pain-description">Frazeologizmy, metafory, osnova</p>
+                      <p className="pain-description">Nevieš, ktoré je čo</p>
                     </div>
                   </div>
 
@@ -221,7 +221,7 @@ export default function HomePage() {
               </div>
               <h2 className="benefits-title">
                 Zatiaľ čo ostatní <span className="stress-text">stresujú</span>,<br/>
-                ty máš hotovo za <span className="highlight-text">10 minút</span>
+                ty máš hotovo za <span className="highlight-text">2 minúty</span>
               </h2>
               <p className="benefits-subtitle">
                 Nie je to podvádzanie. Je to inteligentné riešenie pre modernú generáciu.
@@ -271,7 +271,7 @@ export default function HomePage() {
                 </div>
                 <div className="benefit-content">
                   <h3>Koniec stresu</h3>
-                  <p>Žiadne prázdne stránky. Žiadne škrtanie. Žiadne panické noci pred termínom.</p>
+                  <p>Žiadne prázdne stránky. Žiadne škrtanie. Žiadne panické záchvaty cez prestávku.</p>
                   <div className="benefit-tags">
                     <span className="benefit-tag">✓ Bez paniky</span>
                     <span className="benefit-tag">✓ Bez stresu</span>
@@ -363,7 +363,7 @@ export default function HomePage() {
           <div className="pricing-cards">
             <div className="pricing-card featured">
               <div className="pricing-badge popular">Dostupné teraz</div>
-              <h3 className="pricing-card-title">Complete Essay</h3>
+              <h3 className="pricing-card-title"> Perfektný sloh</h3>
               <div className="pricing-price">
                 <span className="price-amount">7,99 €</span>
                 <span className="price-period">jednorazovo</span>
@@ -371,7 +371,7 @@ export default function HomePage() {
               <ul className="pricing-features">
                 <li className="pricing-feature pricing-feature-left">
                   <i className="fas fa-star"></i>
-                  Kompletný sloh (800+ slov)
+                  Kompletný sloh (do 350 slov)
                 </li>
                 <li className="pricing-feature pricing-feature-left">
                   <i className="fas fa-star"></i>
