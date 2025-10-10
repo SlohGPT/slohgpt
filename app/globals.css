@@ -16354,6 +16354,14 @@ To revert to white header, uncomment this block and comment out the navy header 
   position: fixed;
 }
 
+/* Mobile adjustment for blink-caret positioning */
+@media (max-width: 768px) {
+  .blink-caret {
+    top: 3px !important;
+    position: relative; /* Move caret lower on mobile */
+  }
+}
+
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }

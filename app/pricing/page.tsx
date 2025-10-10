@@ -518,7 +518,7 @@ export default function PricingPage() {
                 </span>
               </h1>
               <h1 className="modern-hero-title mobile-title">
-                <span style={{ display: 'block', marginBottom: 'var(--space-2)', fontSize: '0.9em', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <span style={{ display: 'block', marginBottom: 'var(--space-2)', fontSize: '0.9em', color: '#ffffff' }}>
                   Slohy ako profesionál
                 </span>
                 <span className="text-gradient-primary" style={{ display: 'block', fontSize: '1.2em' }}>
