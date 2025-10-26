@@ -6,6 +6,7 @@ export default function AnnouncementPage() {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [isLoading, setIsLoading] = useState(true)
 
   // Animation states for typewriter effect
   const [currentSetIndex, setCurrentSetIndex] = useState(0)
@@ -79,7 +80,35 @@ export default function AnnouncementPage() {
                 setTimeout(() => {
                   setStartContent(true)
                   let contentIdx = 0
-                  const contentFull = currentSet.text
+                  // On mobile, show only first paragraph with ellipsis
+                  const isMobile = window.innerWidth <= 768
+                  let contentFull = currentSet.text
+                  
+                  if (isMobile) {
+                    // Limit to maximum 5 rows on mobile
+                    const words = contentFull.split(' ')
+                    let limitedText = ''
+                    let lineCount = 0
+                    const maxLines = 5
+                    const charsPerLine = 50 // Approximate characters per line
+                    
+                    for (let i = 0; i < words.length; i++) {
+                      const testText = limitedText + (limitedText ? ' ' : '') + words[i]
+                      const currentLineCount = Math.ceil(testText.length / charsPerLine)
+                      
+                      if (currentLineCount > maxLines) {
+                        break
+                      }
+                      limitedText = testText
+                    }
+                    
+                    if (limitedText.length < contentFull.length) {
+                      contentFull = limitedText.trim() + '...'
+                    }
+                    
+                    // Add 4 spaces at the beginning for proper indentation on mobile
+                    contentFull = '    ' + contentFull
+                  }
                   const typeContent = () => {
                     if (contentIdx < contentFull.length) {
                       setContentText(contentFull.substring(0, contentIdx + 1))
@@ -188,6 +217,17 @@ export default function AnnouncementPage() {
     document.body.style.color = 'white'
     document.body.style.overflowX = 'hidden'
     
+    // Check if mobile and add loading delay
+    const isMobile = window.innerWidth <= 768
+    if (isMobile) {
+      // Add a small delay to ensure smooth loading
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 500)
+    } else {
+      setIsLoading(false)
+    }
+    
     return () => {
       // Restore elements when leaving
       if (header) header.style.display = ''
@@ -207,6 +247,12 @@ export default function AnnouncementPage() {
           background: #1a1a1a !important;
           color: white !important;
           overflow-x: hidden !important;
+        }
+        @media (max-width: 768px) {
+          body {
+            overflow-y: auto !important;
+            height: auto !important;
+          }
         }
         header {
           display: none !important;
@@ -235,6 +281,17 @@ export default function AnnouncementPage() {
           0%, 100% { opacity: 0.2; transform: scale(1); }
           50% { opacity: 0.8; transform: scale(1.2); }
         }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile-first approach - default to stacked layout */
+        .modal-container {
+          display: flex !important;
+          flex-direction: column !important;
+        }
+        
         @media (min-width: 769px) {
           .modal-container {
             display: flex !important;
@@ -253,23 +310,102 @@ export default function AnnouncementPage() {
         }
         @media (max-width: 768px) {
           .modal-container {
+            position: relative !important;
             display: flex !important;
             flex-direction: column !important;
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            background: transparent !important;
           }
           .left-section {
             display: flex !important;
             width: 100% !important;
             min-height: auto !important;
             padding: 3rem 1.5rem 2rem 1.5rem !important;
+            flex-shrink: 0 !important;
+            background: transparent !important;
           }
           .right-section {
             display: flex !important;
             width: 100% !important;
-            min-height: 600px !important;
+            min-height: auto !important;
             padding: 1rem !important;
+            flex-shrink: 0 !important;
+            position: relative !important;
+            background: transparent !important;
+            justify-content: center !important;
+            align-items: center !important;
+          }
+          .right-section > div {
+            background: transparent !important;
+            padding: 0 !important;
+            paddingTop: 0 !important;
+            minHeight: auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+          .right-section > div > div:first-child {
+            display: none !important;
+          }
+          .right-section > div > div:last-child {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 1rem !important;
+            border-radius: 12px !important;
+            background: rgba(11, 14, 26, 0.95) !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(94, 60, 246, 0.25) !important;
+            backdrop-filter: blur(14px) !important;
+            position: relative !important;
+            z-index: 1 !important;
+            margin-bottom: 3rem !important;
+            align-self: flex-start !important;
+          }
+          /* Hide floating background elements on mobile */
+          .floating-icons,
+          .floating-icons > div,
+          .floating,
+          .twinkle-animation,
+          [class*="floating"],
+          [class*="twinkle"],
+          .right-section > div > div:first-child {
+            display: none !important;
           }
         }
       `}</style>
+      
+      {/* Loading spinner for mobile */}
+      {isLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: '#0b0e1a',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999999
+        }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            border: '3px solid rgba(94, 60, 246, 0.3)',
+            borderTop: '3px solid #5E3CF6',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+        </div>
+      )}
       
       {/* Split screen layout like the original modal */}
       <div className="modal-container" style={{
@@ -280,7 +416,9 @@ export default function AnnouncementPage() {
         bottom: 0,
         zIndex: 999999,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
+        background: '#0b0e1a',
+        overflow: 'hidden'
       }}>
         {/* Left Section - Form */}
         <div 
