@@ -257,15 +257,6 @@ export async function POST(request: NextRequest) {
       
       return NextResponse.json({ success: true, data: signup })
     }
-
-    console.log('✅ New announcement signup saved:', data)
-
-    // Send notification email (temporarily disabled for debugging)
-    // sendNewSubmissionNotification(email, clientIP).catch(err => 
-    //   console.error('Failed to send notification:', err)
-    // )
-
-    return NextResponse.json({ success: true, data })
   } catch (error) {
     console.error('❌ Error processing announcement signup:', error)
     return NextResponse.json(
