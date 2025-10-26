@@ -91,10 +91,14 @@ export async function POST(request: NextRequest) {
       signups.push(signup)
       console.log('✅ New announcement signup (fallback):', signup)
       
-      // Send notification email
+      // Send notification email via separate endpoint
       console.log('📧 Attempting to send notification for announcement signup:', email)
-      sendNewSubmissionNotification(email, clientIP)
-        .then(() => console.log('✅ Email notification sent successfully'))
+      fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://www.slohgpt.sk'}/api/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, ipAddress: clientIP })
+      })
+        .then(res => console.log('✅ Notification request sent:', res.status))
         .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
@@ -177,10 +181,14 @@ export async function POST(request: NextRequest) {
       }
       console.log('✅ New announcement signup (fallback):', signup)
       
-      // Send notification email
+      // Send notification email via separate endpoint
       console.log('📧 Attempting to send notification for announcement signup:', email)
-      sendNewSubmissionNotification(email, clientIP)
-        .then(() => console.log('✅ Email notification sent successfully'))
+      fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://www.slohgpt.sk'}/api/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, ipAddress: clientIP })
+      })
+        .then(res => console.log('✅ Notification request sent:', res.status))
         .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
@@ -252,10 +260,14 @@ export async function POST(request: NextRequest) {
       }
       console.log('✅ New announcement signup (fallback):', signup)
       
-      // Send notification email
+      // Send notification email via separate endpoint
       console.log('📧 Attempting to send notification for announcement signup:', email)
-      sendNewSubmissionNotification(email, clientIP)
-        .then(() => console.log('✅ Email notification sent successfully'))
+      fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://www.slohgpt.sk'}/api/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, ipAddress: clientIP })
+      })
+        .then(res => console.log('✅ Notification request sent:', res.status))
         .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
