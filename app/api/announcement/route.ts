@@ -166,6 +166,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Save to Supabase
+    console.log('💾 Attempting to save to Supabase:', { email: email.toLowerCase(), ip_address: clientIP })
+    
     const { data, error } = await supabase
       .from('announcement_signups')
       .insert([
@@ -180,6 +182,13 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('❌ Supabase error:', error)
+      console.error('❌ Error details:', {
+        message: error.message,
+        code: error.code,
+        hint: error.hint,
+        details: error.details
+      })
+      
       // If table doesn't exist, fall back to memory storage
       if (error.code === '42P01' || error.message.includes('relation') || error.message.includes('does not exist')) {
         console.log('📝 Table not found, using fallback storage')
@@ -200,7 +209,12 @@ export async function POST(request: NextRequest) {
       }
       
       return NextResponse.json(
-        { error: 'Failed to save email' },
+        { 
+          error: 'Failed to save email',
+          details: error.message,
+          code: error.code,
+          hint: error.hint
+        },
         { status: 500 }
       )
     }
