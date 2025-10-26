@@ -15,12 +15,11 @@ export async function POST(request: NextRequest) {
 
     console.log('🧪 Testing basic email sending to:', email)
     
-    // Create transporter with Gmail-specific settings
+    // Create transporter with alternative Gmail settings
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
