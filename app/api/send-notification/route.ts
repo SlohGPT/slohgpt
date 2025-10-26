@@ -15,17 +15,6 @@ export async function POST(request: NextRequest) {
 
     console.log('📧 Sending notification for:', email)
     
-    // Fetch logo and convert to base64
-    let logoBase64 = ''
-    try {
-      const logoResponse = await fetch('https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png')
-      const logoBuffer = await logoResponse.arrayBuffer()
-      logoBase64 = Buffer.from(logoBuffer).toString('base64')
-      console.log('✅ Logo fetched and converted to base64')
-    } catch (err) {
-      console.log('⚠️ Could not fetch logo, using alt text')
-    }
-    
     // Get location from IP address
     let location = 'Unknown'
     if (ipAddress && ipAddress !== 'unknown') {
@@ -79,7 +68,7 @@ export async function POST(request: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 40px 20px; text-align: center;">
-                    ${logoBase64 ? `<img src="data:image/png;base64,${logoBase64}" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />` : '<h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px;">SlohGPT</h1>'}
+                    <img src="https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png" alt="SlohGPT" width="200" height="auto" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
                     <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 18px; font-weight: 600;">🎉 New Email Signup!</p>
                   </td>
                 </tr>
