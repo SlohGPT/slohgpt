@@ -239,6 +239,21 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         )
       }
+      
+      // Success case - send notification and return response
+      console.log('✅ New announcement signup saved to Supabase:', data)
+      
+      // Send notification email via separate endpoint
+      console.log('📧 Attempting to send notification for announcement signup:', email)
+      fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://www.slohgpt.sk'}/api/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, ipAddress: clientIP })
+      })
+        .then(res => console.log('✅ Notification request sent:', res.status))
+        .catch(err => console.error('❌ Failed to send notification:', err))
+      
+      return NextResponse.json({ success: true, data })
     } catch (networkError) {
       console.error('❌ Network error connecting to Supabase:', networkError)
       console.log('📝 Network error, using fallback storage')
