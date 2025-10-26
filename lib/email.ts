@@ -2,6 +2,11 @@ import nodemailer from 'nodemailer'
 
 // Create transporter
 const createTransporter = () => {
+  // Check if required environment variables are available
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    throw new Error('Email configuration is incomplete. Missing SMTP_HOST, SMTP_USER, or SMTP_PASS.')
+  }
+
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '587'),
@@ -324,6 +329,12 @@ export async function sendPasswordChangedEmail(email: string, name: string) {
 // Send new email submission notification
 export async function sendNewSubmissionNotification(email: string, ipAddress: string) {
   try {
+    // Check if email configuration is available
+    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.FROM_EMAIL) {
+      console.log('📧 Email configuration not available, skipping notification')
+      return
+    }
+
     const transporter = createTransporter()
     const timestamp = new Date().toLocaleString('sk-SK', {
       timeZone: 'Europe/Bratislava',
