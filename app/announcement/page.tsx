@@ -184,6 +184,11 @@ export default function AnnouncementPage() {
           console.log('📧 Email already registered, showing error')
           setErrorMessage('Tento email ste už zadali. Skúste iný email.')
           setSubmitStatus('error')
+        } else if (response.status === 429) {
+          // Rate limit exceeded - show specific error message
+          console.log('🚫 Rate limit exceeded, showing error')
+          setErrorMessage('Z tohto zariadenia ste už zadaný email tento týždeň. Skúste to znova za týždeň.')
+          setSubmitStatus('error')
         } else {
           console.error('❌ API Error:', {
             status: response.status,

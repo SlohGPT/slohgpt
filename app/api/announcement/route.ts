@@ -2,12 +2,39 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 // Fallback in-memory storage for when Supabase is not available
-const signups: Array<{ id: string; email: string; created_at: string }> = []
+const signups: Array<{ id: string; email: string; ip_address: string; created_at: string }> = []
+
+// Helper function to get client IP address
+function getClientIP(request: NextRequest): string {
+  // Check various headers for the real IP
+  const forwarded = request.headers.get('x-forwarded-for')
+  const realIP = request.headers.get('x-real-ip')
+  const cfConnectingIP = request.headers.get('cf-connecting-ip')
+  
+  if (forwarded) {
+    // x-forwarded-for can contain multiple IPs, take the first one
+    return forwarded.split(',')[0].trim()
+  }
+  
+  if (realIP) {
+    return realIP
+  }
+  
+  if (cfConnectingIP) {
+    return cfConnectingIP
+  }
+  
+  // Fallback to connection remote address
+  return request.ip || 'unknown'
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { email } = body
+    const clientIP = getClientIP(request)
+
+    console.log('📧 New signup attempt:', { email, ip: clientIP })
 
     // Validate input
     if (!email) {
@@ -29,7 +56,8 @@ export async function POST(request: NextRequest) {
     // Check if Supabase is available
     if (!supabase) {
       console.error('❌ Supabase client not initialized - using fallback storage')
-      // Fallback: store in memory for now (check for duplicates)
+      
+      // Check for duplicate email in fallback storage
       const existingSignup = signups.find(s => s.email.toLowerCase() === email.toLowerCase())
       if (existingSignup) {
         return NextResponse.json(
@@ -38,9 +66,24 @@ export async function POST(request: NextRequest) {
         )
       }
       
+      // Check for IP rate limiting in fallback storage (1 week = 7 days)
+      const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+      const recentSignupFromIP = signups.find(s => 
+        s.ip_address === clientIP && 
+        new Date(s.created_at) > oneWeekAgo
+      )
+      
+      if (recentSignupFromIP) {
+        return NextResponse.json(
+          { error: 'Only one email per IP address per week allowed' },
+          { status: 429 }
+        )
+      }
+      
       const signup = {
         id: Math.random().toString(36).substr(2, 9),
         email,
+        ip_address: clientIP,
         created_at: new Date().toISOString()
       }
       
@@ -49,12 +92,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, data: signup })
     }
 
-    // Check if email already exists in Supabase
+    // Check for duplicate email in Supabase
     const { data: existingData, error: checkError } = await supabase
       .from('announcement_signups')
       .select('email')
       .eq('email', email.toLowerCase())
-      .maybeSingle() // Use maybeSingle instead of single to avoid error if no rows
+      .maybeSingle()
 
     if (checkError) {
       console.error('❌ Error checking existing email:', checkError)
@@ -72,6 +115,7 @@ export async function POST(request: NextRequest) {
         const signup = {
           id: Math.random().toString(36).substr(2, 9),
           email,
+          ip_address: clientIP,
           created_at: new Date().toISOString()
         }
         signups.push(signup)
@@ -87,12 +131,34 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check for IP rate limiting in Supabase (1 week = 7 days)
+    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    const { data: recentSignupFromIP, error: ipCheckError } = await supabase
+      .from('announcement_signups')
+      .select('id, created_at')
+      .eq('ip_address', clientIP)
+      .gt('created_at', oneWeekAgo)
+      .maybeSingle()
+
+    if (ipCheckError) {
+      console.error('❌ Error checking IP rate limit:', ipCheckError)
+      // If IP column doesn't exist yet, skip rate limiting for now
+      console.log('📝 IP column may not exist, skipping rate limit check')
+    } else if (recentSignupFromIP) {
+      console.log('🚫 Rate limit exceeded for IP:', clientIP)
+      return NextResponse.json(
+        { error: 'Only one email per IP address per week allowed' },
+        { status: 429 }
+      )
+    }
+
     // Save to Supabase
     const { data, error } = await supabase
       .from('announcement_signups')
       .insert([
         {
           email: email.toLowerCase(),
+          ip_address: clientIP,
           created_at: new Date().toISOString()
         }
       ])
@@ -107,6 +173,7 @@ export async function POST(request: NextRequest) {
         const signup = {
           id: Math.random().toString(36).substr(2, 9),
           email,
+          ip_address: clientIP,
           created_at: new Date().toISOString()
         }
         console.log('✅ New announcement signup (fallback):', signup)
