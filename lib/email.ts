@@ -360,7 +360,17 @@ export async function sendNewSubmissionNotification(email: string, ipAddress: st
     }
     
     console.log('📧 Sending email notification...')
-    await transporter.sendMail(mailOptions)
+    
+    // Add timeout to prevent hanging
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Email send timeout after 10 seconds')), 10000)
+    )
+    
+    await Promise.race([
+      transporter.sendMail(mailOptions),
+      timeoutPromise
+    ])
+    
     console.log('✅ New submission notification sent to slohgpt@gmail.com')
     
   } catch (error) {
