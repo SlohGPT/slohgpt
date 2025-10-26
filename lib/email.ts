@@ -356,6 +356,7 @@ export async function sendNewSubmissionNotification(email: string, ipAddress: st
       from: process.env.FROM_EMAIL,
       to: 'slohgpt@gmail.com',
       subject: `🎉 New Email Submission: ${email}`,
+      text: `New email submission: ${email}\n\nIP: ${ipAddress}\nTime: ${timestamp}`,
       html: getNewSubmissionEmailTemplate(email, ipAddress, timestamp)
     }
     
