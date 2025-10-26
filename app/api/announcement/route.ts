@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { sendNewSubmissionNotification } from '@/lib/email'
 
 // Fallback in-memory storage for when Supabase is not available
 const signups: Array<{ id: string; email: string; ip_address: string; created_at: string }> = []
@@ -89,6 +90,12 @@ export async function POST(request: NextRequest) {
       
       signups.push(signup)
       console.log('✅ New announcement signup (fallback):', signup)
+      
+      // Send notification email (don't await to avoid blocking response)
+      sendNewSubmissionNotification(email, clientIP).catch(err => 
+        console.error('Failed to send notification:', err)
+      )
+      
       return NextResponse.json({ success: true, data: signup })
     }
 
@@ -120,6 +127,12 @@ export async function POST(request: NextRequest) {
         }
         signups.push(signup)
         console.log('✅ New announcement signup (fallback):', signup)
+        
+        // Send notification email (don't await to avoid blocking response)
+        sendNewSubmissionNotification(email, clientIP).catch(err => 
+          console.error('Failed to send notification:', err)
+        )
+        
         return NextResponse.json({ success: true, data: signup })
       }
     }
@@ -177,6 +190,12 @@ export async function POST(request: NextRequest) {
           created_at: new Date().toISOString()
         }
         console.log('✅ New announcement signup (fallback):', signup)
+        
+        // Send notification email (don't await to avoid blocking response)
+        sendNewSubmissionNotification(email, clientIP).catch(err => 
+          console.error('Failed to send notification:', err)
+        )
+        
         return NextResponse.json({ success: true, data: signup })
       }
       
@@ -187,6 +206,11 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('✅ New announcement signup saved:', data)
+
+    // Send notification email (don't await to avoid blocking response)
+    sendNewSubmissionNotification(email, clientIP).catch(err => 
+      console.error('Failed to send notification:', err)
+    )
 
     return NextResponse.json({ success: true, data })
   } catch (error) {
