@@ -176,8 +176,8 @@ export default function AnnouncementPage() {
           // Email already registered - show success instead of error
           setSubmitStatus('success')
           localStorage.setItem('announcement_shown', 'true')
-      } else {
-        setSubmitStatus('error')
+        } else {
+          setSubmitStatus('error')
         }
       }
     } catch (error) {
