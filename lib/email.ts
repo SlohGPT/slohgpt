@@ -300,6 +300,27 @@ const getNewSubmissionEmailTemplate = (email: string, ipAddress: string, timesta
   `
 }
 
+// Send password changed confirmation email
+export async function sendPasswordChangedEmail(email: string, name: string) {
+  try {
+    const transporter = createTransporter()
+    
+    const mailOptions = {
+      from: process.env.FROM_EMAIL,
+      to: email,
+      subject: 'Password Changed - SlohGPT',
+      html: getPasswordChangedEmailTemplate(name)
+    }
+    
+    await transporter.sendMail(mailOptions)
+    console.log('✅ Password changed confirmation sent to:', email)
+    
+  } catch (error) {
+    console.error('❌ Failed to send password changed email:', error)
+    throw new Error('Failed to send password changed email')
+  }
+}
+
 // Send new email submission notification
 export async function sendNewSubmissionNotification(email: string, ipAddress: string) {
   try {
