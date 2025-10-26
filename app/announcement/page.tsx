@@ -179,18 +179,17 @@ export default function AnnouncementPage() {
           console.error('Could not parse error response:', e)
         }
         
-        console.error('❌ API Error:', {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorData
-        })
-        
         if (response.status === 409) {
           // Email already registered - show specific error message
           console.log('📧 Email already registered, showing error')
           setErrorMessage('Tento email ste už zadali. Skúste iný email.')
           setSubmitStatus('error')
         } else {
+          console.error('❌ API Error:', {
+            status: response.status,
+            statusText: response.statusText,
+            error: errorData
+          })
           console.log('💥 Setting error status')
           setErrorMessage('Niečo sa pokazilo. Skúste to prosím znova.')
           setSubmitStatus('error')
