@@ -185,7 +185,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save to Supabase
-    console.log('💾 Attempting to save to Supabase:', { email: email.toLowerCase(), ip_address: clientIP })
+    console.log('💾 Attempting to save to Supabase with correct URL:', { email: email.toLowerCase(), ip_address: clientIP })
     
     try {
       const { data, error } = await supabase
