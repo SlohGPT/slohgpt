@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     console.log('🧪 Testing basic email sending to:', email)
     
     // Create transporter
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false,
