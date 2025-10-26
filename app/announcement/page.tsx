@@ -146,16 +146,27 @@ export default function AnnouncementPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    console.log('🚀 Form submitted with email:', email)
     setIsSubmitting(true)
+    setSubmitStatus('idle')
     
     try {
+      console.log('📡 Making API request to /api/announcement')
       const response = await fetch('/api/announcement', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
 
+      console.log('📨 Response received:', {
+        ok: response.ok,
+        status: response.status,
+        statusText: response.statusText
+      })
+
       if (response.ok) {
+        const data = await response.json()
+        console.log('✅ Success response:', data)
         setSubmitStatus('success')
         localStorage.setItem('announcement_shown', 'true')
       } else {
@@ -166,7 +177,7 @@ export default function AnnouncementPage() {
           console.error('Could not parse error response:', e)
         }
         
-        console.error('API Error:', {
+        console.error('❌ API Error:', {
           status: response.status,
           statusText: response.statusText,
           error: errorData
@@ -174,14 +185,16 @@ export default function AnnouncementPage() {
         
         if (response.status === 409) {
           // Email already registered - show success instead of error
+          console.log('📧 Email already registered, showing success')
           setSubmitStatus('success')
           localStorage.setItem('announcement_shown', 'true')
         } else {
+          console.log('💥 Setting error status')
           setSubmitStatus('error')
         }
       }
     } catch (error) {
-      console.error('Error submitting:', error)
+      console.error('💥 Network/JS Error submitting:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
