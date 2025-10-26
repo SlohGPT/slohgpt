@@ -6,6 +6,7 @@ export default function AnnouncementPage() {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
   // Animation states for typewriter effect
@@ -149,6 +150,7 @@ export default function AnnouncementPage() {
     console.log('🚀 Form submitted with email:', email)
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setErrorMessage('')
     
     try {
       console.log('📡 Making API request to /api/announcement')
@@ -184,17 +186,19 @@ export default function AnnouncementPage() {
         })
         
         if (response.status === 409) {
-          // Email already registered - show success instead of error
-          console.log('📧 Email already registered, showing success')
-          setSubmitStatus('success')
-          localStorage.setItem('announcement_shown', 'true')
+          // Email already registered - show specific error message
+          console.log('📧 Email already registered, showing error')
+          setErrorMessage('Tento email ste už zadali. Skúste iný email.')
+          setSubmitStatus('error')
         } else {
           console.log('💥 Setting error status')
+          setErrorMessage('Niečo sa pokazilo. Skúste to prosím znova.')
           setSubmitStatus('error')
         }
       }
     } catch (error) {
       console.error('💥 Network/JS Error submitting:', error)
+      setErrorMessage('Niečo sa pokazilo. Skúste to prosím znova.')
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -519,7 +523,7 @@ export default function AnnouncementPage() {
                     </div>
                     {submitStatus === 'error' && (
                       <p style={{ color: '#dc2626', fontSize: '0.875rem' }}>
-                        Niečo sa pokazilo. Skúste to prosím znova.
+                        {errorMessage}
                       </p>
                     )}
                     <button
