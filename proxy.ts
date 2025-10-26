@@ -16,6 +16,7 @@ export function proxy(request: NextRequest) {
   
   // Don't redirect admin routes
   if (pathname.startsWith('/admin/')) {
+    console.log('✅ Admin route detected, allowing:', pathname)
     return NextResponse.next()
   }
   
@@ -44,10 +45,11 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)
+     * - admin (Admin routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|admin|_next/static|_next/image|favicon.ico).*)',
   ],
 }
