@@ -165,58 +165,97 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if Supabase is available
+    if (!supabase) {
+      console.log('📝 Supabase not available, using fallback storage')
+      const signup = {
+        id: Math.random().toString(36).substr(2, 9),
+        email,
+        ip_address: clientIP,
+        created_at: new Date().toISOString()
+      }
+      console.log('✅ New announcement signup (fallback):', signup)
+      
+      // Send notification email
+      sendNewSubmissionNotification(email, clientIP).catch(err => 
+        console.error('Failed to send notification:', err)
+      )
+      
+      return NextResponse.json({ success: true, data: signup })
+    }
+
     // Save to Supabase
     console.log('💾 Attempting to save to Supabase:', { email: email.toLowerCase(), ip_address: clientIP })
     
-    const { data, error } = await supabase
-      .from('announcement_signups')
-      .insert([
-        {
-          email: email.toLowerCase(),
-          ip_address: clientIP,
-          created_at: new Date().toISOString()
-        }
-      ])
-      .select()
-      .single()
+    try {
+      const { data, error } = await supabase
+        .from('announcement_signups')
+        .insert([
+          {
+            email: email.toLowerCase(),
+            ip_address: clientIP,
+            created_at: new Date().toISOString()
+          }
+        ])
+        .select()
+        .single()
 
-    if (error) {
-      console.error('❌ Supabase error:', error)
-      console.error('❌ Error details:', {
-        message: error.message,
-        code: error.code,
-        hint: error.hint,
-        details: error.details
-      })
-      
-      // If table doesn't exist, fall back to memory storage
-      if (error.code === '42P01' || error.message.includes('relation') || error.message.includes('does not exist')) {
-        console.log('📝 Table not found, using fallback storage')
-        const signup = {
-          id: Math.random().toString(36).substr(2, 9),
-          email,
-          ip_address: clientIP,
-          created_at: new Date().toISOString()
-        }
-        console.log('✅ New announcement signup (fallback):', signup)
-        
-        // Send notification email (temporarily disabled for debugging)
-        // sendNewSubmissionNotification(email, clientIP).catch(err => 
-        //   console.error('Failed to send notification:', err)
-        // )
-        
-        return NextResponse.json({ success: true, data: signup })
-      }
-      
-      return NextResponse.json(
-        { 
-          error: 'Failed to save email',
-          details: error.message,
+      if (error) {
+        console.error('❌ Supabase error:', error)
+        console.error('❌ Error details:', {
+          message: error.message,
           code: error.code,
-          hint: error.hint
-        },
-        { status: 500 }
+          hint: error.hint,
+          details: error.details
+        })
+        
+        // If table doesn't exist, fall back to memory storage
+        if (error.code === '42P01' || error.message.includes('relation') || error.message.includes('does not exist')) {
+          console.log('📝 Table not found, using fallback storage')
+          const signup = {
+            id: Math.random().toString(36).substr(2, 9),
+            email,
+            ip_address: clientIP,
+            created_at: new Date().toISOString()
+          }
+          console.log('✅ New announcement signup (fallback):', signup)
+          
+          // Send notification email
+          sendNewSubmissionNotification(email, clientIP).catch(err => 
+            console.error('Failed to send notification:', err)
+          )
+          
+          return NextResponse.json({ success: true, data: signup })
+        }
+        
+        return NextResponse.json(
+          { 
+            error: 'Failed to save email',
+            details: error.message,
+            code: error.code,
+            hint: error.hint
+          },
+          { status: 500 }
+        )
+      }
+    } catch (networkError) {
+      console.error('❌ Network error connecting to Supabase:', networkError)
+      console.log('📝 Network error, using fallback storage')
+      
+      const signup = {
+        id: Math.random().toString(36).substr(2, 9),
+        email,
+        ip_address: clientIP,
+        created_at: new Date().toISOString()
+      }
+      console.log('✅ New announcement signup (fallback):', signup)
+      
+      // Send notification email
+      sendNewSubmissionNotification(email, clientIP).catch(err => 
+        console.error('Failed to send notification:', err)
       )
+      
+      return NextResponse.json({ success: true, data: signup })
     }
 
     console.log('✅ New announcement signup saved:', data)
