@@ -67,9 +67,6 @@ export async function POST(request: NextRequest) {
         )
       }
       
-      // IP rate limiting temporarily disabled for testing
-      // TODO: Re-enable after testing email functionality
-      /*
       // Check for IP rate limiting in fallback storage (1 week = 7 days)
       const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
       const recentSignupFromIP = signups.find(s => 
@@ -83,7 +80,6 @@ export async function POST(request: NextRequest) {
           { status: 429 }
         )
       }
-      */
       
       const signup = {
         id: Math.random().toString(36).substr(2, 9),
@@ -148,9 +144,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // IP rate limiting temporarily disabled for testing
-    // TODO: Re-enable after testing email functionality
-    /*
     // Check for IP rate limiting in Supabase (1 week = 7 days)
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
     const { data: recentSignupFromIP, error: ipCheckError } = await supabase
@@ -171,7 +164,6 @@ export async function POST(request: NextRequest) {
         { status: 429 }
       )
     }
-    */
 
     // Check if Supabase is available
     if (!supabase) {
