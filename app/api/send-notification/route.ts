@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 40px 20px; text-align: center;">
-                    <img src="https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
+                    <img src="cid:logo" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                     <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 18px; font-weight: 600;">🎉 New Email Signup!</p>
                   </td>
                 </tr>
@@ -146,7 +146,12 @@ export async function POST(request: NextRequest) {
       to: 'slohgpt@gmail.com',
       subject: `🎉 New Signup: ${email}`,
       text: `New email submission: ${email}\n\nLocation: ${location}\nIP: ${ipAddress || 'unknown'}\nTime: ${timestamp}`,
-      html: htmlTemplate
+      html: htmlTemplate,
+      attachments: [{
+        filename: 'logo-slohgpt-white.png',
+        path: 'https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png',
+        cid: 'logo'
+      }]
     })
 
     console.log('✅ Notification sent:', info.messageId)
