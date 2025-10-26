@@ -92,9 +92,10 @@ export async function POST(request: NextRequest) {
       console.log('✅ New announcement signup (fallback):', signup)
       
       // Send notification email
-      sendNewSubmissionNotification(email, clientIP).catch(err => 
-        console.error('Failed to send notification:', err)
-      )
+      console.log('📧 Attempting to send notification for announcement signup:', email)
+      sendNewSubmissionNotification(email, clientIP)
+        .then(() => console.log('✅ Email notification sent successfully'))
+        .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
     }
@@ -177,9 +178,10 @@ export async function POST(request: NextRequest) {
       console.log('✅ New announcement signup (fallback):', signup)
       
       // Send notification email
-      sendNewSubmissionNotification(email, clientIP).catch(err => 
-        console.error('Failed to send notification:', err)
-      )
+      console.log('📧 Attempting to send notification for announcement signup:', email)
+      sendNewSubmissionNotification(email, clientIP)
+        .then(() => console.log('✅ Email notification sent successfully'))
+        .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
     }
@@ -251,9 +253,10 @@ export async function POST(request: NextRequest) {
       console.log('✅ New announcement signup (fallback):', signup)
       
       // Send notification email
-      sendNewSubmissionNotification(email, clientIP).catch(err => 
-        console.error('Failed to send notification:', err)
-      )
+      console.log('📧 Attempting to send notification for announcement signup:', email)
+      sendNewSubmissionNotification(email, clientIP)
+        .then(() => console.log('✅ Email notification sent successfully'))
+        .catch(err => console.error('❌ Failed to send notification:', err))
       
       return NextResponse.json({ success: true, data: signup })
     }
