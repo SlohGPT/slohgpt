@@ -15,15 +15,19 @@ export async function POST(request: NextRequest) {
 
     console.log('🧪 Testing basic email sending to:', email)
     
-    // Create transporter
+    // Create transporter with Gmail-specific settings
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587,
       secure: false,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     })
 
     // Send simple test email
