@@ -329,13 +329,17 @@ export async function sendPasswordChangedEmail(email: string, name: string) {
 // Send new email submission notification
 export async function sendNewSubmissionNotification(email: string, ipAddress: string) {
   try {
+    console.log('📧 Attempting to send notification for:', email)
+    
     // Check if email configuration is available
     if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.FROM_EMAIL) {
       console.log('📧 Email configuration not available, skipping notification')
       return
     }
 
+    console.log('📧 Email config available, creating transporter...')
     const transporter = createTransporter()
+    
     const timestamp = new Date().toLocaleString('sk-SK', {
       timeZone: 'Europe/Bratislava',
       year: 'numeric',
@@ -352,11 +356,16 @@ export async function sendNewSubmissionNotification(email: string, ipAddress: st
       html: getNewSubmissionEmailTemplate(email, ipAddress, timestamp)
     }
     
+    console.log('📧 Sending email notification...')
     await transporter.sendMail(mailOptions)
     console.log('✅ New submission notification sent to slohgpt@gmail.com')
     
   } catch (error) {
     console.error('❌ Failed to send new submission notification:', error)
+    console.error('❌ Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
+    })
     // Don't throw error - we don't want email failures to break the signup process
   }
 }
