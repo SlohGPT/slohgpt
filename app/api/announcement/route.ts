@@ -91,10 +91,10 @@ export async function POST(request: NextRequest) {
       signups.push(signup)
       console.log('✅ New announcement signup (fallback):', signup)
       
-      // Send notification email (don't await to avoid blocking response)
-      sendNewSubmissionNotification(email, clientIP).catch(err => 
-        console.error('Failed to send notification:', err)
-      )
+      // Send notification email (temporarily disabled for debugging)
+      // sendNewSubmissionNotification(email, clientIP).catch(err => 
+      //   console.error('Failed to send notification:', err)
+      // )
       
       return NextResponse.json({ success: true, data: signup })
     }
@@ -207,10 +207,10 @@ export async function POST(request: NextRequest) {
 
     console.log('✅ New announcement signup saved:', data)
 
-    // Send notification email (don't await to avoid blocking response)
-    sendNewSubmissionNotification(email, clientIP).catch(err => 
-      console.error('Failed to send notification:', err)
-    )
+    // Send notification email (temporarily disabled for debugging)
+    // sendNewSubmissionNotification(email, clientIP).catch(err => 
+    //   console.error('Failed to send notification:', err)
+    // )
 
     return NextResponse.json({ success: true, data })
   } catch (error) {
