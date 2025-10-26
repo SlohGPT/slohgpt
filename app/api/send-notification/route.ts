@@ -61,30 +61,29 @@ export async function POST(request: NextRequest) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       </head>
       <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 20px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 10px;">
           <tr>
             <td align="center">
-              <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+              <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); max-width: 100%;">
                 <!-- Header -->
                 <tr>
-                  <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 40px 20px; text-align: center;">
-                    <img src="https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png" alt="SlohGPT" width="200" height="auto" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
-                    <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 18px; font-weight: 600;">🎉 New Email Signup!</p>
+                  <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 30px 20px; text-align: center;">
+                    <img src="https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png" alt="SlohGPT" width="200" height="auto" style="max-width: 150px; width: 100%; height: auto; display: block; margin: 0 auto;" />
                   </td>
                 </tr>
                 
                 <!-- Content -->
                 <tr>
-                  <td style="padding: 40px 30px;">
-                    <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 24px; font-weight: 700;">Someone signed up for early access!</h2>
+                  <td style="padding: 30px 20px;">
+                    <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 22px; font-weight: 700; line-height: 1.3;">Someone signed up for early access!</h2>
                     
-                    <p style="color: #6b7280; margin: 0 0 30px 0; font-size: 16px; line-height: 1.6;">
+                    <p style="color: #6b7280; margin: 0 0 20px 0; font-size: 15px; line-height: 1.6;">
                       A new person has submitted their email for early access to SlohGPT!
                     </p>
                     
                     <!-- Details Card -->
-                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 25px; margin: 30px 0;">
-                      <h3 style="color: #1f2937; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">📧 Submission Details</h3>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                      <h3 style="color: #1f2937; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">📧 Submission Details</h3>
                       
                       <table width="100%" cellpadding="0" cellspacing="0">
                         <tr>
