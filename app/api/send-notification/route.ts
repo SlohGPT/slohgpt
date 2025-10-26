@@ -15,6 +15,17 @@ export async function POST(request: NextRequest) {
 
     console.log('📧 Sending notification for:', email)
     
+    // Fetch logo and convert to base64
+    let logoBase64 = ''
+    try {
+      const logoResponse = await fetch('https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png')
+      const logoBuffer = await logoResponse.arrayBuffer()
+      logoBase64 = Buffer.from(logoBuffer).toString('base64')
+      console.log('✅ Logo fetched and converted to base64')
+    } catch (err) {
+      console.log('⚠️ Could not fetch logo, using alt text')
+    }
+    
     // Get location from IP address
     let location = 'Unknown'
     if (ipAddress && ipAddress !== 'unknown') {
@@ -68,7 +79,7 @@ export async function POST(request: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 40px 20px; text-align: center;">
-                    <img src="cid:logo" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
+                    <img src="data:image/png;base64,${logoBase64}" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                     <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 18px; font-weight: 600;">🎉 New Email Signup!</p>
                   </td>
                 </tr>
@@ -146,12 +157,7 @@ export async function POST(request: NextRequest) {
       to: 'slohgpt@gmail.com',
       subject: `🎉 New Signup: ${email}`,
       text: `New email submission: ${email}\n\nLocation: ${location}\nIP: ${ipAddress || 'unknown'}\nTime: ${timestamp}`,
-      html: htmlTemplate,
-      attachments: [{
-        filename: 'logo-slohgpt-white.png',
-        path: 'https://res.cloudinary.com/dng0qhxe8/image/upload/v1758658677/logo-slohgpt-white_wrmid9.png',
-        cid: 'logo'
-      }]
+      html: htmlTemplate
     })
 
     console.log('✅ Notification sent:', info.messageId)
