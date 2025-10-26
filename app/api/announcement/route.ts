@@ -67,19 +67,7 @@ export async function POST(request: NextRequest) {
         )
       }
       
-      // Check for IP rate limiting in fallback storage (1 week = 7 days)
-      const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-      const recentSignupFromIP = signups.find(s => 
-        s.ip_address === clientIP && 
-        new Date(s.created_at) > oneWeekAgo
-      )
-      
-      if (recentSignupFromIP) {
-        return NextResponse.json(
-          { error: 'Only one email per IP address per week allowed' },
-          { status: 429 }
-        )
-      }
+      // IP rate limiting disabled
       
       const signup = {
         id: Math.random().toString(36).substr(2, 9),
@@ -162,13 +150,16 @@ export async function POST(request: NextRequest) {
       console.error('❌ Error checking IP rate limit:', ipCheckError)
       // If IP column doesn't exist yet, skip rate limiting for now
       console.log('📝 IP column may not exist, skipping rate limit check')
-    } else if (recentSignupFromIP) {
+    } // IP rate limiting disabled
+    /*
+    else if (recentSignupFromIP) {
       console.log('🚫 Rate limit exceeded for IP:', clientIP)
       return NextResponse.json(
         { error: 'Only one email per IP address per week allowed' },
         { status: 429 }
       )
     }
+    */
 
     // Check if Supabase is available
     if (!supabase) {
