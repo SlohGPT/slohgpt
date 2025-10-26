@@ -27,3 +27,23 @@ ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 -- Create policy to allow all operations for now (you can restrict this later)
 CREATE POLICY "Allow all operations on users" ON users
   FOR ALL USING (true);
+
+-- Create announcement_signups table
+CREATE TABLE IF NOT EXISTS announcement_signups (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create index on email for faster lookups
+CREATE INDEX IF NOT EXISTS idx_announcement_signups_email ON announcement_signups(email);
+
+-- Create index on created_at for sorting
+CREATE INDEX IF NOT EXISTS idx_announcement_signups_created_at ON announcement_signups(created_at);
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE announcement_signups ENABLE ROW LEVEL SECURITY;
+
+-- Create policy to allow all operations for now (you can restrict this later)
+CREATE POLICY "Allow all operations on announcement_signups" ON announcement_signups
+  FOR ALL USING (true);
