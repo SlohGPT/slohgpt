@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 40px 20px; text-align: center;">
-                    <img src="data:image/png;base64,${logoBase64}" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
+                    ${logoBase64 ? `<img src="data:image/png;base64,${logoBase64}" alt="SlohGPT" style="max-width: 200px; height: auto; margin-bottom: 15px;" />` : '<h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px;">SlohGPT</h1>'}
                     <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 18px; font-weight: 600;">🎉 New Email Signup!</p>
                   </td>
                 </tr>
