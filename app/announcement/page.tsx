@@ -425,12 +425,14 @@ export default function AnnouncementPage() {
                         cursor: 'pointer'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.background = 'rgba(94,60,246,0.2)'
-                        e.target.style.transform = 'translateY(-1px)'
+                        const target = e.target as HTMLElement
+                        target.style.background = 'rgba(94,60,246,0.2)'
+                        target.style.transform = 'translateY(-1px)'
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background = 'rgba(94,60,246,0.1)'
-                        e.target.style.transform = 'translateY(0)'
+                        const target = e.target as HTMLElement
+                        target.style.background = 'rgba(94,60,246,0.1)'
+                        target.style.transform = 'translateY(0)'
                       }}
                     >
                       slohgpt@gmail.com
