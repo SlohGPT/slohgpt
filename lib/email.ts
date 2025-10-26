@@ -341,7 +341,20 @@ export async function sendNewSubmissionNotification(email: string, ipAddress: st
     }
 
     console.log('📧 Email config available, creating transporter...')
-    const transporter = createTransporter()
+    
+    // Create transporter directly with working configuration
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    })
     
     const timestamp = new Date().toLocaleString('sk-SK', {
       timeZone: 'Europe/Bratislava',
