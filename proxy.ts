@@ -4,8 +4,17 @@ import type { NextRequest } from 'next/server'
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   
-  // Don't redirect if we're already on the announcement page
-  if (pathname === '/announcement') {
+  // Check if user is authenticated via preview (has the cookie)
+  const previewAuthenticated = request.cookies.get('preview_authenticated')?.value === 'true'
+  const announcementShown = request.cookies.get('announcement_shown')?.value === 'true'
+  
+  // Don't redirect if user is authenticated or has seen announcement
+  if (previewAuthenticated || announcementShown) {
+    return NextResponse.next()
+  }
+  
+  // Don't redirect if we're already on the announcement page or preview page
+  if (pathname === '/announcement' || pathname === '/preview') {
     return NextResponse.next()
   }
   
