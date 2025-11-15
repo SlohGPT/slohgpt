@@ -78,14 +78,14 @@ export default function Footer() {
         <div className="footer-bottom">
           <p>&copy; 2025 SlohGPT. Všetky práva vyhradené.</p>
           <div className="footer-social">
-            <a href="#" aria-label="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61583239567804" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="#" aria-label="Instagram">
+            <a href="https://www.instagram.com/slohgpt.sk" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="#" aria-label="Twitter">
-              <i className="fab fa-twitter"></i>
+            <a href="https://www.tiktok.com/@slohgpt" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+              <i className="fab fa-tiktok"></i>
             </a>
           </div>
         </div>
